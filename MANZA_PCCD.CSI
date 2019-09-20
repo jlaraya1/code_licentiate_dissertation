@@ -1,0 +1,1524 @@
+;{CR10X}
+
+;Programa : ESTANDAR PARA ESTACION CLIMATICA TERRENA MANZANILLO
+
+;Realizado el 25/01/05
+
+;Instrumentos instalados :
+
+;1)  TEMP Y HR:  CS 500        NS 64093
+;2) LLUVIA:     TE 525M        NS 34198-804
+;3) VEL Y DIR:  YOUNG 5103     NS 9721
+;4) RADIACION:  SP LITE        NS 42564
+;5) MODEM COM 200              NS 4061
+;6) PANEL ALAMBR CR10X         NS 31220
+;7) LOGGER CR 10X              NS ?
+;CAMBIOS REALIZADOS:  Ninguno hasta ahora
+
+
+;  Realizado por Jose Luis Araya Lopez.
+
+
+*Table 1 Program
+  01: 10        Execution Interval (seconds)
+
+
+; ********** SENSOR DE TEMPERATURA *******
+
+1:  Volt (SE) (P1)
+ 1: 1        Reps
+ 2: 25       2500 mV 60 Hz Rejection Range
+ 3: 1        SE Channel
+ 4: 9        Loc [ TEMP_C    ]
+ 5: 0.1      Mult
+ 6: -40      Offset
+
+; ********** SENSOR DE HUMEDAD *********
+
+2:  Volt (SE) (P1)
+ 1: 1        Reps
+ 2: 25       2500 mV 60 Hz Rejection Range
+ 3: 2        SE Channel
+ 4: 10       Loc [ HR        ]
+ 5: .1       Mult
+ 6: 0        Offset
+
+
+; *******  SENSOR DE RADIACION: **********
+
+
+3:  Volt (Diff) (P2)
+ 1: 1        Reps
+ 2: 23       25 mV 60 Hz Rejection Range
+ 3: 2        DIFF Channel
+ 4: 12       Loc [ RAD_KJ_m2 ]
+ 5: 1        Mult
+ 6: 0        Offset
+
+;**** CORRECCION DE VALORES NEGATIVOS DE RADIACION: *****
+
+4:  If (X<=>F) (P89)
+ 1: 12       X Loc [ RAD_KJ_m2 ]
+ 2: 4        <
+ 3: 0        F
+ 4: 30       Then Do
+
+     5:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 12       Z Loc [ RAD_KJ_m2 ]
+
+6:  End (P95)
+
+; Instruccion 89 es utilizada para anular valores de radiacion
+; horarios entre las 7:00 pm inclusive y las 4:00am inclusive
+
+7:  Time (P18)
+ 1: 1        Minutes into current day (maximum 1440)
+ 2: 0        Mod/By
+ 3: 62       Loc [ TIME_NUM  ]
+
+8:  If (X<=>F) (P89)
+ 1: 62       X Loc [ TIME_NUM  ]
+ 2: 4        <
+ 3: 300      F
+ 4: 30       Then Do
+
+9:  Z=F x 10^n (P30)
+ 1: 0        F
+ 2: 0        n, Exponent of 10
+ 3: 12       Z Loc [ RAD_KJ_m2 ]
+
+10:  End (P95)
+
+11:  If (X<=>F) (P89)
+ 1: 62       X Loc [ TIME_NUM  ]
+ 2: 3        >=
+ 3: 1080     F
+ 4: 30       Then Do
+
+12:  Z=F x 10^n (P30)
+ 1: 0        F
+ 2: 0        n, Exponent of 10
+ 3: 12       Z Loc [ RAD_KJ_m2 ]
+
+13:  End (P95)
+
+;**** CONVERSION DE KJ/m2 A KW/m2  ***********
+
+14:  Z=X*F (P37)
+ 1: 12       X Loc [ RAD_KJ_m2 ]
+ 2: 0.1      F
+ 3: 11       Z Loc [ RAD_KW_m2 ]
+
+;**** CONVERSION DE KJ/m2 A MJ/m2  ***********
+
+15:  Z=X*F (P37)
+ 1: 12       X Loc [ RAD_KJ_m2 ]
+ 2: 0.001    F
+ 3: 13       Z Loc [ RAD_MJ_m2 ]
+
+16:  If (X<=>F) (P89)
+ 1: 11       X Loc [ RAD_KW_m2 ]
+ 2: 3        >=
+ 3: .12      F
+ 4: 30       Then Do
+
+;** Casos de hora sol**********************
+
+     17:  Z=Z+1 (P32)
+      1: 66       Z Loc [ CASOS_sol ]
+
+18:  End (P95)
+
+; ******** SENSOR DE VELOCIDAD DE VIENTO *****
+
+19:  Pulse (P3)
+ 1: 1        Reps
+ 2: 2        Pulse Channel 2
+ 3: 21       Low Level AC, Output Hz
+ 4: 14       Loc [ VEL_m_s   ]
+ 5: 0.098    Mult
+ 6: 0        Offset
+
+; ******** SENSOR DE DIRECCION DE VIENTO *****
+
+20:  Excite-Delay (SE) (P4)
+ 1: 1        Reps
+ 2: 5        2500 mV Slow Range
+ 3: 5        SE Channel
+ 4: 3        Excite all reps w/Exchan 3
+ 5: 2        Delay (0.01 sec units)
+ 6: 2500     mV Excitation
+ 7: 16       Loc [ DIR_vient ]
+ 8: 0.142    Mult
+ 9: 0        Offset
+
+;***CORRECCION DE VELOCIDAD DEL VIENTO****************
+
+21:  If (X<=>F) (P89)
+ 1: 14       X Loc [ VEL_m_s   ]
+ 2: 4        <
+ 3: 0        F
+ 4: 30       Then Do
+
+     22:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 15       Z Loc [ VCORR_m_s ]
+
+23:  Else (P94)
+
+     24:  Z=X (P31)
+      1: 14       X Loc [ VEL_m_s   ]
+      2: 15       Z Loc [ VCORR_m_s ]
+
+25:  End (P95)
+
+
+26:  Pulse (P3)
+ 1: 1        Reps
+ 2: 1        Pulse Channel 1
+ 3: 2        Switch Closure, All Counts
+ 4: 17       Loc [ LLUV_mm   ]
+ 5: .1       Mult
+ 6: 0        Offset
+
+27:  Volt (SE) (P1)
+ 1: 1        Reps
+ 2: 5        2500 mV Slow Range
+ 3: 9        SE Channel
+ 4: 64       Loc [ HR_caja   ]
+ 5: 0.1      Mult
+ 6: 0        Offset
+
+28:  Internal Temperature (P17)
+ 1: 18       Loc [ TEM_LOG   ]
+
+;***** VOLTAJE DE LA BATERIA ******
+
+29:  Batt Voltage (P10)
+ 1: 19       Loc [ VOLT_BAT  ]
+
+;**** Numero de la estacion ***
+
+30:  Z=F x 10^n (P30)
+ 1: 81023    F
+ 2: 0        n, Exponent of 10
+ 3: 20       Z Loc [ ESTACION  ]
+
+
+
+31:  Z=F x 10^n (P30)
+ 1: -8       F
+ 2: 0        n, Exponent of 10
+ 3: 65       Z Loc [ SENS_AUS  ]
+
+32:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 1        Interval (same units as above)
+ 3: 30       Then Do
+
+33:  Block Move (P54)
+ 1: 29       No. of Values
+ 2: 22       First Source Loc [ LLUV_2mi  ]
+ 3: 1        Source Step
+ 4: 21       First Destination Loc [ LLUV_1mi  ]
+ 5: 1        Destination Step
+
+34:  End (P95)
+
+35:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 1        Interval (same units as above)
+ 3: 10       Set Output Flag High (Flag 0)
+
+36:  Set Active Storage Area (P80)
+ 1: 3        Input Storage Area
+ 2: 50       Loc [ LLUV_30mi ]
+
+37:  Totalize (P72)^11551
+ 1: 1        Reps
+ 2: 17       Loc [ LLUV_mm   ]
+
+38:  Spatial Average (P51)
+ 1: 5        Swath
+ 2: 46       First Loc [ LLUV_26mi ]
+ 3: 51       Avg Loc [ PRO_5mi   ]
+
+39:  Z=X*F (P37)
+ 1: 51       X Loc [ PRO_5mi   ]
+ 2: 5        F
+ 3: 55       Z Loc [ TOT_5mi   ]
+
+40:  Spatial Average (P51)
+ 1: 10       Swath
+ 2: 41       First Loc [ LLUV_21mi ]
+ 3: 52       Avg Loc [ PRO_10mi  ]
+
+41:  Z=X*F (P37)
+ 1: 52       X Loc [ PRO_10mi  ]
+ 2: 10       F
+ 3: 56       Z Loc [ TOT_10mi  ]
+
+42:  Spatial Average (P51)
+ 1: 15       Swath
+ 2: 36       First Loc [ LLUV_16mi ]
+ 3: 53       Avg Loc [ PRO_15mi  ]
+
+43:  Z=X*F (P37)
+ 1: 53       X Loc [ PRO_15mi  ]
+ 2: 15       F
+ 3: 57       Z Loc [ TOT_15mi  ]
+
+
+44:  Spatial Average (P51)
+ 1: 30       Swath
+ 2: 21       First Loc [ LLUV_1mi  ]
+ 3: 54       Avg Loc [ PROM_30mi ]
+
+45:  Z=X*F (P37)
+ 1: 54       X Loc [ PROM_30mi ]
+ 2: 30       F
+ 3: 58       Z Loc [ TOT_30mi  ]
+
+;*******************************************
+;Se usara el valor umbral en la velocidad minima para considerar casos de viento,
+;redondeandolo a la media decima mayor mas proxima.
+46:  If (X<=>F) (P89)
+ 1: 15       X Loc [ VCORR_m_s ]
+ 2: 3        >=
+ 3: 0.1      F
+ 4: 30       Then Do
+
+47:  Do (P86)
+ 1: 1        Call Subroutine 1
+
+48:  End (P95)
+;***************************************
+
+49:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 60       Interval (same units as above)
+ 3: 10       Set Output Flag High (Flag 0)
+
+50:  Set Active Storage Area (P80)
+ 1: 3        Input Storage Area
+ 2: 59       Loc [ RUN_AVER  ]
+
+51:  Average (P71)^15645
+ 1: 1        Reps
+ 2: 15       Loc [ VCORR_m_s ]
+
+
+
+52:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 60       Interval (same units as above)
+ 3: 30       Then Do
+
+     53:  Spatial Maximum (P49)
+      1: 8        Swath
+      2: 1        First Loc [ NORTE     ]
+      3: 1060     Max Loc [ FREC_VIEN ]
+
+     54:  CASE (P93)
+      1: 60       Case Loc [ FREC_VIEN ]
+
+
+          55:  If Case Location < F (P83)
+           1: 121      F
+           2: 30       Then Do
+
+
+               56:  If (X<=>F) (P89)
+                1: 59       X Loc [ RUN_AVER  ]
+                2: 4        <
+                3: 1.00001  F
+                4: 30       Then Do
+
+                    57:  Z=F x 10^n (P30)
+                     1: 0        F
+                     2: 0        n, Exponent of 10
+                     3: 61       Z Loc [ DIR_PRED  ]
+
+               58:  Else (P94)
+
+                    59:  Z=F x 10^n (P30)
+                     1: 9        F
+                     2: 0        n, Exponent of 10
+                     3: 61       Z Loc [ DIR_PRED  ]
+
+               60:  End (P95)
+
+          61:  End (P95)
+
+     62:  End (P95)
+
+     63:  CASE (P93)
+      1: 60       Case Loc [ FREC_VIEN ]
+
+          64:  If Case Location < F (P83)
+           1: 361      F
+           2: 30       Then Do
+
+               65:  If (X<=>F) (P89)
+                1: 59       X Loc [ RUN_AVER  ]
+                2: 4        <
+                3: 1.00001  F
+                4: 30       Then Do
+
+                    66:  Z=F x 10^n (P30)
+                     1: 0        F
+                     2: 0        n, Exponent of 10
+                     3: 61       Z Loc [ DIR_PRED  ]
+
+               67:  End (P95)
+
+          68:  End (P95)
+
+     69:  End (P95)
+
+     70:  Beginning of Loop (P87)
+      1: 0        Delay
+      2: 8        Loop Count
+
+          71:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 1     -- Z Loc [ NORTE     ]
+
+     72:  End (P95)
+
+     73:  Z=X*F (P37)
+      1: 66       X Loc [ CASOS_sol ]
+      2: 0.1667   F
+      3: 67       Z Loc [ SOL_min   ]
+
+     74:  Z=INT(X) (P45)
+      1: 67       X Loc [ SOL_min   ]
+      2: 68       Z Loc [ INT_sol   ]
+
+     75:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 66       Z Loc [ CASOS_sol ]
+
+76:  End (P95)
+
+
+;*******************Calculos especiales para RTMC************
+
+
+;******************Correccion de HR***************
+
+77:  If (X<=>F) (P89)
+ 1: 10       X Loc [ HR        ]
+ 2: 4        <
+ 3: 106      F
+ 4: 30       Then Do
+
+     78:  If (X<=>F) (P89)
+      1: 10       X Loc [ HR        ]
+      2: 3        >=
+      3: 100      F
+      4: 30       Then Do
+
+79:  Else (P94)
+
+     80:  Z=X (P31)
+      1: 10       X Loc [ HR        ]
+      2: 70       Z Loc [ HR_corr   ]
+
+81:  End (P95)
+
+82:  End (P95)
+
+83:  If (X<=>F) (P89)
+ 1: 10       X Loc [ HR        ]
+ 2: 3        >=
+ 3: 106      F
+ 4: 30       Then Do
+
+     84:  Z=X (P31)
+      1: 10       X Loc [ HR        ]
+      2: 70       Z Loc [ HR_corr   ]
+
+85:  End (P95)
+
+
+;******************Acumulado instantaneo de lluvia**********
+86:  Z=X+Y (P33)
+ 1: 71       X Loc [ SUM_lluv  ]
+ 2: 17       Y Loc [ LLUV_mm   ]
+ 3: 71       Z Loc [ SUM_lluv  ]
+
+
+87:  If time is (P92)
+ 1: 420      Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 10       Set Output Flag High (Flag 0)
+
+88:  Set Active Storage Area (P80)
+ 1: 3        Input Storage Area
+ 2: 72       Loc [ LLUV_ayer ]
+
+89:  Totalize (P72)^358
+ 1: 1        Reps
+ 2: 17       Loc [ LLUV_mm   ]
+
+90:  If time is (P92)
+ 1: 420      Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 30       Then Do
+
+     91:  Z=F (P30)
+      1: 0        F
+      2: 0        Exponent of 10
+      3: 71       Z Loc [ SUM_lluv  ]
+
+92:  End (P95)
+
+;******Maximas y minimas de temperatura en lo que va del dia*******
+
+
+93:  If (X<=>Y) (P88)
+ 1: 9        X Loc [ TEMP_C    ]
+ 2: 3        >=
+ 3: 73       Y Loc [ Tmax      ]
+ 4: 30       Then Do
+
+     94:  Z=X (P31)
+      1: 9        X Loc [ TEMP_C    ]
+      2: 73       Z Loc [ Tmax      ]
+
+95:  End (P95)
+
+96:  If (X<=>Y) (P88)
+ 1: 9        X Loc [ TEMP_C    ]
+ 2: 4        <
+ 3: 74       Y Loc [ Tmin      ]
+ 4: 30       Then Do
+
+     97:  Z=X (P31)
+      1: 9        X Loc [ TEMP_C    ]
+      2: 74       Z Loc [ Tmin      ]
+
+98:  End (P95)
+
+99:  If (X<=>Y) (P88)
+ 1: 15       X Loc [ VCORR_m_s ]
+ 2: 3        >=
+ 3: 75       Y Loc [ Vmax      ]
+ 4: 30       Then Do
+
+     100:  Z=X (P31)
+      1: 15       X Loc [ VCORR_m_s ]
+      2: 75       Z Loc [ Vmax      ]
+
+101:  End (P95)
+
+
+;*****Inicializacion de variables a la medianoche*******
+
+102:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 30       Then Do
+
+     103:  Z=X (P31)
+      1: 9        X Loc [ TEMP_C    ]
+      2: 73       Z Loc [ Tmax      ]
+
+     104:  Z=X (P31)
+      1: 9        X Loc [ TEMP_C    ]
+      2: 74       Z Loc [ Tmin      ]
+
+     105:  Z=X (P31)
+      1: 15       X Loc [ VCORR_m_s ]
+      2: 75       Z Loc [ Vmax      ]
+
+106:  End (P95)
+
+107:  Running Average (P52)
+ 1: 2        Reps
+ 2: 15       First Source Loc [ VCORR_m_s ]
+ 3: 76       First Destination Loc [ Vmed_2min ]
+ 4: 12       Number of Values in Avg Window
+
+108:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 2        Interval (same units as above)
+ 3: 10       Set Output Flag High (Flag 0)
+
+109:  Set Active Storage Area (P80)
+ 1: 3        Input Storage Area
+ 2: 78       Loc [ Vmax_2min ]
+
+110:  Maximum (P73)^5994
+ 1: 1        Reps
+ 2: 0        Value Only
+ 3: 15       Loc [ VCORR_m_s ]
+
+
+
+;****CONTROL DE LA CALIDAD PARA LA TEMPERATURA******
+
+
+111:  Z=X (P31)
+ 1: 9        X Loc [ TEMP_C    ]
+ 2: 81       Z Loc [ TEMP_C2   ]
+
+
+112:  Block Move (P54)
+ 1: 2        No. of Values
+ 2: 80       First Source Loc [ temp_2    ]
+ 3: 1        Source Step
+ 4: 79       First Destination Loc [ temp_1    ]
+ 5: 1        Destination Step
+
+
+
+
+
+113:  Z=X-Y (P35)
+ 1: 79       X Loc [ temp_1    ]
+ 2: 80       Y Loc [ temp_2    ]
+ 3: 82       Z Loc [ Dif_TempC ]
+
+
+114:  Z=ABS(X) (P43)
+ 1: 82       X Loc [ Dif_TempC ]
+ 2: 82       Z Loc [ Dif_TempC ]
+
+;Utilizando el valor de 2C recomendado por Zahumerski
+
+
+115:  If (X<=>F) (P89)
+ 1: 82       X Loc [ Dif_TempC ]
+ 2: 3        >=
+ 3: 0.1      F
+ 4: 30       Then Do
+
+
+     116:  Z=Z+1 (P32)
+      1: 85       Z Loc [ out_ins_T ]
+
+     117:  If (X<=>F) (P89)
+      1: 85       X Loc [ out_ins_T ]
+      2: 3        >=
+      3: 119      F
+      4: 30       Then Do
+
+          118:  Z=F x 10^n (P30)
+           1: -8       F
+           2: 0        n, Exponent of 10
+           3: 84       Z Loc [ FLG_ins_T ]
+
+     119:  Else (P94)
+
+
+          120:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 84       Z Loc [ FLG_ins_T ]
+
+     121:  End (P95)
+
+122:  End (P95)
+
+;////////Promedio temp ultima hora///////////
+
+
+123:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 60       Interval (same units as above)
+ 3: 10       Set Output Flag High (Flag 0)
+
+124:  Set Active Storage Area (P80)
+ 1: 3        Input Storage Area
+ 2: 92       Loc [ TempC_H   ]
+
+125:  Average (P71)^10452
+ 1: 2        Reps
+ 2: 9        Loc [ TEMP_C    ]
+
+;////se incluyen los parametros de Manzanillo//////
+
+
+126:  CASE (P93)
+ 1: 92       Case Loc [ TempC_H   ]
+
+
+     127:  If Case Location < F (P83)
+      1: 18.7     F
+      2: 30       Then Do
+
+          128:  Z=F x 10^n (P30)
+           1: -1       F
+           2: 0        n, Exponent of 10
+           3: 83       Z Loc [ TOUT_flag ]
+
+     129:  End (P95)
+
+     130:  If Case Location < F (P83)
+      1: 35.1     F
+      2: 30       Then Do
+
+          131:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 83       Z Loc [ TOUT_flag ]
+
+     132:  Else (P94)
+
+          133:  Z=F x 10^n (P30)
+           1: 1        F
+           2: 0        n, Exponent of 10
+           3: 83       Z Loc [ TOUT_flag ]
+
+     134:  End (P95)
+
+135:  End (P95)
+
+
+;//////////Dip test en operacion//////////
+
+136:  If (X<=>F) (P89)
+ 1: 92       X Loc [ TempC_H   ]
+ 2: 4        <
+ 3: 0        F
+ 4: 30       Then Do
+
+     137:  Z=F x 10^n (P30)
+      1: -9       F
+      2: 0        n, Exponent of 10
+      3: 92       Z Loc [ TempC_H   ]
+
+
+138:  End (P95)
+
+139:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 60       Interval (same units as above)
+ 3: 30       Then Do
+
+     140:  Z=X (P31)
+      1: 92       X Loc [ TempC_H   ]
+      2: 97       Z Loc [ temer_4   ]
+
+
+     141:  Z=X (P31)
+      1: 93       X Loc [ HR_H      ]
+      2: 101      Z Loc [ HR_4H     ]
+
+
+     142:  Block Move (P54)
+      1: 3        No. of Values
+      2: 95       First Source Loc [ temer_2   ]
+      3: 1        Source Step
+      4: 94       First Destination Loc [ temer_1   ]
+      5: 1        Destination Step
+
+
+     143:  Block Move (P54)
+      1: 3        No. of Values
+      2: 99       First Source Loc [ HR_2H     ]
+      3: 1        Source Step
+      4: 98       First Destination Loc [ HR_1H     ]
+      5: 1        Destination Step
+
+
+     144:  Z=X-Y (P35)
+      1: 94       X Loc [ temer_1   ]
+      2: 95       Y Loc [ temer_2   ]
+      3: 102      Z Loc [ Timenos   ]
+
+
+     145:  Z=X-Y (P35)
+      1: 96       X Loc [ temer_3   ]
+      2: 95       Y Loc [ temer_2   ]
+      3: 103      Z Loc [ Timas     ]
+
+     146:  Z=X*Y (P36)
+      1: 102      X Loc [ Timenos   ]
+      2: 103      Y Loc [ Timas     ]
+      3: 104      Z Loc [ delt_calc ]
+
+;  delta cuadrado=4.88 para el Dip Test
+
+     147:  CASE (P93)
+      1: 104      Case Loc [ delt_calc ]
+
+
+          148:  If Case Location < F (P83)
+           1: 2.87     F
+           2: 30       Then Do
+
+               149:  Z=F x 10^n (P30)
+                1: 0        F
+                2: 0        n, Exponent of 10
+                3: 88       Z Loc [ delta_err ]
+
+          150:  Else (P94)
+
+               151:  Z=F x 10^n (P30)
+                1: -2       F
+                2: 0        n, Exponent of 10
+                3: 88       Z Loc [ delta_err ]
+
+          152:  End (P95)
+
+     153:  End (P95)
+
+;////////Diferencia respecto a hora anterior////////
+
+
+     154:  Z=X-Y (P35)
+      1: 96       X Loc [ temer_3   ]
+      2: 95       Y Loc [ temer_2   ]
+      3: 105      Z Loc [ JUMP_2C   ]
+
+     155:  Z=ABS(X) (P43)
+      1: 105      X Loc [ JUMP_2C   ]
+      2: 105      Z Loc [ JUMP_2C   ]
+
+;////////diferencia horaria T>2.21///////////////
+
+
+     156:  If (X<=>F) (P89)
+      1: 105      X Loc [ JUMP_2C   ]
+      2: 3        >=
+      3: 2.20     F
+      4: 30       Then Do
+
+          157:  Z=F x 10^n (P30)
+           1: -5       F
+           2: 0        n, Exponent of 10
+           3: 87       Z Loc [ Flag_Jump ]
+
+     158:  Else (P94)
+
+          159:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 87       Z Loc [ Flag_Jump ]
+
+     160:  End (P95)
+
+;//////Razon de cambio de la temperatura con la HR///////
+
+
+
+     161:  Z=X-Y (P35)
+      1: 96       X Loc [ temer_3   ]
+      2: 95       Y Loc [ temer_2   ]
+      3: 106      Z Loc [ T24_T23   ]
+
+     162:  Z=X-Y (P35)
+      1: 100      X Loc [ HR_3H     ]
+      2: 99       Y Loc [ HR_2H     ]
+      3: 107      Z Loc [ HR3_HR2   ]
+
+     163:  Z=X/Y (P38)
+      1: 106      X Loc [ T24_T23   ]
+      2: 107      Y Loc [ HR3_HR2   ]
+      3: 108      Z Loc [ T_HR_cstc ]
+
+     164:  If (X<=>F) (P89)
+      1: 108      X Loc [ T_HR_cstc ]
+      2: 4        <
+      3: 0        F
+      4: 30       Then Do
+
+          165:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 86       Z Loc [ THR_flag  ]
+
+     166:  Else (P94)
+
+          167:  Z=F x 10^n (P30)
+           1: -4       F
+           2: 0        n, Exponent of 10
+           3: 86       Z Loc [ THR_flag  ]
+
+
+     168:  End (P95)
+
+169:  End (P95)
+
+;////////Temperaturas absolutas maximas y minimas/////////
+
+
+
+170:  If time is (P92)
+ 1: 419      Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 10       Set Output Flag High (Flag 0)
+
+171:  Set Active Storage Area (P80)
+ 1: 3        Input Storage Area
+ 2: 109      Loc [ TmaxD_abs ]
+
+172:  Maximum (P73)^470
+ 1: 2        Reps
+ 2: 10       Value with Hr-Min
+ 3: 9        Loc [ TEMP_C    ]
+
+173:  If time is (P92)
+ 1: 419      Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 10       Set Output Flag High (Flag 0)
+
+174:  Set Active Storage Area (P80)
+ 1: 3        Input Storage Area
+ 2: 111      Loc [ TminD_abs ]
+
+175:  Minimum (P74)^27988
+ 1: 2        Reps
+ 2: 10       Value with Hr-Min
+ 3: 9        Loc [ TEMP_C    ]
+
+;/////Subrutinas para T maxima y T minima//////
+
+
+176:  If time is (P92)
+ 1: 419      Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 2        Call Subroutine 2
+
+177:  If time is (P92)
+ 1: 419      Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 3        Call Subroutine 3
+
+
+178:  If time is (P92)
+ 1: 419      Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 30       Then Do
+
+     179:  If (X<=>Y) (P88)
+      1: 111      X Loc [ TminD_abs ]
+      2: 3        >=
+      3: 109      Y Loc [ TmaxD_abs ]
+      4: 30       Then Do
+
+     180:  Z=F x 10^n (P30)
+      1: -3       F
+      2: 0        n, Exponent of 10
+      3: 91       Z Loc [ FlagT_day ]
+
+181:  Else (P94)
+
+     182:  Z=F x 10^n (P30)
+      1: 0.0      F
+      2: 00       n, Exponent of 10
+      3: 91       Z Loc [ FlagT_day ]
+
+183:  End (P95)
+
+184:  End (P95)
+
+
+;***********    SALIDA HORARIA:  **************
+;**********************************************
+
+185:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 60       Interval (same units as above)
+ 3: 10       Set Output Flag High (Flag 0)
+
+186:  Set Active Storage Area (P80)^11701
+ 1: 1        Final Storage Area 1
+ 2: 1        Array ID
+
+187:  Resolution (P78)
+ 1: 1        High Resolution
+
+
+188:  Sample (P70)^21376
+ 1: 1        Reps
+ 2: 20       Loc [ ESTACION  ]
+
+189:  Resolution (P78)
+ 1: 0        Low Resolution
+
+190:  Real Time (P77)^25644
+ 1: 1220     Year,Day,Hour/Minute (midnight = 2400)
+
+191:  Average (P71)^19882
+ 1: 1        Reps
+ 2: 9        Loc [ TEMP_C    ]
+
+192:  Average (P71)^18710
+ 1: 1        Reps
+ 2: 10       Loc [ HR        ]
+
+193:  Maximum (P73)^12841
+ 1: 1        Reps
+ 2: 0        Value Only
+ 3: 11       Loc [ RAD_KW_m2 ]
+
+194:  Minimum (P74)^15125
+ 1: 1        Reps
+ 2: 0        Value Only
+ 3: 11       Loc [ RAD_KW_m2 ]
+
+195:  Totalize (P72)^8599
+ 1: 1        Reps
+ 2: 13       Loc [ RAD_MJ_m2 ]
+
+196:  Sample (P70)^22669
+ 1: 1        Reps
+ 2: 68       Loc [ INT_sol   ]
+
+197:  Totalize (P72)^1187
+ 1: 1        Reps
+ 2: 17       Loc [ LLUV_mm   ]
+
+198:  Sample (P70)^16495
+ 1: 2        Reps
+ 2: 60       Loc [ FREC_VIEN ]
+
+199:  Wind Vector (P69)^6749
+ 1: 1        Reps
+ 2: 90       Samples per Sub-Interval
+ 3: 2        S, U, theta(u), sigma(theta(u)) with polar sensor
+ 4: 15       Wind Speed/East Loc [ VCORR_m_s ]
+ 5: 16       Wind Direction/North Loc [ DIR_vient ]
+
+;/////salida de control de calidad para temperatura//////
+
+
+200:  Sample (P70)^25483
+ 1: 6        Reps
+ 2: 83       Loc [ TOUT_flag ]
+
+
+201:  Standard Deviation (P82)^6432
+ 1: 1        Reps
+ 2: 9        Sample Loc [ TEMP_C    ]
+
+
+202:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 60       Interval (same units as above)
+ 3: 30       Then Do
+
+     203:  Z=F x 10^n (P30)
+      1: 0.0      F
+      2: 00       n, Exponent of 10
+      3: 85       Z Loc [ out_ins_T ]
+
+
+     204:  Z=F x 10^n (P30)
+      1: 0.0      F
+      2: 00       n, Exponent of 10
+      3: 84       Z Loc [ FLG_ins_T ]
+
+205:  End (P95)
+
+;******   SALIDA  DIARIA **********************************
+
+
+206:  If time is (P92)
+ 1: 420      Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 10       Set Output Flag High (Flag 0)
+
+207:  Set Active Storage Area (P80)^29196
+ 1: 1        Final Storage Area 1
+ 2: 2        Array ID
+
+208:  Resolution (P78)
+ 1: 1        High Resolution
+
+209:  Sample (P70)^22448
+ 1: 1        Reps
+ 2: 20       Loc [ ESTACION  ]
+
+210:  Resolution (P78)
+ 1: 0        Low Resolution
+
+211:  Real Time (P77)^15377
+ 1: 1220     Year,Day,Hour/Minute (midnight = 2400)
+
+212:  Maximum (P73)^17634
+ 1: 2        Reps
+ 2: 10       Value with Hr-Min
+ 3: 9        Loc [ TEMP_C    ]
+
+213:  Minimum (P74)^29595
+ 1: 2        Reps
+ 2: 10       Value with Hr-Min
+ 3: 9        Loc [ TEMP_C    ]
+
+214:  Maximum (P73)^16041
+ 1: 1        Reps
+ 2: 10       Value with Hr-Min
+ 3: 15       Loc [ VCORR_m_s ]
+
+215:  Maximum (P73)^20506
+ 1: 4        Reps
+ 2: 0        Value Only
+ 3: 55       Loc [ TOT_5mi   ]
+
+216:  Wind Vector (P69)^26011
+ 1: 1        Reps
+ 2: 360      Samples per Sub-Interval
+ 3: 2        S, U, theta(u), sigma(theta(u)) with polar sensor
+ 4: 15       Wind Speed/East Loc [ VCORR_m_s ]
+ 5: 16       Wind Direction/North Loc [ DIR_vient ]
+
+217:  Sample (P70)^6273
+ 1: 3        Reps
+ 2: 89       Loc [ FL_Tmin   ]
+
+;******** SALIDA DE CONTROL A LAS 4AM ******************************
+
+218:  If time is (P92)
+ 1: 240      Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 10       Set Output Flag High (Flag 0)
+
+219:  Set Active Storage Area (P80)^11237
+ 1: 1        Final Storage Area 1
+ 2: 3        Array ID
+
+220:  Real Time (P77)^26279
+ 1: 220      Day,Hour/Minute (midnight = 2400)
+
+
+221:  Sample (P70)^19064
+ 1: 2        Reps
+ 2: 18       Loc [ TEM_LOG   ]
+
+222:  Maximum (P73)^1017
+ 1: 1        Reps
+ 2: 00       Time Option
+ 3: 64       Loc [ HR_caja   ]
+
+223:  Z=F x 10^n (P30)
+ 1: 0        F
+ 2: 00       n, Exponent of 10
+ 3: 69       Z Loc [ CONTR_SEN ]
+
+224:  Sample (P70)^31330
+ 1: 1        Reps
+ 2: 69       Loc [ CONTR_SEN ]
+
+
+
+225:  Serial Out (P96)
+ 1: 71       Storage Module
+
+*Table 2 Program
+  02: 0.0000    Execution Interval (seconds)
+
+*Table 3 Subroutines
+
+
+1:  Beginning of Subroutine (P85)
+ 1: 1        Subroutine 1
+
+     2:  CASE (P93)
+      1: 16       Case Loc [ DIR_vient ]
+
+          3:  If Case Location < F (P83)
+           1: 22.5     F
+           2: 30       Then Do
+
+               4:  Z=Z+1 (P32)
+                1: 1        Z Loc [ NORTE     ]
+
+          5:  End (P95)
+
+          6:  If Case Location < F (P83)
+           1: 67.5     F
+           2: 30       Then Do
+
+               7:  Z=Z+1 (P32)
+                1: 2        Z Loc [ NORESTE   ]
+
+          8:  End (P95)
+
+          9:  If Case Location < F (P83)
+           1: 112.5    F
+           2: 30       Then Do
+
+               10:  Z=Z+1 (P32)
+                1: 3        Z Loc [ ESTE      ]
+
+          11:  End (P95)
+
+          12:  If Case Location < F (P83)
+           1: 157.5    F
+           2: 30       Then Do
+
+               13:  Z=Z+1 (P32)
+                1: 4        Z Loc [ SURESTE   ]
+
+          14:  End (P95)
+
+          15:  If Case Location < F (P83)
+           1: 202.5    F
+           2: 30       Then Do
+
+               16:  Z=Z+1 (P32)
+                1: 5        Z Loc [ SUR       ]
+
+          17:  End (P95)
+
+          18:  If Case Location < F (P83)
+           1: 247.5    F
+           2: 30       Then Do
+
+               19:  Z=Z+1 (P32)
+                1: 6        Z Loc [ SUROESTE  ]
+
+          20:  End (P95)
+
+          21:  If Case Location < F (P83)
+           1: 292.5    F
+           2: 30       Then Do
+
+               22:  Z=Z+1 (P32)
+                1: 7        Z Loc [ OESTE     ]
+
+          23:  End (P95)
+
+          24:  If Case Location < F (P83)
+           1: 337.5    F
+           2: 30       Then Do
+
+               25:  Z=Z+1 (P32)
+                1: 8        Z Loc [ NOROESTE  ]
+
+          26:  End (P95)
+
+          27:  If Case Location < F (P83)
+           1: 361      F
+           2: 30       Then Do
+
+               28:  Z=Z+1 (P32)
+                1: 1        Z Loc [ NORTE     ]
+
+          29:  End (P95)
+
+     30:  End (P95)
+
+31:  End (P95)
+
+;/////////T maxima diaria///////
+32:  Beginning of Subroutine (P85)
+ 1: 2        Subroutine 2
+
+
+
+     33:  CASE (P93)
+      1: 110      Case Loc [ HM_Tmax   ]
+
+
+
+          34:  If Case Location < F (P83)
+           1: 831      F
+           2: 30       Then Do
+
+               35:  Z=F x 10^n (P30)
+                1: -6       F
+                2: 00       n, Exponent of 10
+                3: 90       Z Loc [ FL_Tmax   ]
+
+          36:  End (P95)
+
+          37:  If Case Location < F (P83)
+           1: 1559     F
+           2: 30       Then Do
+
+               38:  Z=F x 10^n (P30)
+                1: 0        F
+                2: 0        n, Exponent of 10
+                3: 90       Z Loc [ FL_Tmax   ]
+
+          39:  End (P95)
+
+          40:  If Case Location < F (P83)
+           1: 2400     F
+           2: 30       Then Do
+
+               41:  Z=F x 10^n (P30)
+                1: -6       F
+                2: 0        n, Exponent of 10
+                3: 90       Z Loc [ FL_Tmax   ]
+
+
+          42:  End (P95)
+
+     43:  End (P95)
+
+44:  End (P95)
+
+;/////Temperatura minima diaria///////
+
+
+45:  Beginning of Subroutine (P85)
+ 1: 3        Subroutine 3
+
+     46:  CASE (P93)
+      1: 112      Case Loc [ HM_Tmin   ]
+
+
+          47:  If Case Location < F (P83)
+           1: 704      F
+           2: 30       Then Do
+
+               48:  Z=F x 10^n (P30)
+                1: 0        F
+                2: 0        n, Exponent of 10
+                3: 89       Z Loc [ FL_Tmin   ]
+
+          49:  End (P95)
+
+
+
+
+          50:  If Case Location < F (P83)
+           1: 2300     F
+           2: 30       Then Do
+
+               51:  Z=F x 10^n (P30)
+                1: -7       F
+                2: 0        n, Exponent of 10
+                3: 89       Z Loc [ FL_Tmin   ]
+
+
+          52:  End (P95)
+
+          53:  If Case Location < F (P83)
+           1: 2400     F
+           2: 30       Then Do
+
+               54:  Z=F x 10^n (P30)
+                1: 0        F
+                2: 0        n, Exponent of 10
+                3: 89       Z Loc [ FL_Tmin   ]
+
+          55:  End (P95)
+
+     56:  End (P95)
+
+57:  End (P95)
+
+
+
+
+
+
+End Program
+
+
+-Input Locations-
+1 NORTE     1 1 3
+2 NORESTE   1 0 1
+3 ESTE      1 0 1
+4 SURESTE   1 0 0
+5 SUR       1 0 1
+6 SUROESTE  1 0 0
+7 OESTE     1 0 1
+8 NOROESTE  1 0 1
+9 TEMP_C    1 14 1
+10 HR        1 11 1
+11 RAD_KW_m2 1 5 2
+12 RAD_KJ_m2 1 2 4
+13 RAD_MJ_m2 1 2 2
+14 VEL_m_s   1 2 1
+15 VCORR_m_s 1 10 2
+16 DIR_vient 1 3 1
+17 LLUV_mm   1 4 1
+18 TEM_LOG   1 0 1
+19 VOLT_BAT  1 0 1
+20 ESTACION  1 3 1
+21 LLUV_1mi  5 1 1
+22 LLUV_2mi  9 2 1
+23 LLUV_3mi  9 2 1
+24 LLUV_4mi  9 2 1
+25 LLUV_5mi  9 2 1
+26 LLUV_6mi  9 2 1
+27 LLUV_7mi  9 2 1
+28 LLUV_8mi  9 2 1
+29 LLUV_9mi  9 2 1
+30 LLUV_10mi 9 2 1
+31 LLUV_11mi 9 2 1
+32 LLUV_12mi 9 2 1
+33 LLUV_13mi 9 2 1
+34 LLUV_14mi 9 2 1
+35 LLUV_15mi 9 2 1
+36 LLUV_16mi 9 3 1
+37 LLUV_17mi 9 3 1
+38 LLUV_18mi 9 3 1
+39 LLUV_19mi 9 3 1
+40 LLUV_20mi 9 3 1
+41 LLUV_21mi 9 4 1
+42 LLUV_22mi 9 4 1
+43 LLUV_23mi 9 4 1
+44 LLUV_24mi 9 4 1
+45 LLUV_25mi 9 4 1
+46 LLUV_26mi 9 5 1
+47 LLUV_27mi 9 5 1
+48 LLUV_28mi 9 5 1
+49 LLUV_29mi 17 5 1
+50 LLUV_30mi 1 4 1
+51 PRO_5mi   1 1 1
+52 PRO_10mi  1 3 0
+53 PRO_15mi  1 2 1
+54 PROM_30mi 1 2 1
+55 TOT_5mi   1 2 1
+56 TOT_10mi  1 1 1
+57 TOT_15mi  1 1 1
+58 TOT_30mi  1 1 1
+59 RUN_AVER  1 1 1
+60 FREC_VIEN 5 2 1
+61 DIR_PRED  17 0 4
+62 TIME_NUM  1 1 1
+63 PRES_mb   1 0 0
+64 HR_caja   1 0 1
+65 SENS_AUS  1 0 1
+66 CASOS_sol 1 0 2
+67 SOL_min   1 0 1
+68 INT_sol   1 1 1
+69 CONTR_SEN 1 1 1
+70 HR_corr   1 0 2
+71 SUM_lluv  1 1 2
+72 LLUV_ayer 1 0 1
+73 Tmax      1 1 2
+74 Tmin      1 1 2
+75 Vmax      1 1 2
+76 Vmed_2min 5 0 1
+77 Dmed_2min 17 0 1
+78 Vmax_2min 1 0 1
+79 temp_1    7 1 1
+80 temp_2    19 2 1
+81 TEMP_C2   1 0 1
+82 Dif_TempC 1 2 2
+83 TOUT_flag 1 1 3
+84 FLG_ins_T 1 1 3
+85 out_ins_T 1 2 2
+86 THR_flag  1 1 2
+87 Flag_Jump 1 1 2
+88 delta_err 1 1 2
+89 FL_Tmin   1 1 3
+90 FL_Tmax   1 1 3
+91 FlagT_day 1 1 2
+92 TempC_H   3 3 2
+93 HR_H      3 1 0
+94 temer_1   7 1 1
+95 temer_2   11 5 1
+96 temer_3   19 4 1
+97 temer_4   1 1 1
+98 HR_1H     7 0 1
+99 HR_2H     11 2 1
+100 HR_3H     19 2 1
+101 HR_4H     1 1 1
+102 Timenos   1 1 1
+103 Timas     1 1 1
+104 delt_calc 1 1 1
+105 JUMP_2C   1 2 2
+106 T24_T23   1 1 1
+107 HR3_HR2   1 1 1
+108 T_HR_cstc 1 1 1
+109 TmaxD_abs 7 1 1
+110 HM_Tmax   19 1 0
+111 TminD_abs 7 1 1
+112 HM_Tmin   19 1 0
+-Program Security-
+0000
+0000
+0000
+-Mode 4-
+-Final Storage Area 2-
+1920
+-CR10X ID-
+0
+-CR10X Power Up-
+3
+-CR10X Compile Setting-
+3
+-CR10X RS-232 Setting-
+-1
+-DLD File Labels-
+0
+-Final Storage Labels-
+0,LLUV_mm_TOT~17,11551
+1,Year_RTM,25644
+1,Day_RTM
+1,Hour_Minute_RTM
+2,TEMP_C_AVG~9,19882
+3,HR_AVG~10,18710
+4,RAD_KW_m2_MAX~11,12841
+5,RAD_KW_m2_MIN~11,15125
+6,RAD_MJ_m2_TOT~13,8599
+7,INT_sol~68,22669
+8,LLUV_mm_TOT~17,1187
+9,FREC_VIEN~60,16495
+9,DIR_PRED~61
+10,VCORR_m_s_S_WVT~15,6749
+10,VCORR_m_s_U_WVT~15
+10,DIR_vient_DU_WVT~16
+10,DIR_vient_SDU_WVT~16
+11,2,29196
+12,ESTACION~20,22448
+13,Year_RTM,15377
+13,Day_RTM
+13,Hour_Minute_RTM
+14,TEMP_C_MAX~9,17634
+14,TEMP_C_Hr_Min_MAX~9
+14,HR_MAX~10
+14,HR_Hr_Min_MAX~10
+15,TEMP_C_MIN~9,29595
+15,TEMP_C_Hr_Min_MIN~9
+15,HR_MIN~10
+15,HR_Hr_Min_MIN~10
+16,VCORR_m_s_MAX~15,16041
+16,VCORR_m_s_Hr_Min_MAX~15
+17,TOT_5mi_MAX~55,20506
+17,TOT_10mi_MAX~56
+17,TOT_15mi_MAX~57
+17,TOT_30mi_MAX~58
+18,VCORR_m_s_S_WVT~15,26011
+18,VCORR_m_s_U_WVT~15
+18,DIR_vient_DU_WVT~16
+18,DIR_vient_SDU_WVT~16
+19,3,11237
+20,Day_RTM,26279
+20,Hour_Minute_RTM
+21,TEM_LOG~18,19064
+21,VOLT_BAT~19
+22,1,11701
+23,ESTACION~20,21376
+24,VCORR_m_s_AVG~15,15645
+25,HR_caja_MAX~64,1017
+26,CONTR_SEN~69,31330
+27,VCORR_m_s_MAX~15,5994
+28,LLUV_mm_TOT~17,358
+29,TEMP_C_AVG~9,10452
+29,HR_AVG~10
+30,TEMP_C_MAX~9,470
+30,TEMP_C_Hr_Min_MAX~9
+30,HR_MAX~10
+30,HR_Hr_Min_MAX~10
+31,TEMP_C_MIN~9,27988
+31,TEMP_C_Hr_Min_MIN~9
+31,HR_MIN~10
+31,HR_Hr_Min_MIN~10
+32,TOUT_flag~83,25483
+32,FLG_ins_T~84
+32,out_ins_T~85
+32,THR_flag~86
+32,Flag_Jump~87
+32,delta_err~88
+33,TEMP_C_STD~9,6432
+34,FL_Tmin~89,6273
+34,FL_Tmax~90
+34,FlagT_day~91

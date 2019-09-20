@@ -1,0 +1,40 @@
+Final Storage Label File for:  FAST TIPS.csi
+Date:  2/13/2006
+Time:  08:09:16
+
+101 Output_Table   1.00 Sec
+1 101 L
+
+1 Output_Table  60.00 Min
+1 1 L
+2 Year_RTM  L
+3 Day_RTM  L
+4 Hour_Minute_RTM  L
+5 Tips_TOT  L
+6 Lluv_mm_TOT  L
+7 FLAG_INT  L
+8 SEC_FLAG  L
+9 COUNTER  L
+10 FLG_CUSUM  L
+
+2 Output_Table  60.00 Min
+1 2 L
+2 Year_RTM  L
+3 Day_RTM  L
+4 Hour_Minute_RTM  L
+5 Seconds_RTM  L
+6 Tips_TOT  L
+7 Lluv_mm_TOT  L
+8 Tips  L
+9 Lluv_mm  L
+10 LAMBDA  L
+11 COUNTER  L
+12 LAMBD_OUT  L
+13 interT_13  L
+14 CHNG_INDX  L
+15 FLAG_INT  L
+16 SEC_FLAG  L
+17 COUNTER  L
+
+
+Estimated Total Final Storage Locations used per day 648

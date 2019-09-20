@@ -1,0 +1,165 @@
+;{CR10X}
+;
+*Table 1 Program
+  01: 10        Execution Interval (seconds)
+1:  Do (P86)
+ 1: 10       Set Output Flag High
+
+2:  Pulse (P3)
+ 1: 1        Reps
+ 2: 1        Pulse Input Channel
+ 3: 2        Switch Closure, All Counts
+ 4: 1        Loc [ Tips      ]
+ 5: 1        Mult
+ 6: 0        Offset
+
+3:  Z=X*F (P37)
+ 1: 1        X Loc [ Tips      ]
+ 2: 0.1      F
+ 3: 2        Z Loc [ Lluv_mm   ]
+
+;/////////Total de lluvia en 1 hora//////////
+
+4:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 30       Then Do
+
+     5:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 26       Z Loc [ Time_13   ]
+
+6:  Totalize (P72)^17719
+ 1: 1        Reps
+ 2: 1        Loc [ Tips      ]
+
+     7:  Time (P18)
+      1: 3        Store Year,Day,Hr,Min,Sec in 5 consecutive locations
+      2: 0        Mod/By
+      3: 7        Loc [ Tp_Year   ]
+
+     8:  Z=X*F (P37)
+      1: 9        X Loc [ Tp_Hour   ]
+      2: 3600     F
+      3: 13       Z Loc [ Tp_Hour_S ]
+
+     9:  Z=X*F (P37)
+      1: 10       X Loc [ Tp_Min    ]
+      2: 60       F
+      3: 12       Z Loc [ Tp_Min_S  ]
+
+
+     10:  Z=X+Y (P33)
+      1: 12       X Loc [ Tp_Min_S  ]
+      2: 13       Y Loc [ Tp_Hour_S ]
+      3: 26       Z Loc [ Time_13   ]
+
+     11:  Z=X+Y (P33)
+      1: 26       X Loc [ Time_13   ]
+      2: 11       Y Loc [ Tp_Sec    ]
+      3: 26       Z Loc [ Time_13   ]
+
+
+     12:  Block Move (P54)
+      1: 12       No. of Values
+      2: 15       First Source Loc [ Time_2    ]
+      3: 1        Source Step
+      4: 14       First Destination Loc [ Time_1    ]
+      5: 1        Destination Step
+
+     13:  Z=X-Y (P35)
+      1: 26       X Loc [ Time_13   ]
+      2: 25       Y Loc [ Time_12   ]
+      3: 39       Z Loc [ interT_13 ]
+
+     14:  Block Move (P54)
+      1: 12       No. of Values
+      2: 28       First Source Loc [ interTT_2 ]
+      3: 1        Source Step
+      4: 27       First Destination Loc [ interTT_1 ]
+      5: 1        Destination Step
+
+
+
+
+*Table 2 Program
+  02: 0.0000    Execution Interval (seconds)
+
+*Table 3 Subroutines
+
+End Program
+
+-Input Locations-
+1 Tips      1 2 1
+2 Lluv_mm   1 0 1
+3 Tp_1s     6 0 0
+4 Tp_2s     10 0 0
+5 Tp_3s     10 0 0
+6 Tp_4s     18 0 0
+7 Tp_Year   5 0 1
+8 Tp_Day    9 0 1
+9 Tp_Hour   9 1 1
+10 Tp_Min    9 1 1
+11 Tp_Sec    17 1 1
+12 Tp_Min_S  1 1 1
+13 Tp_Hour_S 1 1 1
+14 Time_1    7 0 1
+15 Time_2    11 1 1
+16 Time_3    11 1 1
+17 Time_4    11 1 1
+18 Time_5    11 1 1
+19 Time_6    11 1 1
+20 Time_7    11 1 1
+21 Time_8    11 1 1
+22 Time_9    11 1 1
+23 Time_10   11 1 1
+24 Time_11   11 1 1
+25 Time_12   19 2 1
+26 Time_13   1 3 3
+27 interTT_1 7 0 1
+28 interTT_2 11 1 1
+29 interTT_3 11 0 1
+30 interTT_4 11 0 1
+31 interTT_5 11 0 1
+32 interTT_6 11 0 1
+33 interTT_7 11 0 1
+34 interTT_8 11 0 1
+35 interTT_9 11 0 1
+36 interT_10 11 0 1
+37 interT_11 11 0 1
+38 interT_12 19 0 1
+39 interT_13 1 0 1
+40 _________ 0 0 0
+41 _________ 0 0 0
+42 _________ 0 0 0
+43 _________ 0 0 0
+44 _________ 0 0 0
+45 _________ 0 0 0
+46 _________ 0 0 0
+47 _________ 0 0 0
+48 _________ 0 0 0
+49 _________ 0 0 0
+50 _________ 0 0 0
+51 _________ 0 0 0
+52 _________ 0 0 0
+53 _________ 0 0 0
+-Program Security-
+0000
+0000
+0000
+-Mode 4-
+-Final Storage Area 2-
+0
+-CR10X ID-
+0
+-CR10X Power Up-
+3
+-CR10X Compile Setting-
+3
+-CR10X RS-232 Setting-
+-1
+-DLD File Labels-
+0
+-Final Storage Labels-
+0,Tips_TOT~1,17719

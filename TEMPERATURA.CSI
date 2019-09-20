@@ -1,0 +1,1272 @@
+;{CR10}
+;
+*Table 1 Program
+  01: 10        Execution Interval (seconds)
+
+;*********************QUALITY CONTROL ALGORITHMS FOR TEMPERATURE********************
+
+;************************Programmer: Jose Luis Araya Lopez.*************************
+
+
+;///////////////////////////////////////////////////////////////////////////////////
+;TOUT_flag:-1 when average hourly temperature is lower than climatological minimun temperature
+;           1 when average hourly temperature is higher than climatological maximun temperature
+;///////////////////////////////////////////////////////////////////////////////////
+
+;***********************************************************************************
+;Delta_err: The dip test flagging parameter.
+;            0: in of range
+;           -2: out of range
+;***********************************************************************************
+
+;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+;FlagT_day: It flaggs min T > max T
+;           0: Right case
+;          -3: Wrong case
+;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+;====================================================================================
+;THR_flag: Testing rate of change between temperature and relative humidity
+;           0: Right case
+;          -4:Suspicious value
+;=====================================================================================
+;/////////////////////////////////////////////////////////////////////////////////////////
+;CHECK ON A PLAUSIBLE RATE OF CHANGE (Sahumersky)
+
+;We are flagging those average temperature values>=2C
+;
+;JUMP_2C
+;Flag_Jump: -5 if JUMP_2C>=2C
+;////////////////////////////////////////////////////////////////////////////////////////
+;****************************************************************************************
+;Flagging max dayly temp if  Tmax_hour<900h and Tmax_hour>1500h
+;Flagging min dayly temp if  Tmin_hour< 2300h and Tmin_hour> 600h
+;
+;Fl_Tmax      -6 if Tmax out of range
+;Fl_Tmin      -7 if Tmin out of range
+;               0 otherwise
+
+
+;***************************************************************************************
+
+1:  Do (P86)
+ 1: 41       Set Port 1 High
+
+2:  Excitation with Delay (P22)
+ 1: 1        Ex Channel
+ 2: 0        Delay W/Ex (0.01 sec units)
+ 3: 10       Delay After Ex (0.01 sec units)
+ 4: 0        mV Excitation
+
+3:  Volt (SE) (P1)
+ 1: 1        Reps
+ 2: 25       2500 mV 60 Hz Rejection Range
+ 3: 1        SE Channel
+ 4: 3        Loc [ Temp_C    ]
+ 5: 0.1      Mult
+ 6: -40      Offset
+
+4:  Volt (SE) (P1)
+ 1: 1        Reps
+ 2: 25       2500 mV 60 Hz Rejection Range
+ 3: 1        SE Channel
+ 4: 51       Loc [ HR        ]
+ 5: 0.1      Mult
+ 6: 0        Offset
+
+5:  Internal Temperature (P17)
+ 1: 61       Loc [ T_panel   ]
+
+
+
+
+
+;============================================================================
+;============================================================================
+;Prueba de razon de cambio plausible (Chequeo de de tiempo de consistencia
+;de valores instantaneos):
+;NOTA: ESTE ALGORITMO YA LO PROBE Y ESTA TRABAJANDO PERFECTAMENTE, DETECTA LOS BRINCOS
+;ABRUPTOS Y LOS VA CONTANDO Y ABANDERA CORRECTAMENTE. USAR SIN PROBLEMAS
+6:  Block Move (P54)
+ 1: 2        No. of Values
+ 2: 2        First Source Loc [ Temp_2    ]
+ 3: 1        Source Step
+ 4: 1        First Destination Loc [ Temp_1    ]
+ 5: 1        Destination Step
+
+;Dif_TempC: es la diferencia absoluta entre temperaturas instantaneas
+
+7:  Z=X-Y (P35)
+ 1: 1        X Loc [ Temp_1    ]
+ 2: 2        Y Loc [ Temp_2    ]
+ 3: 4        Z Loc [ Dif_TempC ]
+
+8:  Z=ABS(X) (P43)
+ 1: 4        X Loc [ Dif_TempC ]
+ 2: 4        Z Loc [ Dif_TempC ]
+
+
+
+
+
+
+
+
+;el valor de esta diferencia debe ser >=2C, lo cambie solo para hacer pruebas
+;¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡PARAMETER¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+9:  If (X<=>F) (P89)
+ 1: 4        X Loc [ Dif_TempC ]
+ 2: 3        >=
+ 3: 0.1      F
+ 4: 30       Then Do
+;¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+
+
+
+
+
+
+
+
+
+     10:  Z=Z+1 (P32)
+      1: 5        Z Loc [ out_ins_T ]
+
+
+          11:  If (X<=>F) (P89)
+           1: 5        X Loc [ out_ins_T ]
+           2: 3        >=
+           3: 119      F
+           4: 30       Then Do
+;el 119 corresponde al porcentaje de brincos atipicos(33% o mayor). Se abandera cuando mas de un tercio de
+;los datos presentan cambios
+               12:  Z=F x 10^n (P30)
+                1: -8       F
+                2: 00       n, Exponent of 10
+                3: 6        Z Loc [ FLG_ins_T ]
+
+          13:  Else (P94)
+
+               14:  Z=F x 10^n (P30)
+                1: 0        F
+                2: 0        n, Exponent of 10
+                3: 6        Z Loc [ FLG_ins_T ]
+
+     15:  End (P95)
+
+     16:  End (P95)
+
+;==================================================================================================
+;fIN DE RAZON DE CAMBIO
+;===================================================================================================
+
+
+;/****calculo del promedio de temperatura en la ultima hora*****/
+
+17:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 60       Interval (same units as above)
+ 3: 10       Set Output Flag High
+
+18:  Set Active Storage Area (P80)
+ 1: 3        Input Storage Area
+ 2: 31       Loc [ TempC_H   ]
+
+19:  Average (P71)^270
+ 1: 1        Reps
+ 2: 3        Loc [ Temp_C    ]
+
+;/////Algoritmo de Desviacion estandar hecho el 5/11/06////
+
+20:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 60       Interval (same units as above)
+ 3: 10       Set Output Flag High
+
+21:  Set Active Storage Area (P80)
+ 1: 3        Input Storage Area
+ 2: 63       Loc [ STD_HORA  ]
+
+
+22:  Standard Deviation (P82)^3482
+ 1: 1        Reps
+ 2: 3        Sample Loc [ Temp_C    ]
+
+
+;///Valor umbral superior  Percentil 99.9////
+
+23:  If (X<=>F) (P89)
+ 1: 63       X Loc [ STD_HORA  ]
+ 2: 3        >=
+ 3: 2.5      F
+ 4: 30       Then Do
+
+
+     24:  Z=F x 10^n (P30)
+      1: -11      F
+      2: 00       n, Exponent of 10
+      3: 64       Z Loc [ STD_FLAG  ]
+
+
+25:  Else (P94)
+
+     26:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 00       n, Exponent of 10
+      3: 64       Z Loc [ STD_FLAG  ]
+
+
+27:  End (P95)
+
+;///Valor umbral inferior  Percentil 0.1////
+
+28:  If (X<=>F) (P89)
+ 1: 63       X Loc [ STD_HORA  ]
+ 2: 4        <
+ 3: 1        F
+ 4: 30       Then Do
+
+
+     29:  Z=F x 10^n (P30)
+      1: -12      F
+      2: 00       n, Exponent of 10
+      3: 64       Z Loc [ STD_FLAG  ]
+
+
+30:  Else (P94)
+
+     31:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 00       n, Exponent of 10
+      3: 64       Z Loc [ STD_FLAG  ]
+
+
+32:  End (P95)
+
+
+
+;Correcting a nonsense out-of-range temperature value
+
+33:  If (X<=>F) (P89)
+ 1: 31       X Loc [ TempC_H   ]
+ 2: 4        <
+ 3: 0        F
+ 4: 30       Then Do
+
+     34:  Z=F x 10^n (P30)
+      1: -9       F
+      2: 0        n, Exponent of 10
+      3: 31       Z Loc [ TempC_H   ]
+
+35:  End (P95)
+
+;////////hourly relative humidity///////////
+
+36:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 60       Interval (same units as above)
+ 3: 10       Set Output Flag High
+
+37:  Set Active Storage Area (P80)
+ 1: 3        Input Storage Area
+ 2: 46       Loc [ HR_H      ]
+
+38:  Average (P71)^21648
+ 1: 1        Reps
+ 2: 51       Loc [ HR        ]
+
+
+;///////////////////////////////////////////////
+;Add all of  the usual rh corrections here
+;///////////////////////////////////////////////
+
+
+;//////////upper and lower temperature limits///////////
+
+;******THIS ALGORITHM HAS BEEN SHOWN TO WORK OK********
+
+;////////I have been changing the threshold parameter to test the dip test///////
+
+;DEFINING RANGES:
+;                 ///////FOR DIP TEST///////
+
+
+
+
+
+
+
+;¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡PARAMETERS¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+39:  Z=F x 10^n (P30)
+ 1: 0.01     F
+ 2: 00       n, Exponent of 10
+ 3: 35       Z Loc [ delt_clim ]
+
+;//////////Flagging label for out-of-range values/////////////////////
+
+;TOUT_flag:-1 when temperature is out of climatological range
+
+40:  CASE (P93)
+ 1: 31       Case Loc [ TempC_H   ]
+
+     41:  If Case Location < F (P83)
+      1: 20       F
+      2: 30       Then Do
+
+     42:  Z=F x 10^n (P30)
+      1: -1       F
+      2: 0        n, Exponent of 10
+      3: 38       Z Loc [ TOUT_flag ]
+
+43:  End (P95)
+
+44:  If Case Location < F (P83)
+ 1: 21       F
+ 2: 30       Then Do
+
+     45:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 38       Z Loc [ TOUT_flag ]
+
+46:  Else (P94)
+
+     47:  Z=F x 10^n (P30)
+      1: 1        F
+      2: 0        n, Exponent of 10
+      3: 38       Z Loc [ TOUT_flag ]
+
+48:  End (P95)
+
+49:  End (P95)
+;¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+
+
+
+
+
+
+
+
+
+;/***********dip test*********/
+
+
+50:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 60       Interval (same units as above)
+ 3: 30       Then Do
+
+     51:  Block Move (P54)
+      1: 24       No. of Values
+      2: 8        First Source Loc [ temer_2   ]
+      3: 1        Source Step
+      4: 7        First Destination Loc [ temer_1   ]
+      5: 1        Destination Step
+
+     52:  Block Move (P54)
+      1: 3        No. of Values
+      2: 44       First Source Loc [ HR_2H     ]
+      3: 1        Source Step
+      4: 43       First Destination Loc [ HR_1H     ]
+      5: 1        Destination Step
+
+53:  Z=X-Y (P35)
+ 1: 28       X Loc [ temer_22  ]
+ 2: 29       Y Loc [ temer_23  ]
+ 3: 32       Z Loc [ Timenos1  ]
+
+54:  Z=X-Y (P35)
+ 1: 30       X Loc [ temer_24  ]
+ 2: 29       Y Loc [ temer_23  ]
+ 3: 33       Z Loc [ Timas1    ]
+
+55:  Z=X*Y (P36)
+ 1: 32       X Loc [ Timenos1  ]
+ 2: 33       Y Loc [ Timas1    ]
+ 3: 34       Z Loc [ delt_calc ]
+
+;There is no need of doing dip test apliable after having an evidently
+;wrong under-zero temperature value
+
+;FIRST LEVEL: Lest do hourly temperature
+
+56:  CASE (P93)
+ 1: 34       Case Loc [ delt_calc ]
+
+     57:  If Case Location < F (P83)
+      1: 0.02     F
+      2: 30       Then Do
+
+ 58:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 39       Z Loc [ delta_err ]
+
+59:  Else (P94)
+
+     60:  Z=F x 10^n (P30)
+      1: -2       F
+      2: 0        n, Exponent of 10
+      3: 39       Z Loc [ delta_err ]
+
+61:  End (P95)
+
+62:  End (P95)
+;//////////////////////////////////////////////////////////////////////
+;Including check on plausible rate of change
+63:  Z=X-Y (P35)
+ 1: 30       X Loc [ temer_24  ]
+ 2: 29       Y Loc [ temer_23  ]
+ 3: 52       Z Loc [ Jump_2C   ]
+
+64:  Z=ABS(X) (P43)
+ 1: 52       X Loc [ Jump_2C   ]
+ 2: 52       Z Loc [ Jump_2C   ]
+
+
+
+
+
+
+
+
+;¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡PARAMETER¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+; 0.5 in order to test it, it should be 2C
+65:  If (X<=>F) (P89)
+ 1: 52       X Loc [ Jump_2C   ]
+ 2: 3        >=
+ 3: 0.5      F
+ 4: 30       Then Do
+;¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+
+
+
+
+
+
+
+
+     66:  Z=F x 10^n (P30)
+      1: -5       F
+      2: 0        n, Exponent of 10
+      3: 53       Z Loc [ Flag_Jump ]
+
+67:  Else (P94)
+
+     68:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 53       Z Loc [ Flag_Jump ]
+
+69:  End (P95)
+
+;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+;Checking Temperature with relative humidity to see what s up
+
+70:  Z=X-Y (P35)
+ 1: 30       X Loc [ temer_24  ]
+ 2: 29       Y Loc [ temer_23  ]
+ 3: 48       Z Loc [ T24_T23   ]
+
+71:  Z=X-Y (P35)
+ 1: 45       X Loc [ HR_3H     ]
+ 2: 44       Y Loc [ HR_2H     ]
+ 3: 49       Z Loc [ HR3_HR2   ]
+
+
+72:  Z=X/Y (P38)
+ 1: 48       X Loc [ T24_T23   ]
+ 2: 49       Y Loc [ HR3_HR2   ]
+ 3: 47       Z Loc [ T_HR_cstc ]
+
+73:  If (X<=>F) (P89)
+ 1: 47       X Loc [ T_HR_cstc ]
+ 2: 4        <
+ 3: 0        F
+ 4: 30       Then Do
+
+     74:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 50       Z Loc [ THR_flag  ]
+
+    75:  Else (P94)
+
+
+         76:  Z=F x 10^n (P30)
+          1: -4       F
+          2: 0        n, Exponent of 10
+          3: 50       Z Loc [ THR_flag  ]
+
+    77:  End (P95)
+;+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+78:  End (P95)
+
+;///////-2: code for values out of range between three hours/////
+;/////////////////////0 if it is correct//////////////////////
+
+;/////////Daily max and min Temp//////////////
+
+;*****This algorithm is for absolute dayly temperature********
+
+79:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 10       Set Output Flag High
+
+80:  Set Active Storage Area (P80)
+ 1: 3        Input Storage Area
+ 2: 55       Loc [ TmaxD_abs ]
+
+81:  Maximum (P73)^7933
+ 1: 2        Reps
+ 2: 10       Value with Hr-Min
+ 3: 3        Loc [ Temp_C    ]
+
+82:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 10       Set Output Flag High
+
+83:  Set Active Storage Area (P80)
+ 1: 3        Input Storage Area
+ 2: 57       Loc [ TminD_abs ]
+
+
+84:  Minimum (P74)^20276
+ 1: 1        Reps
+ 2: 10       Value with Hr-Min
+ 3: 3        Loc [ Temp_C    ]
+;////////////Cleaning flags///////////
+85:  Z=F x 10^n (P30)
+ 1: 0        F
+ 2: 00       n, Exponent of 10
+ 3: 59       Z Loc [ Fl_Tmax   ]
+
+86:  Z=F x 10^n (P30)
+ 1: 0.0      F
+ 2: 00       n, Exponent of 10
+ 3: 60       Z Loc [ Fl_Tmin   ]
+;/////////////////////////////////////
+
+;*********  T max hour< 900h    -6   *********
+87:  If (X<=>F) (P89)
+ 1: 56       X Loc [ HM_Tmax   ]
+ 2: 4        <
+ 3: 540      F
+ 4: 30       Then Do
+
+     88:  Z=F x 10^n (P30)
+      1: -6       F
+      2: 0        n, Exponent of 10
+      3: 59       Z Loc [ Fl_Tmax   ]
+
+89:  Else (P94)
+
+;*********  T max hour >= 1500h   -6   *********
+     90:  If (X<=>F) (P89)
+      1: 56       X Loc [ HM_Tmax   ]
+      2: 3        >=
+      3: 900      F
+      4: 30       Then Do
+
+          91:  Z=F x 10^n (P30)
+           1: -6       F
+           2: 0        n, Exponent of 10
+           3: 59       Z Loc [ Fl_Tmax   ]
+
+     92:  End (P95)
+
+93:  End (P95)
+;*********  T mim hour>= 600h   -7   *********
+94:  If (X<=>F) (P89)
+ 1: 58       X Loc [ HM_Tmin   ]
+ 2: 3        >=
+ 3: 360      F
+ 4: 30       Then Do
+
+     95:  Z=F x 10^n (P30)
+      1: -7       F
+      2: 0        n, Exponent of 10
+      3: 60       Z Loc [ Fl_Tmin   ]
+
+96:  Else (P94)
+
+;*********  T mim hour < 2300h   -7   *********
+     97:  If (X<=>F) (P89)
+      1: 58       X Loc [ HM_Tmin   ]
+      2: 4        <
+      3: 1380     F
+      4: 30       Then Do
+
+          98:  Z=F x 10^n (P30)
+           1: -7       F
+           2: 0        n, Exponent of 10
+           3: 60       Z Loc [ Fl_Tmin   ]
+
+     99:  End (P95)
+
+100:  End (P95)
+
+
+101:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 30       Then Do
+
+
+102:  If (X<=>Y) (P88)
+ 1: 57       X Loc [ TminD_abs ]
+ 2: 3        >=
+ 3: 55       Y Loc [ TmaxD_abs ]
+ 4: 30       Then Do
+
+;CODE -3 for flagging minimal temperatures bigger than maximal temperatures
+
+     103:  Z=F x 10^n (P30)
+      1: -3       F
+      2: 0        n, Exponent of 10
+      3: 42       Z Loc [ FlagT_day ]
+
+104:  Else (P94)
+
+     105:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 42       Z Loc [ FlagT_day ]
+
+106:  End (P95)
+
+107:  End (P95)
+
+;///////Tmax_day is the maximun daily hourly temperature////////
+;///////Tmin_day is the minimun daily hourly temperature////////
+
+
+
+;********storing data in storage area 1************
+
+108:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 60       Interval (same units as above)
+ 3: 10       Set Output Flag High
+
+109:  Set Active Storage Area (P80)^3077
+ 1: 1        Final Storage Area 1
+ 2: 1        Array ID
+
+110:  Real Time (P77)^32526
+ 1: 1220     Year,Day,Hour/Minute (midnight = 2400)
+
+111:  Sample (P70)^18846
+ 1: 1        Reps
+ 2: 46       Loc [ HR_H      ]
+
+112:  Sample (P70)^18873
+ 1: 3        Reps
+ 2: 43       Loc [ HR_1H     ]
+
+113:  Sample (P70)^29718
+ 1: 2        Reps
+ 2: 34       Loc [ delt_calc ]
+
+114:  Sample (P70)^27347
+ 1: 2        Reps
+ 2: 32       Loc [ Timenos1  ]
+
+115:  Sample (P70)^22700
+ 1: 1        Reps
+ 2: 39       Loc [ delta_err ]
+
+116:  Sample (P70)^17673
+ 1: 1        Reps
+ 2: 38       Loc [ TOUT_flag ]
+
+117:  Sample (P70)^19956
+ 1: 4        Reps
+ 2: 28       Loc [ temer_22  ]
+
+118:  Average (P71)^30643
+ 1: 1        Reps
+ 2: 3        Loc [ Temp_C    ]
+
+119:  Sample (P70)^5381
+ 1: 4        Reps
+ 2: 47       Loc [ T_HR_cstc ]
+
+;//////////////////////////////////////
+;Standard deviation calculation
+120:  Standard Deviation (P82)^19434
+ 1: 1        Reps
+ 2: 3        Sample Loc [ Temp_C    ]
+;///////////////////////////////////////
+121:  Sample (P70)^31066
+ 1: 2        Reps
+ 2: 52       Loc [ Jump_2C   ]
+
+
+122:  Sample (P70)^6115
+ 1: 2        Reps
+ 2: 5        Loc [ out_ins_T ]
+
+123:  Sample (P70)^5658
+ 1: 1        Reps
+ 2: 64       Loc [ STD_FLAG  ]
+
+
+;/////cada hora inicializo FLG_ins_T//////
+124:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 60       Interval (same units as above)
+ 3: 30       Then Do
+
+
+     125:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 5        Z Loc [ out_ins_T ]
+
+     126:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 6        Z Loc [ FLG_ins_T ]
+
+127:  End (P95)
+
+;////flagging when daily extreme temperatures have problems/////
+
+128:  If time is (P92)
+ 1: 0        Minutes (Seconds --) into a
+ 2: 1440     Interval (same units as above)
+ 3: 10       Set Output Flag High
+
+129:  Set Active Storage Area (P80)^2369
+ 1: 1        Final Storage Area 1
+ 2: 2        Array ID
+
+130:  Real Time (P77)^19216
+ 1: 1220     Year,Day,Hour/Minute (midnight = 2400)
+
+131:  Sample (P70)^12958
+ 1: 1        Reps
+ 2: 42       Loc [ FlagT_day ]
+
+132:  Sample (P70)^3840
+ 1: 1        Reps
+ 2: 40       Loc [ Tmax_day  ]
+
+133:  Sample (P70)^12022
+ 1: 1        Reps
+ 2: 41       Loc [ Tmin_day  ]
+
+134:  Sample (P70)^21139
+ 1: 6        Reps
+ 2: 55       Loc [ TmaxD_abs ]
+
+
+;//////////Salida 3 para algoritmo de valores instantaneos del salto///////////////
+
+135:  If time is (P92)
+ 1: 0     -- Minutes (Seconds --) into a
+ 2: 10    -- Interval (same units as above)
+ 3: 10       Set Output Flag High
+
+136:  Set Active Storage Area (P80)^16214
+ 1: 1        Final Storage Area 1
+ 2: 3        Array ID
+
+
+137:  Real Time (P77)^4687
+ 1: 1221     Year,Day,Hour/Minute,Seconds (midnight = 2400)
+
+
+138:  Sample (P70)^4893
+ 1: 6        Reps
+ 2: 1        Loc [ Temp_1    ]
+
+
+139:  Sample (P70)^20579
+ 1: 3        Reps
+ 2: 40       Loc [ Tmax_day  ]
+
+
+
+
+
+
+*Table 2 Program
+  02: 0.0000    Execution Interval (seconds)
+
+*Table 3 Subroutines
+
+End Program
+
+
+
+
+
+
+-Input Locations-
+1 Temp_1    7 2 1
+2 Temp_2    19 2 1
+3 Temp_C    1 7 1
+4 Dif_TempC 1 2 2
+5 out_ins_T 5 2 2
+6 FLG_ins_T 17 1 3
+7 temer_1   7 1 1
+8 temer_2   11 1 1
+9 temer_3   11 1 1
+10 temer_4   11 1 1
+11 temer_5   11 1 1
+12 temer_6   11 1 1
+13 temer_7   11 1 1
+14 temer_8   11 1 1
+15 temer_9   11 1 1
+16 temer_10  11 1 1
+17 temer_11  11 1 1
+18 temer_12  11 1 1
+19 temer_13  11 1 1
+20 temer_14  11 1 1
+21 temer_15  11 1 1
+22 temer_16  11 1 1
+23 temer_17  11 1 1
+24 temer_18  11 1 1
+25 temer_19  11 1 1
+26 temer_20  11 1 1
+27 temer_21  11 1 1
+28 temer_22  11 3 1
+29 temer_23  11 5 1
+30 temer_24  19 4 1
+31 TempC_H   1 2 2
+32 Timenos1  1 2 1
+33 Timas1    1 2 1
+34 delt_calc 1 2 1
+35 delt_clim 1 1 1
+36 TmaxH_cli 1 0 1
+37 TminH_cli 1 0 1
+38 TOUT_flag 1 1 3
+39 delta_err 1 1 2
+40 Tmax_day  1 2 0
+41 Tmin_day  1 1 0
+42 FlagT_day 1 1 2
+43 HR_1H     7 0 1
+44 HR_2H     11 2 1
+45 HR_3H     19 2 1
+46 HR_H      1 2 1
+47 T_HR_cstc 1 2 1
+48 T24_T23   1 2 1
+49 HR3_HR2   1 2 1
+50 THR_flag  1 1 2
+51 HR        1 1 1
+52 Jump_2C   1 3 2
+53 Flag_Jump 1 1 2
+54 curr_time 1 0 0
+55 TmaxD_abs 7 2 1
+56 HM_Tmax   11 3 0
+57 TminD_abs 11 2 1
+58 HM_Tmin   19 3 0
+59 Fl_Tmax   1 1 3
+60 Fl_Tmin   1 1 3
+61 T_panel   1 0 1
+62 T_termop  1 0 0
+63 STD_HORA  1 2 1
+64 STD_FLAG  1 1 4
+65 _________ 0 0 0
+66 _________ 0 0 0
+67 _________ 0 0 0
+68 _________ 0 0 0
+69 _________ 0 0 0
+70 _________ 0 0 0
+71 _________ 0 0 0
+72 _________ 0 0 0
+73 _________ 0 0 0
+74 _________ 0 0 0
+75 _________ 0 0 0
+76 _________ 0 0 0
+77 _________ 0 0 0
+78 _________ 0 0 0
+79 _________ 0 0 0
+80 _________ 0 0 0
+81 _________ 0 0 0
+82 _________ 0 0 0
+83 _________ 0 0 0
+84 _________ 0 0 0
+85 _________ 0 0 0
+86 _________ 0 0 0
+87 _________ 0 0 0
+88 _________ 0 0 0
+89 _________ 0 0 0
+90 _________ 0 0 0
+91 _________ 0 0 0
+92 _________ 0 0 0
+93 _________ 0 0 0
+94 _________ 0 0 0
+95 _________ 0 0 0
+96 _________ 0 0 0
+97 _________ 0 0 0
+98 _________ 0 0 0
+99 _________ 0 0 0
+100 _________ 0 0 0
+101 _________ 0 0 0
+102 _________ 0 0 0
+103 _________ 0 0 0
+104 _________ 0 0 0
+105 _________ 0 0 0
+106 _________ 0 0 0
+107 _________ 0 0 0
+108 _________ 0 0 0
+109 _________ 0 0 0
+110 _________ 0 0 0
+111 _________ 0 0 0
+112 _________ 0 0 0
+113 _________ 0 0 0
+114 _________ 0 0 0
+115 _________ 0 0 0
+116 _________ 0 0 0
+117 _________ 0 0 0
+118 _________ 0 0 0
+119 _________ 0 0 0
+120 _________ 0 0 0
+121 _________ 0 0 0
+122 _________ 0 0 0
+123 _________ 0 0 0
+124 _________ 0 0 0
+125 _________ 0 0 0
+126 _________ 0 0 0
+127 _________ 0 0 0
+128 _________ 0 0 0
+129 _________ 0 0 0
+130 _________ 0 0 0
+131 _________ 0 0 0
+132 _________ 0 0 0
+133 _________ 0 0 0
+134 _________ 0 0 0
+135 _________ 0 0 0
+136 _________ 0 0 0
+137 _________ 0 0 0
+138 _________ 0 0 0
+139 _________ 0 0 0
+140 _________ 0 0 0
+141 _________ 0 0 0
+142 _________ 0 0 0
+143 _________ 0 0 0
+144 _________ 0 0 0
+145 _________ 0 0 0
+146 _________ 0 0 0
+147 _________ 0 0 0
+148 _________ 0 0 0
+149 _________ 0 0 0
+150 _________ 0 0 0
+151 _________ 0 0 0
+152 _________ 0 0 0
+153 _________ 0 0 0
+154 _________ 0 0 0
+155 _________ 0 0 0
+156 _________ 0 0 0
+157 _________ 0 0 0
+158 _________ 0 0 0
+159 _________ 0 0 0
+160 _________ 0 0 0
+161 _________ 0 0 0
+162 _________ 0 0 0
+163 _________ 0 0 0
+164 _________ 0 0 0
+165 _________ 0 0 0
+166 _________ 0 0 0
+167 _________ 0 0 0
+168 _________ 0 0 0
+169 _________ 0 0 0
+170 _________ 0 0 0
+171 _________ 0 0 0
+172 _________ 0 0 0
+173 _________ 0 0 0
+174 _________ 0 0 0
+175 _________ 0 0 0
+176 _________ 0 0 0
+177 _________ 0 0 0
+178 _________ 0 0 0
+179 _________ 0 0 0
+180 _________ 0 0 0
+181 _________ 0 0 0
+182 _________ 0 0 0
+183 _________ 0 0 0
+184 _________ 0 0 0
+185 _________ 0 0 0
+186 _________ 0 0 0
+187 _________ 0 0 0
+188 _________ 0 0 0
+189 _________ 0 0 0
+190 _________ 0 0 0
+191 _________ 0 0 0
+192 _________ 0 0 0
+193 _________ 0 0 0
+194 _________ 0 0 0
+195 _________ 0 0 0
+196 _________ 0 0 0
+197 _________ 0 0 0
+198 _________ 0 0 0
+199 _________ 0 0 0
+200 _________ 0 0 0
+201 _________ 0 0 0
+202 _________ 0 0 0
+203 _________ 0 0 0
+204 _________ 0 0 0
+205 _________ 0 0 0
+206 _________ 0 0 0
+207 _________ 0 0 0
+208 _________ 0 0 0
+209 _________ 0 0 0
+210 _________ 0 0 0
+211 _________ 0 0 0
+212 _________ 0 0 0
+213 _________ 0 0 0
+214 _________ 0 0 0
+215 _________ 0 0 0
+216 _________ 0 0 0
+217 _________ 0 0 0
+218 _________ 0 0 0
+219 _________ 0 0 0
+220 _________ 0 0 0
+221 _________ 0 0 0
+222 _________ 0 0 0
+223 _________ 0 0 0
+224 _________ 0 0 0
+225 _________ 0 0 0
+226 _________ 0 0 0
+227 _________ 0 0 0
+228 _________ 0 0 0
+229 _________ 0 0 0
+230 _________ 0 0 0
+231 _________ 0 0 0
+232 _________ 0 0 0
+233 _________ 0 0 0
+234 _________ 0 0 0
+235 _________ 0 0 0
+236 _________ 0 0 0
+237 _________ 0 0 0
+238 _________ 0 0 0
+239 _________ 0 0 0
+240 _________ 0 0 0
+241 _________ 0 0 0
+242 _________ 0 0 0
+243 _________ 0 0 0
+244 _________ 0 0 0
+245 _________ 0 0 0
+246 _________ 0 0 0
+247 _________ 0 0 0
+248 _________ 0 0 0
+249 _________ 0 0 0
+250 _________ 0 0 0
+251 _________ 0 0 0
+252 _________ 0 0 0
+253 _________ 0 0 0
+254 _________ 0 0 0
+255 _________ 0 0 0
+256 _________ 0 0 0
+257 _________ 0 0 0
+258 _________ 0 0 0
+259 _________ 0 0 0
+260 _________ 0 0 0
+261 _________ 0 0 0
+262 _________ 0 0 0
+263 _________ 0 0 0
+264 _________ 0 0 0
+265 _________ 0 0 0
+266 _________ 0 0 0
+267 _________ 0 0 0
+268 _________ 0 0 0
+269 _________ 0 0 0
+270 _________ 0 0 0
+271 _________ 0 0 0
+272 _________ 0 0 0
+273 _________ 0 0 0
+274 _________ 0 0 0
+275 _________ 0 0 0
+276 _________ 0 0 0
+277 _________ 0 0 0
+278 _________ 0 0 0
+279 _________ 0 0 0
+280 _________ 0 0 0
+281 _________ 0 0 0
+282 _________ 0 0 0
+283 _________ 0 0 0
+284 _________ 0 0 0
+285 _________ 0 0 0
+286 _________ 0 0 0
+287 _________ 0 0 0
+288 _________ 0 0 0
+289 _________ 0 0 0
+290 _________ 0 0 0
+291 _________ 0 0 0
+292 _________ 0 0 0
+293 _________ 0 0 0
+294 _________ 0 0 0
+295 _________ 0 0 0
+296 _________ 0 0 0
+297 _________ 0 0 0
+298 _________ 0 0 0
+299 _________ 0 0 0
+300 _________ 0 0 0
+301 _________ 0 0 0
+302 _________ 0 0 0
+303 _________ 0 0 0
+304 _________ 0 0 0
+305 _________ 0 0 0
+306 _________ 0 0 0
+307 _________ 0 0 0
+308 _________ 0 0 0
+309 _________ 0 0 0
+310 _________ 0 0 0
+311 _________ 0 0 0
+312 _________ 0 0 0
+313 _________ 0 0 0
+314 _________ 0 0 0
+315 _________ 0 0 0
+316 _________ 0 0 0
+317 _________ 0 0 0
+318 _________ 0 0 0
+319 _________ 0 0 0
+320 _________ 0 0 0
+321 _________ 0 0 0
+322 _________ 0 0 0
+323 _________ 0 0 0
+324 _________ 0 0 0
+325 _________ 0 0 0
+326 _________ 0 0 0
+327 _________ 0 0 0
+328 _________ 0 0 0
+329 _________ 0 0 0
+330 _________ 0 0 0
+331 _________ 0 0 0
+332 _________ 0 0 0
+333 _________ 0 0 0
+334 _________ 0 0 0
+335 _________ 0 0 0
+336 _________ 0 0 0
+337 _________ 0 0 0
+338 _________ 0 0 0
+339 _________ 0 0 0
+340 _________ 0 0 0
+341 _________ 0 0 0
+342 _________ 0 0 0
+343 _________ 0 0 0
+344 _________ 0 0 0
+345 _________ 0 0 0
+346 _________ 0 0 0
+347 _________ 0 0 0
+348 _________ 0 0 0
+349 _________ 0 0 0
+350 _________ 0 0 0
+351 _________ 0 0 0
+352 _________ 0 0 0
+353 _________ 0 0 0
+354 _________ 0 0 0
+355 _________ 0 0 0
+356 _________ 0 0 0
+357 _________ 0 0 0
+358 _________ 0 0 0
+359 _________ 0 0 0
+360 _________ 0 0 0
+361 _________ 0 0 0
+362 _________ 0 0 0
+363 _________ 0 0 0
+364 _________ 0 0 0
+365 _________ 0 0 0
+366 _________ 0 0 0
+367 _________ 0 0 0
+368 _________ 0 0 0
+369 _________ 0 0 0
+370 _________ 0 0 0
+371 _________ 0 0 0
+372 _________ 0 0 0
+373 _________ 0 0 0
+374 _________ 0 0 0
+375 _________ 0 0 0
+376 _________ 0 0 0
+377 _________ 0 0 0
+378 _________ 0 0 0
+379 _________ 0 0 0
+380 _________ 0 0 0
+381 _________ 0 0 0
+382 _________ 0 0 0
+383 _________ 0 0 0
+384 _________ 0 0 0
+385 _________ 1 1 0
+386 _________ 1 1 0
+-Program Security-
+1888
+0000
+0000
+-Mode 4-
+-Final Storage Area 2-
+0
+-DLD File Labels-
+0
+-Final Storage Labels-
+0,1,3077
+1,Year_RTM,32526
+1,Day_RTM
+1,Hour_Minute_RTM
+2,HR_1H~43,18873
+2,HR_2H~44
+2,HR_3H~45
+3,TOUT_flag~38,17673
+4,delt_calc~34,29718
+4,delt_clim~35
+5,FlagT_day~42,12958
+6,HR_AVG~51,21648
+7,Temp_C_AVG~3,30643
+8,2,2369
+9,Tmax_day~40,3840
+10,Tmin_day~41,12022
+11,Year_RTM,19216
+11,Day_RTM
+11,Hour_Minute_RTM
+12,delta_err~39,22700
+13,Timenos1~32,27347
+13,Timas1~33
+14,HR_H~46,18846
+15,T_HR_cstc~47,5381
+15,T24_T23~48
+15,HR3_HR2~49
+15,THR_flag~50
+16,temer_22~28,19956
+16,temer_23~29
+16,temer_24~30
+16,TempC_H~31
+17,Temp_C_AVG~3,270
+18,Jump_2C~52,31066
+18,Flag_Jump~53
+19,Temp_C_MAX~3,7933
+19,Temp_C_Hr_Min_MAX~3
+19,Dif_TempC_MAX~4
+19,Dif_TempC_Hr_Min_MAX~4
+20,Temp_C_MIN~3,20276
+20,Temp_C_Hr_Min_MIN~3
+21,TmaxD_abs~55,21139
+21,HM_Tmax~56
+21,TminD_abs~57
+21,HM_Tmin~58
+21,Fl_Tmax~59
+21,Fl_Tmin~60
+22,out_ins_T~5,6115
+22,FLG_ins_T~6
+23,Temp_C_STD~3,19434
+24,Temp_1~1,4893
+24,Temp_2~2
+24,Temp_C~3
+24,Dif_TempC~4
+24,out_ins_T~5
+24,FLG_ins_T~6
+25,Year_RTM,4687
+25,Day_RTM
+25,Hour_Minute_RTM
+25,Seconds_RTM
+26,3,16214
+27,Tmax_day~40,20579
+27,Tmin_day~41
+27,FlagT_day~42
+28,Temp_C_STD~3,3482
+29,STD_FLAG~64,5658

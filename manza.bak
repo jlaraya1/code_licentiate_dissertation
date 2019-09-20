@@ -1,0 +1,3860 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project editor="RTMC" name="manzanillo" version="v1.6.1.31">
+  <server>localhost</server>
+  <user></user>
+  <pass></pass>
+  <port>6789</port>
+  <frame_width>808</frame_width>
+  <frame_height>578</frame_height>
+  <manage_comm>0</manage_comm>
+  <save_login>0</save_login>
+  <canvas_width>640</canvas_width>
+  <canvas_height>480</canvas_height>
+  <screens count="6">
+    <screen name="principal">
+      <background_image>Backgrounds\Gradients\CobaltBlue.png</background_image>
+      <components count="47">
+        <component type="imagecomponent" name="Image2">
+          <xpos>-2</xpos>
+          <ypos>234</ypos>
+          <width>636</width>
+          <height>10</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>282</xpos>
+          <ypos>140</ypos>
+          <width>56</width>
+          <height>29</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>18</font_size>
+          <label>Km/h</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="numeric" name="Copy (1) of Copy (1) of Copy (6) of Numeric">
+          <tag>manzanillo.__inlocs__.vcorr_m_s</tag>
+          <xpos>240</xpos>
+          <ypos>141</ypos>
+          <width>38</width>
+          <height>29</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>18</font_size>
+          <decimals>1</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.VCORR_m_s&quot;*3.6</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>73</xpos>
+          <ypos>6</ypos>
+          <width>271</width>
+          <height>19</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>12</font_size>
+          <label>Ministerio de Ambiente y Energ&#237;a</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>468</xpos>
+          <ypos>90</ypos>
+          <width>115</width>
+          <height>13</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>8</font_size>
+          <label>Fecha y hora del Logger</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>72</xpos>
+          <ypos>29</ypos>
+          <width>267</width>
+          <height>19</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>12</font_size>
+          <label>Instituto Meteorol&#243;gico Nacional</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>17</xpos>
+          <ypos>52</ypos>
+          <width>368</width>
+          <height>19</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>12</font_size>
+          <label>ESTACION METEOROLOGICA DE MANZANILLO</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="time" name="Time">
+          <tag>station</tag>
+          <xpos>473</xpos>
+          <ypos>102</ypos>
+          <width>85</width>
+          <height>16</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>10</font_size>
+          <time_source>3</time_source>
+          <time_format>%m/%d %I:%M %p</time_format>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+          <sync_interval>900000</sync_interval>
+          <sync_value>15</sync_value>
+          <sync_units>1</sync_units>
+        </component>
+        <component type="imagecomponent" name="Copy (2) of Image2">
+          <xpos>0</xpos>
+          <ypos>76</ypos>
+          <width>404</width>
+          <height>10</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Copy (1) of Copy (1) of Image2">
+          <xpos>402</xpos>
+          <ypos>0</ypos>
+          <width>10</width>
+          <height>471</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Image7">
+          <xpos>0</xpos>
+          <ypos>0</ypos>
+          <width>410</width>
+          <height>80</height>
+          <image_name>Backgrounds\Colors\LightBlue.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>534</xpos>
+          <ypos>321</ypos>
+          <width>58</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>kW/m2</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>540</xpos>
+          <ypos>404</ypos>
+          <width>56</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>MJ/m2</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>540</xpos>
+          <ypos>201</ypos>
+          <width>22</width>
+          <height>29</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>18</font_size>
+          <label>%</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="numeric" name="Copy (3) of Numeric">
+          <tag>manzanillo.__inlocs__.hr</tag>
+          <xpos>516</xpos>
+          <ypos>196</ypos>
+          <width>18</width>
+          <height>37</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>24</font_size>
+          <decimals>0</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.HR&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>443</xpos>
+          <ypos>173</ypos>
+          <width>154</width>
+          <height>24</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Humedad Relativa</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="numeric" name="Numeric">
+          <tag>manzanillo.1.rad_mj_m2_tot</tag>
+          <xpos>453</xpos>
+          <ypos>397</ypos>
+          <width>81</width>
+          <height>37</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>24</font_size>
+          <decimals>3</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.1.RAD_MJ_m2_TOT&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>443</xpos>
+          <ypos>359</ypos>
+          <width>167</width>
+          <height>25</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Total &#250;ltima hora</label>
+          <cushion>1</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (5) of Numeric">
+          <tag>manzanillo.__inlocs__.rad_kw_m2</tag>
+          <xpos>467</xpos>
+          <ypos>314</ypos>
+          <width>63</width>
+          <height>37</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>24</font_size>
+          <decimals>2</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.RAD_KW_m2&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>414</xpos>
+          <ypos>267</ypos>
+          <width>217</width>
+          <height>25</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Radiaci&#243;n Instant&#225;nea</label>
+          <cushion>1</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="imagecomponent" name="Image6">
+          <xpos>407</xpos>
+          <ypos>241</ypos>
+          <width>227</width>
+          <height>233</height>
+          <image_name>Backgrounds\Gradients\BlackWhite.png</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>209</xpos>
+          <ypos>427</ypos>
+          <width>40</width>
+          <height>29</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>18</font_size>
+          <label>mm</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="numeric" name="Copy (1) of Numeric">
+          <tag>manzanillo.1.lluv_mm_tot</tag>
+          <xpos>149</xpos>
+          <ypos>423</ypos>
+          <width>45</width>
+          <height>37</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>24</font_size>
+          <decimals>1</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.1.LLUV_mm_TOT&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>50</xpos>
+          <ypos>405</ypos>
+          <width>285</width>
+          <height>19</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>12</font_size>
+          <label>Lluvia acumulada en la ultima hora</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="graph" name="Graph">
+          <xpos>0</xpos>
+          <ypos>246</ypos>
+          <width>401</width>
+          <height>161</height>
+          <left_max>25,000000</left_max>
+          <left_min>0,000000</left_min>
+          <graph_width>307,000000</graph_width>
+          <graph_height>118,000000</graph_height>
+          <graph_x>47,000000</graph_x>
+          <graph_y>138,000000</graph_y>
+          <image_name>Backgrounds\Colors\Transparent.gif</image_name>
+          <font_size>10</font_size>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <scale_x>42</scale_x>
+          <title>Lluvia acumulada en la &#250;ltima hora (mm)</title>
+          <time_value>9</time_value>
+          <time_option>2</time_option>
+          <time_back>32400</time_back>
+          <update_rate>3600000</update_rate>
+          <scale_labels>12</scale_labels>
+          <decimals>0</decimals>
+          <time_format>%H</time_format>
+          <time_pos>143</time_pos>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+          <show_v_grid>1</show_v_grid>
+          <show_h_grid>1</show_h_grid>
+          <right_max>100,000000</right_max>
+          <right_min>0,000000</right_min>
+          <auto_label>0</auto_label>
+          <auto_scale_left>0</auto_scale_left>
+          <auto_scale_right>0</auto_scale_right>
+          <pens count="1">
+            <pen type="graphpen">
+              <tag>manzanillo.1.lluv_mm_tot</tag>
+              <line_red>255</line_red>
+              <line_green>0</line_green>
+              <line_blue>0</line_blue>
+              <dot_red>255</dot_red>
+              <dot_green>0</dot_green>
+              <dot_blue>0</dot_blue>
+              <offset>0</offset>
+              <calculation>&quot;manzanillo.1.LLUV_mm_TOT&quot;</calculation>
+              <dot_size>2</dot_size>
+              <line_selection>0</line_selection>
+              <axis>0</axis>
+            </pen>
+          </pens>
+        </component>
+        <component type="imagecomponent" name="Image5">
+          <xpos>0</xpos>
+          <ypos>243</ypos>
+          <width>407</width>
+          <height>227</height>
+          <image_name>Backgrounds\Colors\LightGray.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Image">
+          <xpos>459</xpos>
+          <ypos>6</ypos>
+          <width>129</width>
+          <height>85</height>
+          <image_name>CSIEquipment\DataLoggersStorageModules\CR10X.jpg</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>148</xpos>
+          <ypos>198</ypos>
+          <width>22</width>
+          <height>19</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>12</font_size>
+          <label>SE</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Arial</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>103</xpos>
+          <ypos>215</ypos>
+          <width>11</width>
+          <height>19</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>12</font_size>
+          <label>S</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Arial</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>42</xpos>
+          <ypos>197</ypos>
+          <width>23</width>
+          <height>19</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>12</font_size>
+          <label>SO</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Arial</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>33</xpos>
+          <ypos>150</ypos>
+          <width>12</width>
+          <height>19</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>12</font_size>
+          <label>O</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Arial</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>169</xpos>
+          <ypos>149</ypos>
+          <width>12</width>
+          <height>19</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>12</font_size>
+          <label>O</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Arial</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>149</xpos>
+          <ypos>99</ypos>
+          <width>23</width>
+          <height>19</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>12</font_size>
+          <label>NE</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Arial</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>101</xpos>
+          <ypos>84</ypos>
+          <width>12</width>
+          <height>19</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>12</font_size>
+          <label>N</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Arial</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (1) of Copy (6) of Numeric">
+          <tag>manzanillo.__inlocs__.vcorr_m_s</tag>
+          <xpos>240</xpos>
+          <ypos>112</ypos>
+          <width>38</width>
+          <height>29</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>18</font_size>
+          <decimals>1</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.VCORR_m_s&quot;</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>44</xpos>
+          <ypos>100</ypos>
+          <width>24</width>
+          <height>19</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>12</font_size>
+          <label>NO</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Arial</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="gauge" name="Gauge">
+          <tag>manzanillo.__inlocs__.dir_vient</tag>
+          <xpos>48</xpos>
+          <ypos>104</ypos>
+          <width>118</width>
+          <height>109</height>
+          <max>360,000000</max>
+          <min>0,000000</min>
+          <arrow_red>0</arrow_red>
+          <arrow_green>0</arrow_green>
+          <arrow_blue>255</arrow_blue>
+          <range_begin>90,000000</range_begin>
+          <range_end>89,000000</range_end>
+          <arrow_len>48,000000</arrow_len>
+          <arrow_x>60,000000</arrow_x>
+          <arrow_y>54,000000</arrow_y>
+          <image_name>Gauges\Circular.gif</image_name>
+          <font_size>8</font_size>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <scale_labels>9</scale_labels>
+          <scale_len>41</scale_len>
+          <calculation>&quot;manzanillo.__inlocs__.DIR_vient&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+          <decimals>0</decimals>
+          <auto_label>0</auto_label>
+        </component>
+        <component type="label" name="Label">
+          <xpos>285</xpos>
+          <ypos>112</ypos>
+          <width>39</width>
+          <height>29</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>18</font_size>
+          <label>m/s</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>235</xpos>
+          <ypos>178</ypos>
+          <width>85</width>
+          <height>24</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>14</font_size>
+          <label>Direcci&#243;n:</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>300</xpos>
+          <ypos>206</ypos>
+          <width>6</width>
+          <height>13</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>8</font_size>
+          <label>0</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>238</xpos>
+          <ypos>86</ypos>
+          <width>90</width>
+          <height>24</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>14</font_size>
+          <label>Velocidad:</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="imagecomponent" name="Copy (6) of Image2">
+          <xpos>406</xpos>
+          <ypos>375</ypos>
+          <width>227</width>
+          <height>10</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Copy (1) of Image2">
+          <xpos>0</xpos>
+          <ypos>0</ypos>
+          <width>10</width>
+          <height>86</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="numeric" name="Copy (6) of Numeric">
+          <tag>manzanillo.__inlocs__.dir_vient</tag>
+          <xpos>278</xpos>
+          <ypos>201</ypos>
+          <width>15</width>
+          <height>29</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>18</font_size>
+          <decimals>0</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.DIR_vient&quot;</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (4) of Numeric">
+          <tag>manzanillo.__inlocs__.temp_c</tag>
+          <xpos>496</xpos>
+          <ypos>141</ypos>
+          <width>45</width>
+          <height>37</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>24</font_size>
+          <decimals>1</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.TEMP_C&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>543</xpos>
+          <ypos>148</ypos>
+          <width>20</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>&#186;C</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>464</xpos>
+          <ypos>118</ypos>
+          <width>108</width>
+          <height>24</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Temperatura</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+      </components>
+    </screen>
+    <screen name="tablas">
+      <background_image>Backgrounds\Gradients\BlackWhite.png</background_image>
+      <components count="14">
+        <component type="time" name="Copy (1) of Time2">
+          <tag>station</tag>
+          <xpos>70</xpos>
+          <ypos>412</ypos>
+          <width>263</width>
+          <height>29</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>18</font_size>
+          <time_source>4</time_source>
+          <time_format>%c</time_format>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+          <sync_interval>900000</sync_interval>
+          <sync_value>15</sync_value>
+          <sync_units>1</sync_units>
+        </component>
+        <component type="label" name="Label">
+          <xpos>141</xpos>
+          <ypos>387</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>12</font_size>
+          <label>Hora de la PC</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>44</xpos>
+          <ypos>333</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>12</font_size>
+          <label>Hora de la estaci&#243;n autom&#225;tica (Logger)</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="time" name="Time2">
+          <tag>manzanillo</tag>
+          <xpos>72</xpos>
+          <ypos>355</ypos>
+          <width>263</width>
+          <height>29</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>18</font_size>
+          <time_source>1</time_source>
+          <time_format>%c</time_format>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+          <sync_interval>900000</sync_interval>
+          <sync_value>15</sync_value>
+          <sync_units>1</sync_units>
+        </component>
+        <component type="graph" name="Copy (1) of Graph2">
+          <xpos>3</xpos>
+          <ypos>0</ypos>
+          <width>407</width>
+          <height>159</height>
+          <left_max>20,000000</left_max>
+          <left_min>0,000000</left_min>
+          <graph_width>312,000000</graph_width>
+          <graph_height>116,000000</graph_height>
+          <graph_x>48,000000</graph_x>
+          <graph_y>136,000000</graph_y>
+          <image_name>Backgrounds\Colors\Transparent.gif</image_name>
+          <font_size>10</font_size>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <scale_x>43</scale_x>
+          <title>Voltaje instantaneo de la bater&#237;a</title>
+          <time_value>12</time_value>
+          <time_option>2</time_option>
+          <time_back>43200</time_back>
+          <update_rate>120000</update_rate>
+          <scale_labels>5</scale_labels>
+          <decimals>0</decimals>
+          <time_format>%H:%M</time_format>
+          <time_pos>141</time_pos>
+          <font_face>Arial</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+          <show_v_grid>1</show_v_grid>
+          <show_h_grid>1</show_h_grid>
+          <right_max>35,000000</right_max>
+          <right_min>0,000000</right_min>
+          <auto_label>0</auto_label>
+          <auto_scale_left>0</auto_scale_left>
+          <auto_scale_right>0</auto_scale_right>
+          <pens count="1">
+            <pen type="graphpen">
+              <tag>manzanillo.__inlocs__.volt_bat</tag>
+              <line_red>255</line_red>
+              <line_green>0</line_green>
+              <line_blue>0</line_blue>
+              <dot_red>255</dot_red>
+              <dot_green>0</dot_green>
+              <dot_blue>0</dot_blue>
+              <offset>0</offset>
+              <calculation>&quot;manzanillo.__inlocs__.VOLT_BAT&quot;</calculation>
+              <dot_size>2</dot_size>
+              <line_selection>0</line_selection>
+              <axis>0</axis>
+            </pen>
+          </pens>
+        </component>
+        <component type="numeric" name="Copy (2) of Copy (1) of Numeric2">
+          <tag>manzanillo.__inlocs__.hr_caja</tag>
+          <xpos>524</xpos>
+          <ypos>98</ypos>
+          <width>35</width>
+          <height>29</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>255</font_blue>
+          <units>%</units>
+          <font_size>18</font_size>
+          <decimals>0</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.HR_caja&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>471</xpos>
+          <ypos>82</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>12</font_size>
+          <label>HR en la caja:</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Arial</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (1) of Copy (1) of Numeric2">
+          <tag>manzanillo.__inlocs__.volt_bat</tag>
+          <xpos>508</xpos>
+          <ypos>17</ypos>
+          <width>47</width>
+          <height>29</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <units>V</units>
+          <font_size>18</font_size>
+          <decimals>1</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.VOLT_BAT&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="imagecomponent" name="Image4">
+          <xpos>398</xpos>
+          <ypos>124</ypos>
+          <width>236</width>
+          <height>347</height>
+          <image_name>CSIEquipment\MetAg\Stations\UT20Tower.jpg</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="numeric" name="Copy (1) of Numeric2">
+          <tag>manzanillo.__inlocs__.tem_log</tag>
+          <xpos>502</xpos>
+          <ypos>58</ypos>
+          <width>57</width>
+          <height>29</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <units>&#186;C</units>
+          <font_size>18</font_size>
+          <decimals>1</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.TEM_LOG&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>435</xpos>
+          <ypos>43</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>12</font_size>
+          <label>Temperatura: Logger</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Arial</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="imagecomponent" name="Image3">
+          <xpos>395</xpos>
+          <ypos>0</ypos>
+          <width>10</width>
+          <height>470</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>440</xpos>
+          <ypos>2</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>12</font_size>
+          <label>Voltaje de la Bater&#237;a</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Arial</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="graph" name="Graph2">
+          <xpos>3</xpos>
+          <ypos>168</ypos>
+          <width>407</width>
+          <height>159</height>
+          <left_max>45,000000</left_max>
+          <left_min>10,000000</left_min>
+          <graph_width>312,000000</graph_width>
+          <graph_height>116,000000</graph_height>
+          <graph_x>48,000000</graph_x>
+          <graph_y>136,000000</graph_y>
+          <image_name>Backgrounds\Colors\Transparent.gif</image_name>
+          <font_size>10</font_size>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <scale_x>43</scale_x>
+          <title>Temperatura instantanea del panel de alambrado</title>
+          <time_value>6</time_value>
+          <time_option>2</time_option>
+          <time_back>21600</time_back>
+          <update_rate>120000</update_rate>
+          <scale_labels>8</scale_labels>
+          <decimals>0</decimals>
+          <time_format>%H:%M</time_format>
+          <time_pos>141</time_pos>
+          <font_face>Arial</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+          <show_v_grid>1</show_v_grid>
+          <show_h_grid>1</show_h_grid>
+          <right_max>2,000000</right_max>
+          <right_min>1,000000</right_min>
+          <auto_label>0</auto_label>
+          <auto_scale_left>0</auto_scale_left>
+          <auto_scale_right>0</auto_scale_right>
+          <pens count="1">
+            <pen type="graphpen">
+              <tag>manzanillo.__inlocs__.tem_log</tag>
+              <line_red>255</line_red>
+              <line_green>255</line_green>
+              <line_blue>0</line_blue>
+              <dot_red>255</dot_red>
+              <dot_green>255</dot_green>
+              <dot_blue>0</dot_blue>
+              <offset>0</offset>
+              <calculation>&quot;manzanillo.__inlocs__.TEM_LOG&quot;</calculation>
+              <dot_size>2</dot_size>
+              <line_selection>0</line_selection>
+              <axis>0</axis>
+            </pen>
+          </pens>
+        </component>
+      </components>
+    </screen>
+    <screen name="manzaRED">
+      <background_image>White.gif</background_image>
+      <components count="76">
+        <component type="numeric" name="Copy (1) of Copy (1) of Copy (2) of Copy (3) of Copy (1) of Copy (1) of Copy (2) of Copy (1) of Copy (1) of Copy (1) of Numeric">
+          <tag>manzanillo.1.rad_mj_m2_tot</tag>
+          <xpos>480</xpos>
+          <ypos>427</ypos>
+          <width>46</width>
+          <height>25</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>16</font_size>
+          <decimals>2</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.1.RAD_MJ_m2_TOT&quot;</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (2) of Copy (3) of Copy (1) of Copy (1) of Copy (2) of Copy (1) of Copy (1) of Copy (1) of Numeric">
+          <tag>manzanillo.__inlocs__.rad_kw_m2</tag>
+          <xpos>481</xpos>
+          <ypos>384</ypos>
+          <width>46</width>
+          <height>25</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>16</font_size>
+          <decimals>2</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.RAD_KW_m2&quot;</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (2) of Copy (1) of Copy (3) of Copy (1) of Copy (1) of Copy (2) of Copy (1) of Copy (1) of Copy (1) of Numeric">
+          <tag>manzanillo.__inlocs__.hr</tag>
+          <xpos>519</xpos>
+          <ypos>299</ypos>
+          <width>18</width>
+          <height>35</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>22</font_size>
+          <decimals>0</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.HR&quot;</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="imagecomponent" name="Copy (1) of Copy (1) of Copy (1) of Copy (1) of Image19">
+          <xpos>424</xpos>
+          <ypos>82</ypos>
+          <width>10</width>
+          <height>392</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>437</xpos>
+          <ypos>205</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>12</font_size>
+          <label>M&#225;xima:</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>441</xpos>
+          <ypos>246</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>12</font_size>
+          <label>M&#237;nima:</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (3) of Copy (3) of Copy (1) of Copy (1) of Copy (2) of Copy (1) of Copy (1) of Copy (1) of Numeric">
+          <tag>manzanillo.__inlocs__.tmax</tag>
+          <xpos>521</xpos>
+          <ypos>124</ypos>
+          <width>45</width>
+          <height>35</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>22</font_size>
+          <decimals>1</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.Tmax&quot;</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (3) of Copy (1) of Copy (1) of Copy (2) of Copy (1) of Copy (1) of Copy (1) of Numeric">
+          <tag>manzanillo.__inlocs__.tmax</tag>
+          <xpos>523</xpos>
+          <ypos>195</ypos>
+          <width>45</width>
+          <height>35</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>22</font_size>
+          <decimals>1</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.Tmax&quot;</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (1) of Copy (3) of Copy (1) of Copy (1) of Copy (2) of Copy (1) of Copy (1) of Copy (1) of Numeric">
+          <tag>manzanillo.__inlocs__.tmin</tag>
+          <xpos>522</xpos>
+          <ypos>234</ypos>
+          <width>45</width>
+          <height>35</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>22</font_size>
+          <decimals>1</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.Tmin&quot;</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="imagecomponent" name="Image9">
+          <xpos>0</xpos>
+          <ypos>270</ypos>
+          <width>786</width>
+          <height>10</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>452</xpos>
+          <ypos>283</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>12</font_size>
+          <label>Humedad relativa actual</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>538</xpos>
+          <ypos>306</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>16</font_size>
+          <label>%</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="imagecomponent" name="Copy (1) of Copy (2) of Copy (1) of Copy (1) of Copy (1) of Image19">
+          <xpos>431</xpos>
+          <ypos>336</ypos>
+          <width>203</width>
+          <height>10</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>491</xpos>
+          <ypos>344</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Radiaci&#243;n</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>1</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>502</xpos>
+          <ypos>367</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>10</font_size>
+          <label>Instant&#225;nea</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>532</xpos>
+          <ypos>388</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Kw/m2</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>482</xpos>
+          <ypos>411</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>10</font_size>
+          <label>Total &#250;ltima hora</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>528</xpos>
+          <ypos>431</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>MJ/m2</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>465</xpos>
+          <ypos>101</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>12</font_size>
+          <label>Temperatura actual</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>571</xpos>
+          <ypos>134</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>16</font_size>
+          <label>&#186;C</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>450</xpos>
+          <ypos>164</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>12</font_size>
+          <label>Temperaturas extremas</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>479</xpos>
+          <ypos>185</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>10</font_size>
+          <label>(Desde 12am de hoy)</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>570</xpos>
+          <ypos>204</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>16</font_size>
+          <label>&#186;C</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>570</xpos>
+          <ypos>242</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>16</font_size>
+          <label>&#186;C</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="imagecomponent" name="Copy (1) of Copy (1) of Copy (1) of Image19">
+          <xpos>277</xpos>
+          <ypos>273</ypos>
+          <width>10</width>
+          <height>201</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>376</xpos>
+          <ypos>343</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>16</font_size>
+          <label>mm</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>379</xpos>
+          <ypos>426</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>16</font_size>
+          <label>mm</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (2) of Copy (1) of Copy (1) of Copy (2) of Copy (1) of Copy (1) of Copy (1) of Numeric">
+          <tag>manzanillo.__inlocs__.lluv_ayer</tag>
+          <xpos>328</xpos>
+          <ypos>416</ypos>
+          <width>45</width>
+          <height>35</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <units></units>
+          <font_size>22</font_size>
+          <decimals>1</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.LLUV_ayer&quot;</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (2) of Copy (2) of Copy (1) of Copy (1) of Copy (1) of Numeric">
+          <tag>manzanillo.__inlocs__.sum_lluv</tag>
+          <xpos>327</xpos>
+          <ypos>335</ypos>
+          <width>45</width>
+          <height>35</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <units></units>
+          <font_size>22</font_size>
+          <decimals>1</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.SUM_lluv&quot;</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>312</xpos>
+          <ypos>391</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>12</font_size>
+          <label>a 7am de hoy:</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>303</xpos>
+          <ypos>376</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>12</font_size>
+          <label>De 7am de ayer</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>306</xpos>
+          <ypos>311</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>12</font_size>
+          <label>Desde las 7am</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>298</xpos>
+          <ypos>286</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>12</font_size>
+          <label>Lluvia acumulada</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="imagecomponent" name="Image17">
+          <xpos>284</xpos>
+          <ypos>279</ypos>
+          <width>148</width>
+          <height>190</height>
+          <image_name>Backgrounds\Colors\LightGray.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>448</xpos>
+          <ypos>62</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>8</font_size>
+          <label>del d&#237;a</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>22</xpos>
+          <ypos>191</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>10</font_size>
+          <label>(Desde las 12am de hoy)</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>367</xpos>
+          <ypos>226</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>SO</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>229</xpos>
+          <ypos>226</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>SO</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>229</xpos>
+          <ypos>134</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>NO</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>369</xpos>
+          <ypos>134</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>NE</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="imagecomponent" name="Image9">
+          <xpos>0</xpos>
+          <ypos>79</ypos>
+          <width>786</width>
+          <height>10</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="time" name="Copy (1) of Copy (1) of Time">
+          <tag>manzanillo</tag>
+          <xpos>394</xpos>
+          <ypos>62</ypos>
+          <width>31</width>
+          <height>13</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>8</font_size>
+          <time_source>1</time_source>
+          <time_format>%I:%M %p</time_format>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+          <sync_interval>900000</sync_interval>
+          <sync_value>15</sync_value>
+          <sync_units>1</sync_units>
+        </component>
+        <component type="label" name="Label">
+          <xpos>70</xpos>
+          <ypos>284</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>12</font_size>
+          <label>Total de lluvia horaria</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>221</xpos>
+          <ypos>436</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>16</font_size>
+          <label>mm</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (3) of Copy (1) of Copy (1) of Copy (1) of Numeric">
+          <tag>manzanillo.1.lluv_mm_tot</tag>
+          <xpos>186</xpos>
+          <ypos>435</ypos>
+          <width>33</width>
+          <height>25</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <units></units>
+          <font_size>16</font_size>
+          <decimals>1</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.1.LLUV_mm_TOT&quot;</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>19</xpos>
+          <ypos>438</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>14</font_size>
+          <label>Precip. &#250;ltima hora:</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="graph" name="Copy (1) of Graph">
+          <xpos>0</xpos>
+          <ypos>289</ypos>
+          <width>297</width>
+          <height>154</height>
+          <left_max>40,000000</left_max>
+          <left_min>10,000000</left_min>
+          <graph_width>226,000000</graph_width>
+          <graph_height>113,000000</graph_height>
+          <graph_x>33,000000</graph_x>
+          <graph_y>132,000000</graph_y>
+          <image_name>Backgrounds\Colors\Transparent.gif</image_name>
+          <font_size>10</font_size>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <scale_x>28</scale_x>
+          <title></title>
+          <time_value>12</time_value>
+          <time_option>2</time_option>
+          <time_back>43200</time_back>
+          <update_rate>1800000</update_rate>
+          <scale_labels>7</scale_labels>
+          <decimals>0</decimals>
+          <time_format>%H</time_format>
+          <time_pos>137</time_pos>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+          <show_v_grid>1</show_v_grid>
+          <show_h_grid>1</show_h_grid>
+          <right_max>100,000000</right_max>
+          <right_min>0,000000</right_min>
+          <auto_label>0</auto_label>
+          <auto_scale_left>0</auto_scale_left>
+          <auto_scale_right>0</auto_scale_right>
+          <pens count="1">
+            <pen type="graphpen">
+              <tag>manzanillo.1.temp_c_avg</tag>
+              <line_red>255</line_red>
+              <line_green>0</line_green>
+              <line_blue>0</line_blue>
+              <dot_red>255</dot_red>
+              <dot_green>0</dot_green>
+              <dot_blue>0</dot_blue>
+              <offset>0</offset>
+              <calculation>&quot;manzanillo.1.TEMP_C_AVG&quot;</calculation>
+              <dot_size>3</dot_size>
+              <line_selection>0</line_selection>
+              <axis>0</axis>
+            </pen>
+          </pens>
+        </component>
+        <component type="imagecomponent" name="Image8">
+          <xpos>0</xpos>
+          <ypos>274</ypos>
+          <width>283</width>
+          <height>200</height>
+          <image_name>Backgrounds\Colors\LightGray.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>16</xpos>
+          <ypos>14</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>10</font_size>
+          <label>Latitud:</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>167</xpos>
+          <ypos>13</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>16</font_size>
+          <label>Estaci&#243;n Meteorol&#243;gica Manzanillo</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>1</xpos>
+          <ypos>96</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>12</font_size>
+          <label>Velocidad actual del viento:</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>2</xpos>
+          <ypos>172</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>12</font_size>
+          <label>Velocidad m&#225;xima del viento</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>335</xpos>
+          <ypos>327</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <font_size>12</font_size>
+          <label>de hoy:</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="time" name="Copy (1) of Time">
+          <tag>station</tag>
+          <xpos>489</xpos>
+          <ypos>62</ypos>
+          <width>57</width>
+          <height>13</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>8</font_size>
+          <time_source>3</time_source>
+          <time_format>%d/%m /%Y</time_format>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+          <sync_interval>900000</sync_interval>
+          <sync_value>15</sync_value>
+          <sync_units>1</sync_units>
+        </component>
+        <component type="label" name="Label">
+          <xpos>88</xpos>
+          <ypos>226</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>16</font_size>
+          <label>Km/h</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (2) of Copy (1) of Copy (1) of Copy (1) of Numeric">
+          <tag>manzanillo.__inlocs__.vmax</tag>
+          <xpos>41</xpos>
+          <ypos>217</ypos>
+          <width>45</width>
+          <height>35</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>22</font_size>
+          <decimals>1</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.Vmax&quot;*3.6</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>224</xpos>
+          <ypos>88</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>12</font_size>
+          <label>Direcci&#243;n actual del viento</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (1) of Copy (1) of Copy (1) of Copy (1) of Numeric">
+          <tag>manzanillo.__inlocs__.dmed_2min</tag>
+          <xpos>392</xpos>
+          <ypos>245</ypos>
+          <width>24</width>
+          <height>25</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units>&#186;</units>
+          <font_size>16</font_size>
+          <decimals>0</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.Dmed_2min&quot;</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>226</xpos>
+          <ypos>172</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>O</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>383</xpos>
+          <ypos>176</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>E</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>306</xpos>
+          <ypos>248</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>S</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>305</xpos>
+          <ypos>105</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>N</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="gauge" name="Copy (2) of Gauge">
+          <tag>manzanillo.__inlocs__.dmed_2min</tag>
+          <xpos>243</xpos>
+          <ypos>124</ypos>
+          <width>139</width>
+          <height>127</height>
+          <max>360,000000</max>
+          <min>0,000000</min>
+          <arrow_red>217</arrow_red>
+          <arrow_green>0</arrow_green>
+          <arrow_blue>0</arrow_blue>
+          <range_begin>90,000000</range_begin>
+          <range_end>85,000000</range_end>
+          <arrow_len>44,000000</arrow_len>
+          <arrow_x>69,000000</arrow_x>
+          <arrow_y>60,000000</arrow_y>
+          <image_name>Gauges\Circular.gif</image_name>
+          <font_size>8</font_size>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <scale_labels>9</scale_labels>
+          <scale_len>47</scale_len>
+          <calculation>&quot;manzanillo.__inlocs__.Dmed_2min&quot;</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+          <decimals>0</decimals>
+          <auto_label>0</auto_label>
+        </component>
+        <component type="imagecomponent" name="Copy (1) of Copy (1) of Image19">
+          <xpos>195</xpos>
+          <ypos>85</ypos>
+          <width>10</width>
+          <height>193</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>83</xpos>
+          <ypos>131</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>0</font_blue>
+          <font_size>16</font_size>
+          <label>Km/h</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="numeric" name="Copy (1) of Copy (1) of Copy (1) of Numeric">
+          <tag>manzanillo.__inlocs__.vmed_2min</tag>
+          <xpos>40</xpos>
+          <ypos>122</ypos>
+          <width>45</width>
+          <height>35</height>
+          <font_red>255</font_red>
+          <font_green>255</font_green>
+          <font_blue>255</font_blue>
+          <units></units>
+          <font_size>22</font_size>
+          <decimals>1</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.Vmed_2min&quot;*3.6</calculation>
+          <font_face>Tahoma</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>62</xpos>
+          <ypos>45</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>10</font_size>
+          <label>5 msnm</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>62</xpos>
+          <ypos>28</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>10</font_size>
+          <label>82&#186; 39&apos;</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>61</xpos>
+          <ypos>14</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>10</font_size>
+          <label>09&#186; 38&apos;</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>86</xpos>
+          <ypos>62</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>8</font_size>
+          <label>Los datos observados se actualizaron por ultima vez a las</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>232</xpos>
+          <ypos>40</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>10</font_size>
+          <label>Instituto Meteorol&#243;gico Nacional</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>3</xpos>
+          <ypos>45</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>10</font_size>
+          <label>Elevaci&#243;n:</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>6</xpos>
+          <ypos>29</ypos>
+          <width>10</width>
+          <height>10</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>10</font_size>
+          <label>Longitud:</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="imagecomponent" name="Image12">
+          <xpos>0</xpos>
+          <ypos>84</ypos>
+          <width>723</width>
+          <height>378</height>
+          <image_name>Backgrounds\Gradients\BlueRedYellow.png</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Image16">
+          <xpos>0</xpos>
+          <ypos>82</ypos>
+          <width>433</width>
+          <height>205</height>
+          <image_name>Backgrounds\Gradients\CobaltBlue.png</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Image18">
+          <xpos>-88</xpos>
+          <ypos>0</ypos>
+          <width>722</width>
+          <height>90</height>
+          <image_name>Backgrounds\Colors\LightBlue.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+      </components>
+    </screen>
+    <screen name="Horarios">
+      <background_image>White.gif</background_image>
+      <components count="3">
+        <component type="label" name="Label">
+          <xpos>149</xpos>
+          <ypos>24</ypos>
+          <width>8</width>
+          <height>8</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>18</font_size>
+          <label>Tabla de valores horarios</label>
+          <cushion>1</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="tabledisplay" name="Table">
+          <tag>manzanillo.1</tag>
+          <xpos>17</xpos>
+          <ypos>64</ypos>
+          <width>579</width>
+          <height>375</height>
+          <total_records>100</total_records>
+          <time_format>%c</time_format>
+        </component>
+        <component type="imagecomponent" name="Image10">
+          <xpos>0</xpos>
+          <ypos>0</ypos>
+          <width>630</width>
+          <height>474</height>
+          <image_name>Backgrounds\Gradients\BlackWhite.png</image_name>
+          <rotation>0</rotation>
+        </component>
+      </components>
+    </screen>
+    <screen name="Diarios">
+      <background_image>White.gif</background_image>
+      <components count="3">
+        <component type="label" name="Label">
+          <xpos>166</xpos>
+          <ypos>26</ypos>
+          <width>8</width>
+          <height>8</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>18</font_size>
+          <label>Tabla de valores diarios</label>
+          <cushion>1</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="tabledisplay" name="Table2">
+          <tag>manzanillo.2</tag>
+          <xpos>19</xpos>
+          <ypos>65</ypos>
+          <width>572</width>
+          <height>373</height>
+          <total_records>100</total_records>
+          <time_format>%c</time_format>
+        </component>
+        <component type="imagecomponent" name="Image11">
+          <xpos>0</xpos>
+          <ypos>0</ypos>
+          <width>632</width>
+          <height>469</height>
+          <image_name>Backgrounds\Gradients\BlackWhite.png</image_name>
+          <rotation>0</rotation>
+        </component>
+      </components>
+    </screen>
+    <screen name="PCCD">
+      <background_image>White.gif</background_image>
+      <components count="57">
+        <component type="label" name="Copy (6) of Label">
+          <xpos>56</xpos>
+          <ypos>92</ypos>
+          <width>493</width>
+          <height>19</height>
+          <font_red>0</font_red>
+          <font_green>128</font_green>
+          <font_blue>128</font_blue>
+          <font_size>12</font_size>
+          <label>El icono en azul indica condici&#243;n normal, en rojo indica condici&#243;n de alerta)</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>Times New Roman</font_face>
+          <font_family>72</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>92</font_weight>
+        </component>
+        <component type="label" name="Copy (5) of Label">
+          <xpos>411</xpos>
+          <ypos>384</ypos>
+          <width>90</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Bater&#237;a alta</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Copy (4) of Label">
+          <xpos>411</xpos>
+          <ypos>327</ypos>
+          <width>97</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Bater&#237;a baja</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="imagecomponent" name="Copy (2) of Image15">
+          <xpos>208</xpos>
+          <ypos>161</ypos>
+          <width>10</width>
+          <height>286</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Copy (3) of Label">
+          <xpos>53</xpos>
+          <ypos>409</ypos>
+          <width>121</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Temp. M&#237;nima</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Copy (2) of Label">
+          <xpos>55</xpos>
+          <ypos>365</ypos>
+          <width>126</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Temp. M&#225;xima</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="alarm" name="Copy (5) of Copy (1) of Alarm">
+          <tag>manzanillo.__inlocs__.out_ins_t</tag>
+          <xpos>583</xpos>
+          <ypos>125</ypos>
+          <width>28</width>
+          <height>28</height>
+          <delay>1800000</delay>
+          <alarm_val>119</alarm_val>
+          <sound_file>laser.wav</sound_file>
+          <on_image_file>AlarmsToggles\RedLEDOn.gif</on_image_file>
+          <off_image_file>AlarmsToggles\BlueLEDOn.gif</off_image_file>
+          <condition>0</condition>
+          <calculation>&quot;manzanillo.__inlocs__.out_ins_T&quot;</calculation>
+        </component>
+        <component type="alarm" name="Copy (2) of Copy (1) of Alarm">
+          <tag>manzanillo.__inlocs__.delta_err</tag>
+          <xpos>586</xpos>
+          <ypos>209</ypos>
+          <width>27</width>
+          <height>29</height>
+          <delay>1800000</delay>
+          <alarm_val>-2</alarm_val>
+          <sound_file>laser.wav</sound_file>
+          <on_image_file>AlarmsToggles\RedLEDOn.gif</on_image_file>
+          <off_image_file>AlarmsToggles\BlueLEDOn.gif</off_image_file>
+          <condition>4</condition>
+          <calculation>&quot;manzanillo.__inlocs__.delta_err&quot;</calculation>
+        </component>
+        <component type="alarm" name="Alarm">
+          <tag>manzanillo.__inlocs__.fl_tmax</tag>
+          <xpos>321</xpos>
+          <ypos>123</ypos>
+          <width>29</width>
+          <height>29</height>
+          <delay>7200000</delay>
+          <alarm_val>-6</alarm_val>
+          <sound_file>alarm.wav</sound_file>
+          <on_image_file>AlarmsToggles\RedLEDOn.gif</on_image_file>
+          <off_image_file>AlarmsToggles\BlueLEDOn.gif</off_image_file>
+          <condition>4</condition>
+          <calculation>&quot;manzanillo.__inlocs__.FL_Tmax&quot;</calculation>
+        </component>
+        <component type="label" name="Copy (1) of Label">
+          <xpos>379</xpos>
+          <ypos>212</ypos>
+          <width>83</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>&quot;Dip Test&quot;</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="imagecomponent" name="Copy (6) of Image14">
+          <xpos>25</xpos>
+          <ypos>274</ypos>
+          <width>332</width>
+          <height>11</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="alarm" name="Copy (2) of Copy (1) of Copy (8) of Copy (1) of Alarm">
+          <tag>manzanillo.__inlocs__.volt_bat</tag>
+          <xpos>542</xpos>
+          <ypos>324</ypos>
+          <width>31</width>
+          <height>29</height>
+          <delay>3600000</delay>
+          <alarm_val>11</alarm_val>
+          <sound_file>siren.wav</sound_file>
+          <on_image_file>AlarmsToggles\RedLEDOn.gif</on_image_file>
+          <off_image_file>AlarmsToggles\BlueLEDOn.gif</off_image_file>
+          <condition>1</condition>
+          <calculation>&quot;manzanillo.__inlocs__.VOLT_BAT&quot;</calculation>
+        </component>
+        <component type="alarm" name="Copy (1) of Copy (1) of Copy (8) of Copy (1) of Alarm">
+          <tag>manzanillo.__inlocs__.volt_bat</tag>
+          <xpos>542</xpos>
+          <ypos>381</ypos>
+          <width>31</width>
+          <height>30</height>
+          <delay>3600000</delay>
+          <alarm_val>16</alarm_val>
+          <sound_file>alert1.wav</sound_file>
+          <on_image_file>AlarmsToggles\RedLEDOn.gif</on_image_file>
+          <off_image_file>AlarmsToggles\BlueLEDOn.gif</off_image_file>
+          <condition>0</condition>
+          <calculation>&quot;manzanillo.__inlocs__.VOLT_BAT&quot;</calculation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>392</xpos>
+          <ypos>269</ypos>
+          <width>164</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Voltaje de la bater&#237;a</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="alarm" name="Copy (1) of Copy (1) of Copy (2) of Copy (1) of Alarm">
+          <tag>manzanillo.__inlocs__.tout_flag</tag>
+          <xpos>256</xpos>
+          <ypos>362</ypos>
+          <width>30</width>
+          <height>29</height>
+          <delay>1800000</delay>
+          <alarm_val>1</alarm_val>
+          <sound_file>siren.wav</sound_file>
+          <on_image_file>AlarmsToggles\RedLEDOn.gif</on_image_file>
+          <off_image_file>AlarmsToggles\BlueLEDOn.gif</off_image_file>
+          <condition>4</condition>
+          <calculation>&quot;manzanillo.__inlocs__.TOUT_flag&quot;</calculation>
+        </component>
+        <component type="alarm" name="Copy (1) of Copy (2) of Copy (1) of Alarm">
+          <tag>manzanillo.__inlocs__.flag_jump</tag>
+          <xpos>322</xpos>
+          <ypos>251</ypos>
+          <width>26</width>
+          <height>23</height>
+          <delay>1800000</delay>
+          <alarm_val>-5</alarm_val>
+          <sound_file>laser.wav</sound_file>
+          <on_image_file>AlarmsToggles\RedLEDOn.gif</on_image_file>
+          <off_image_file>AlarmsToggles\BlueLEDOn.gif</off_image_file>
+          <condition>4</condition>
+          <calculation>&quot;manzanillo.__inlocs__.Flag_Jump&quot;</calculation>
+        </component>
+        <component type="alarm" name="Copy (6) of Copy (1) of Alarm">
+          <tag>manzanillo.1.temp_c_std</tag>
+          <xpos>586</xpos>
+          <ypos>167</ypos>
+          <width>28</width>
+          <height>28</height>
+          <delay>1800000</delay>
+          <alarm_val>1</alarm_val>
+          <sound_file>laser.wav</sound_file>
+          <on_image_file>AlarmsToggles\RedLEDOn.gif</on_image_file>
+          <off_image_file>AlarmsToggles\BlueLEDOn.gif</off_image_file>
+          <condition>0</condition>
+          <calculation>&quot;manzanillo.1.TEMP_C_STD&quot;</calculation>
+        </component>
+        <component type="alarm" name="Copy (4) of Copy (1) of Alarm">
+          <tag>manzanillo.__inlocs__.fl_tmin</tag>
+          <xpos>256</xpos>
+          <ypos>406</ypos>
+          <width>29</width>
+          <height>30</height>
+          <delay>1800000</delay>
+          <alarm_val>-1</alarm_val>
+          <sound_file>laser.wav</sound_file>
+          <on_image_file>AlarmsToggles\RedLEDOn.gif</on_image_file>
+          <off_image_file>AlarmsToggles\BlueLEDOn.gif</off_image_file>
+          <condition>4</condition>
+          <calculation>&quot;manzanillo.__inlocs__.FL_Tmin&quot;</calculation>
+        </component>
+        <component type="alarm" name="Copy (3) of Copy (1) of Alarm">
+          <tag>manzanillo.__inlocs__.thr_flag</tag>
+          <xpos>321</xpos>
+          <ypos>285</ypos>
+          <width>27</width>
+          <height>26</height>
+          <delay>1800000</delay>
+          <alarm_val>-7</alarm_val>
+          <sound_file>laser.wav</sound_file>
+          <on_image_file>AlarmsToggles\RedLEDOn.gif</on_image_file>
+          <off_image_file>AlarmsToggles\BlueLEDOn.gif</off_image_file>
+          <condition>4</condition>
+          <calculation>&quot;manzanillo.__inlocs__.THR_flag&quot;</calculation>
+        </component>
+        <component type="alarm" name="Copy (1) of Copy (1) of Alarm">
+          <tag>manzanillo.__inlocs__.flagt_day</tag>
+          <xpos>323</xpos>
+          <ypos>210</ypos>
+          <width>27</width>
+          <height>28</height>
+          <delay>7200000</delay>
+          <alarm_val>-3</alarm_val>
+          <sound_file>laser.wav</sound_file>
+          <on_image_file>AlarmsToggles\RedLEDOn.gif</on_image_file>
+          <off_image_file>AlarmsToggles\BlueLEDOn.gif</off_image_file>
+          <condition>4</condition>
+          <calculation>&quot;manzanillo.__inlocs__.FlagT_day&quot;</calculation>
+        </component>
+        <component type="alarm" name="Copy (1) of Alarm">
+          <tag>manzanillo.2.fl_tmin</tag>
+          <xpos>320</xpos>
+          <ypos>166</ypos>
+          <width>29</width>
+          <height>29</height>
+          <delay>7200000</delay>
+          <alarm_val>-7</alarm_val>
+          <sound_file>alarm.wav</sound_file>
+          <on_image_file>AlarmsToggles\RedLEDOn.gif</on_image_file>
+          <off_image_file>AlarmsToggles\BlueLEDOn.gif</off_image_file>
+          <condition>4</condition>
+          <calculation>&quot;manzanillo.2.FL_Tmin&quot;</calculation>
+        </component>
+        <component type="imagecomponent" name="Copy (1) of Copy (2) of Copy (2) of Image15">
+          <xpos>313</xpos>
+          <ypos>119</ypos>
+          <width>10</width>
+          <height>201</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Copy (1) of Copy (3) of Copy (2) of Image15">
+          <xpos>575</xpos>
+          <ypos>113</ypos>
+          <width>10</width>
+          <height>136</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Copy (3) of Copy (2) of Image15">
+          <xpos>468</xpos>
+          <ypos>112</ypos>
+          <width>10</width>
+          <height>130</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>362</xpos>
+          <ypos>70</ypos>
+          <width>69</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>128</font_green>
+          <font_blue>128</font_blue>
+          <font_size>14</font_size>
+          <label>Variable</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>502</xpos>
+          <ypos>71</ypos>
+          <width>83</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>128</font_green>
+          <font_blue>128</font_blue>
+          <font_size>14</font_size>
+          <label>Indicador </label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="numeric" name="Copy (3) of Copy (1) of Copy (2) of Copy (1) of Copy (1) of Copy (2) of Numeric2">
+          <tag>manzanillo.1.temp_c_std</tag>
+          <xpos>522</xpos>
+          <ypos>173</ypos>
+          <width>10</width>
+          <height>24</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <units></units>
+          <font_size>14</font_size>
+          <decimals>0</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.1.TEMP_C_STD&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>365</xpos>
+          <ypos>177</ypos>
+          <width>85</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>SD Temp.</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="imagecomponent" name="Copy (2) of Copy (2) of Image15">
+          <xpos>347</xpos>
+          <ypos>114</ypos>
+          <width>10</width>
+          <height>329</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="numeric" name="Copy (1) of Copy (1) of Copy (2) of Copy (1) of Copy (1) of Copy (2) of Numeric2">
+          <tag>manzanillo.__inlocs__.tout_flag</tag>
+          <xpos>264</xpos>
+          <ypos>325</ypos>
+          <width>10</width>
+          <height>24</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <units></units>
+          <font_size>14</font_size>
+          <decimals>0</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.TOUT_flag&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>362</xpos>
+          <ypos>129</ypos>
+          <width>96</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Salto T inst.</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="numeric" name="Copy (1) of Copy (2) of Copy (1) of Copy (1) of Copy (2) of Numeric2">
+          <tag>manzanillo.__inlocs__.out_ins_t</tag>
+          <xpos>522</xpos>
+          <ypos>130</ypos>
+          <width>10</width>
+          <height>24</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <units></units>
+          <font_size>14</font_size>
+          <decimals>0</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.out_ins_T&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>38</xpos>
+          <ypos>324</ypos>
+          <width>169</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>T max/T min (Hora):</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="numeric" name="Copy (2) of Copy (1) of Copy (1) of Copy (2) of Numeric2">
+          <tag>manzanillo.__inlocs__.thr_flag</tag>
+          <xpos>263</xpos>
+          <ypos>289</ypos>
+          <width>10</width>
+          <height>24</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <units></units>
+          <font_size>14</font_size>
+          <decimals>0</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.THR_flag&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>33</xpos>
+          <ypos>291</ypos>
+          <width>156</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Consistencia T/HR</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="numeric" name="Copy (1) of Copy (1) of Copy (1) of Copy (2) of Numeric2">
+          <tag>manzanillo.__inlocs__.delta_err</tag>
+          <xpos>523</xpos>
+          <ypos>211</ypos>
+          <width>10</width>
+          <height>24</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <units></units>
+          <font_size>14</font_size>
+          <decimals>0</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.delta_err&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="numeric" name="Copy (1) of Copy (1) of Copy (2) of Numeric2">
+          <tag>manzanillo.__inlocs__.flag_jump</tag>
+          <xpos>263</xpos>
+          <ypos>253</ypos>
+          <width>10</width>
+          <height>24</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <units></units>
+          <font_size>14</font_size>
+          <decimals>0</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.Flag_Jump&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="numeric" name="Copy (1) of Copy (2) of Numeric2">
+          <tag>manzanillo.__inlocs__.flagt_day</tag>
+          <xpos>261</xpos>
+          <ypos>217</ypos>
+          <width>10</width>
+          <height>24</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <units></units>
+          <font_size>14</font_size>
+          <decimals>0</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.FlagT_day&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>34</xpos>
+          <ypos>216</ypos>
+          <width>165</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Consistencia extr. T</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="numeric" name="Copy (2) of Numeric2">
+          <tag>manzanillo.__inlocs__.fl_tmax</tag>
+          <xpos>261</xpos>
+          <ypos>175</ypos>
+          <width>10</width>
+          <height>24</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <units></units>
+          <font_size>14</font_size>
+          <decimals>0</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.FL_Tmax&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="numeric" name="Numeric2">
+          <tag>manzanillo.__inlocs__.fl_tmax</tag>
+          <xpos>261</xpos>
+          <ypos>130</ypos>
+          <width>13</width>
+          <height>29</height>
+          <font_red>255</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <units></units>
+          <font_size>18</font_size>
+          <decimals>0</decimals>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <calculation>&quot;manzanillo.__inlocs__.FL_Tmax&quot;</calculation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>244</xpos>
+          <ypos>71</ypos>
+          <width>83</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>128</font_green>
+          <font_blue>128</font_blue>
+          <font_size>14</font_size>
+          <label>Indicador </label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>34</xpos>
+          <ypos>254</ypos>
+          <width>142</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>Variaci&#243;n horaria</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>89</xpos>
+          <ypos>71</ypos>
+          <width>69</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>128</font_green>
+          <font_blue>128</font_blue>
+          <font_size>14</font_size>
+          <label>Variable</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>34</xpos>
+          <ypos>174</ypos>
+          <width>98</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>T min diaria</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="label" name="Label">
+          <xpos>33</xpos>
+          <ypos>130</ypos>
+          <width>103</width>
+          <height>24</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>0</font_blue>
+          <font_size>14</font_size>
+          <label>T max diaria</label>
+          <cushion>0</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="imagecomponent" name="Copy (7) of Image14">
+          <xpos>25</xpos>
+          <ypos>311</ypos>
+          <width>330</width>
+          <height>11</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Copy (5) of Image14">
+          <xpos>25</xpos>
+          <ypos>239</ypos>
+          <width>596</width>
+          <height>11</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Copy (4) of Image14">
+          <xpos>24</xpos>
+          <ypos>196</ypos>
+          <width>596</width>
+          <height>11</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Copy (3) of Image14">
+          <xpos>24</xpos>
+          <ypos>153</ypos>
+          <width>596</width>
+          <height>11</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Copy (2) of Image14">
+          <xpos>23</xpos>
+          <ypos>110</ypos>
+          <width>596</width>
+          <height>11</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Copy (1) of Image15">
+          <xpos>612</xpos>
+          <ypos>54</ypos>
+          <width>10</width>
+          <height>398</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Image15">
+          <xpos>22</xpos>
+          <ypos>54</ypos>
+          <width>10</width>
+          <height>398</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Copy (1) of Image14">
+          <xpos>24</xpos>
+          <ypos>440</ypos>
+          <width>592</width>
+          <height>11</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="imagecomponent" name="Image14">
+          <xpos>26</xpos>
+          <ypos>54</ypos>
+          <width>596</width>
+          <height>11</height>
+          <image_name>Backgrounds\Colors\White.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+        <component type="label" name="Label">
+          <xpos>57</xpos>
+          <ypos>15</ypos>
+          <width>453</width>
+          <height>26</height>
+          <font_red>0</font_red>
+          <font_green>0</font_green>
+          <font_blue>128</font_blue>
+          <font_size>14</font_size>
+          <label>Salida de control de calidad del dato para temperatura</label>
+          <cushion>1</cushion>
+          <background_red>255</background_red>
+          <background_green>255</background_green>
+          <background_blue>255</background_blue>
+          <rotation>0</rotation>
+          <font_face>MS Sans Serif</font_face>
+          <font_family>74</font_family>
+          <font_style>90</font_style>
+          <font_underline>0</font_underline>
+          <font_weight>90</font_weight>
+        </component>
+        <component type="imagecomponent" name="Image13">
+          <xpos>0</xpos>
+          <ypos>0</ypos>
+          <width>631</width>
+          <height>474</height>
+          <image_name>Backgrounds\Colors\LightBlue.gif</image_name>
+          <rotation>0</rotation>
+        </component>
+      </components>
+    </screen>
+  </screens>
+  <auto_scroll_tabs delay="0" enabled="0" count="0"/>
+</Project>

@@ -1,0 +1,135 @@
+Program Trace Information File for:  FAST TIPS.csi
+Date: 2/13/2006
+Time: 08:09:16
+
+T = Program Table Number
+N = Sequential Program Instruction Location Number
+Instruction = Instruction Number and Name
+
+Inst ExTm = Individual Instruction Execution Time
+Block ExTm = Cumulative Execution Time for program block,
+             i.e., subroutine
+Prog ExTm = Cumulative Total Program Execution Time
+
+                                                          Output Flag High
+                                   Inst  Block   Prog     Inst  Block   Prog
+                                   ExTm   ExTm   ExTm     ExTm   ExTm   ExTm
+T|N|Instruction                   (msec) (msec) (msec)   (msec) (msec) (msec)
+---------------                   ------ ------ ------   ------ ------ ------
+1|1|86 Do                           0.3    0.3    0.3      0.3    0.3    0.3
+ Output Flag Set @ 11 for Array 101
+1|2|3 Pulse                         2.2    2.5    2.5      2.2    2.5    2.5
+1|3|37 Z=X*F                        1.2    3.7    3.7      1.2    3.7    3.7
+1|4|89 If (X<=>F)                   0.6    4.3    4.3      0.6    4.3    4.3
+1|5|18 Time                         4.2    8.5    8.5      4.2    8.5    8.5
+1|6|37 Z=X*F                        1.2    9.7    9.7      1.2    9.7    9.7
+1|7|37 Z=X*F                        1.2   10.9   10.9      1.2   10.9   10.9
+1|8|33 Z=X+Y                        1.2   12.1   12.1      1.2   12.1   12.1
+1|9|33 Z=X+Y                        1.2   13.3   13.3      1.2   13.3   13.3
+1|10|54 Block Move                  2.7   16.0   16.0      2.7   16.0   16.0
+1|11|35 Z=X-Y                       1.2   17.2   17.2      1.2   17.2   17.2
+1|12|89 If (X<=>F)                  0.6   17.8   17.8      0.6   17.8   17.8
+1|13|30 Z=F x 10^n                  1.0   18.8   18.8      1.0   18.8   18.8
+1|14|35 Z=X-Y                       1.2   20.0   20.0      1.2   20.0   20.0
+1|15|33 Z=X+Y                       1.2   21.2   21.2      1.2   21.2   21.2
+1|16|95 End                         0.2   21.4   21.4      0.2   21.4   21.4
+1|17|54 Block Move                  2.7   24.1   24.1      2.7   24.1   24.1
+1|18|38 Z=X/Y                       3.0   27.1   27.1      3.0   27.1   27.1
+1|19|40 Z=LN(X)                     8.4   35.5   35.5      8.4   35.5   35.5
+1|20|43 Z=ABS(X)                    1.0   36.5   36.5      1.0   36.5   36.5
+1|21|95 End                         0.2   36.7   36.7      0.2   36.7   36.7
+1|22|89 If (X<=>F)                  0.6   37.3   37.3      0.6   37.3   37.3
+1|23|31 Z=X                         0.7   38.0   38.0      0.7   38.0   38.0
+1|24|32 Z=Z+1                       0.8   38.8   38.8      0.8   38.8   38.8
+1|25|30 Z=F x 10^n                  1.0   39.8   39.8      1.0   39.8   39.8
+1|26|95 End                         0.2   40.0   40.0      0.2   40.0   40.0
+1|27|89 If (X<=>F)                  0.6   40.6   40.6      0.6   40.6   40.6
+1|28|89 If (X<=>F)                  0.6   41.2   41.2      0.6   41.2   41.2
+1|29|32 Z=Z+1                       0.8   42.0   42.0      0.8   42.0   42.0
+1|30|95 End                         0.2   42.2   42.2      0.2   42.2   42.2
+1|31|95 End                         0.2   42.4   42.4      0.2   42.4   42.4
+1|32|89 If (X<=>F)                  0.6   43.0   43.0      0.6   43.0   43.0
+1|33|88 If (X<=>Y)                  0.8   43.8   43.8      0.8   43.8   43.8
+1|34|30 Z=F x 10^n                  1.0   44.8   44.8      1.0   44.8   44.8
+1|35|95 End                         0.2   45.0   45.0      0.2   45.0   45.0
+1|36|88 If (X<=>Y)                  0.8   45.8   45.8      0.8   45.8   45.8
+1|37|30 Z=F x 10^n                  1.0   46.8   46.8      1.0   46.8   46.8
+1|38|95 End                         0.2   47.0   47.0      0.2   47.0   47.0
+1|39|88 If (X<=>Y)                  0.8   47.8   47.8      0.8   47.8   47.8
+1|40|30 Z=F x 10^n                  1.0   48.8   48.8      1.0   48.8   48.8
+1|41|95 End                         0.2   49.0   49.0      0.2   49.0   49.0
+1|42|54 Block Move                  2.7   51.7   51.7      2.7   51.7   51.7
+1|43|51 Spatial Average             9.6   61.3   61.3      9.6   61.3   61.3
+1|44|31 Z=X                         0.7   62.0   62.0      0.7   62.0   62.0
+1|45|89 If (X<=>F)                  0.6   62.6   62.6      0.6   62.6   62.6
+1|46|32 Z=Z+1                       0.8   63.4   63.4      0.8   63.4   63.4
+1|47|30 Z=F x 10^n                  1.0   64.4   64.4      1.0   64.4   64.4
+1|48|95 End                         0.2   64.6   64.6      0.2   64.6   64.6
+1|49|33 Z=X+Y                       1.2   65.8   65.8      1.2   65.8   65.8
+1|50|32 Z=Z+1                       0.8   66.6   66.6      0.8   66.6   66.6
+1|51|38 Z=X/Y                       3.0   69.6   69.6      3.0   69.6   69.6
+1|52|95 End                         0.2   69.8   69.8      0.2   69.8   69.8
+1|53|89 If (X<=>F)                  0.6   70.4   70.4      0.6   70.4   70.4
+1|54|89 If (X<=>F)                  0.6   71.0   71.0      0.6   71.0   71.0
+1|55|30 Z=F x 10^n                  1.0   72.0   72.0      1.0   72.0   72.0
+1|56|95 End                         0.2   72.2   72.2      0.2   72.2   72.2
+1|57|89 If (X<=>F)                  0.6   72.8   72.8      0.6   72.8   72.8
+1|58|30 Z=F x 10^n                  1.0   73.8   73.8      1.0   73.8   73.8
+1|59|30 Z=F x 10^n                  1.0   74.8   74.8      1.0   74.8   74.8
+1|60|95 End                         0.2   75.0   75.0      0.2   75.0   75.0
+1|61|95 End                         0.2   75.2   75.2      0.2   75.2   75.2
+1|62|92 If time is                  0.7   75.9   75.9      0.7   75.9   75.9
+ Output Flag Set @ 162 for Array 1
+1|63|80 Set Active Storage Area     0.3   76.2   76.2      0.3   76.2   76.2
+1|64|77 Real Time                   0.2   76.4   76.4      3.8   80.0   80.0
+ Output Data 3 Values
+1|65|72 Totalize                    2.6   79.0   79.0      4.4   84.4   84.4
+ Output Data 2 Values
+1|66|70 Sample                      0.2   79.2   79.2      0.9   85.3   85.3
+ Output Data 1 Values
+1|67|70 Sample                      0.2   79.4   79.4      0.9   86.2   86.2
+ Output Data 1 Values
+1|68|70 Sample                      0.2   79.6   79.6      0.9   87.1   87.1
+ Output Data 1 Values
+1|69|70 Sample                      0.2   79.8   79.8      0.9   88.0   88.0
+ Output Data 1 Values
+1|70|92 If time is                  0.7   80.5   80.5      0.7   88.7   88.7
+1|71|30 Z=F x 10^n                  1.0   81.5   81.5      1.0   89.7   89.7
+1|72|30 Z=F x 10^n                  1.0   82.5   82.5      1.0   90.7   90.7
+1|73|30 Z=F x 10^n                  1.0   83.5   83.5      1.0   91.7   91.7
+1|74|30 Z=F x 10^n                  1.0   84.5   84.5      1.0   92.7   92.7
+1|75|95 End                         0.2   84.7   84.7      0.2   92.9   92.9
+1|76|86 Do                          0.3   85.0   85.0      0.3   93.2   93.2
+ Output Flag Set @ 176 for Array 2
+1|77|80 Set Active Storage Area     0.3   85.3   85.3      0.3   93.5   93.5
+1|78|77 Real Time                   0.2   85.5   85.5      3.8   97.3   97.3
+ Output Data 4 Values
+1|79|72 Totalize                    2.6   88.1   88.1      4.4  101.7  101.7
+ Output Data 2 Values
+1|80|70 Sample                      0.2   88.3   88.3      1.3  103.0  103.0
+ Output Data 2 Values
+1|81|70 Sample                      0.2   88.5   88.5      1.3  104.3  104.3
+ Output Data 2 Values
+1|82|70 Sample                      0.2   88.7   88.7      0.9  105.2  105.2
+ Output Data 1 Values
+1|83|70 Sample                      0.2   88.9   88.9      0.9  106.1  106.1
+ Output Data 1 Values
+1|84|70 Sample                      0.2   89.1   89.1      0.9  107.0  107.0
+ Output Data 1 Values
+1|85|70 Sample                      0.2   89.3   89.3      0.9  107.9  107.9
+ Output Data 1 Values
+1|86|70 Sample                      0.2   89.5   89.5      0.9  108.8  108.8
+ Output Data 1 Values
+1|87|70 Sample                      0.2   89.7   89.7      0.9  109.7  109.7
+ Output Data 1 Values
+1|88|96 Serial Out                  0.5   90.2   90.2      0.5  110.2  110.2
+
+Program Table 1 Execution Interval    1.000 Seconds
+
+Table 1 Estimated Total Program Execution Time in msec   90.2 w/Output  110.2
+
+Table 1 Estimated Total Final Storage Locations used per day 648
+
+
+
+Estimated Total Final Storage Locations used per day 648

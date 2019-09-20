@@ -1,0 +1,908 @@
+;{CR10X}
+;
+*Table 1 Program
+  01: 1         Execution Interval (seconds)
+
+;PRUEBAS CON UN INTERVALO DE EJECUCION DE 1 SEGUNDO
+;//////////////////////////////////////////////////////////////////////////////////
+;Para efectos de estas pruebas trabajare con el total maximo de precipitacion historico
+;en la estacion, y calculando un valor promedio para el tiempo entre tips en funcion de
+;este acumulado maximo de 5 minutos.
+
+;///////////////////////////////////////////////////////////////////////////////////
+
+;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+;OBSERVACIONES:
+;Hay varias dificultades que por lo que he visto pueden tenerse en este test:
+;
+;1) Los primeros tres tips desde que se instala el programa dan lugar a un valor
+;erroneo de lambda
+;
+;2) El test sigue corriendo incluso cuando no esta lluviendo, por lo que hay que programarle
+;de alguna manera que si pasa mucho tiempo entonces se deje de ejecutar, de modo que el lambda
+;no valla a generar un valor superior al cinco
+;
+;3) Hay que aclarar bien porque el autor esta eligiendo el lambda mayour o igual a cinco como
+;el rango de rechazo
+
+;4) La de la discontinuidad en la media noche para el calculo del tiempo inter tip, pero creo
+;que ya la resolvi poniendo el valor absoluto, tengo que chequear que funciona
+;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+;     SEQUENCE: Almacena el promedio de los codigos de tiempos intertips
+
+1:  Do (P86)
+ 1: 10       Set Output Flag High
+
+2:  Pulse (P3)
+ 1: 1        Reps
+ 2: 1        Pulse Input Channel
+ 3: 2        Switch Closure, All Counts
+ 4: 1        Loc [ Tips      ]
+ 5: 1        Mult
+ 6: 0        Offset
+
+3:  Z=X*F (P37)
+ 1: 1        X Loc [ Tips      ]
+ 2: 0.1      F
+ 3: 2        Z Loc [ Lluv_mm   ]
+
+;/////////Total de lluvia //////////
+
+
+4:  If (X<=>F) (P89)
+ 1: 1        X Loc [ Tips      ]
+ 2: 3        >=
+ 3: 1        F
+ 4: 30       Then Do
+
+;***************************************************************************
+;OJO: ESTE PROGRAMA ESTA TENIENDO UN PROBLEMITA ; EL ALGORITMO SE
+;ESTABILIZA DESPUES DEL TERCER TIP PORQUE EN LA PRIMERA ETIQUETA DEL
+;BLOQUE DE LOS INTERTIPS SE ALMACENAN LOS SEGUNDOS TOTALES DE LA HORA
+;INSTANTANEA, HAY QUE ESPERAR HASTA EL TERCER TIP DESPUES DE QUE EMPIEZA
+; A LLOVER PARA  QUE SE ESTABILICE EL ALGORITMO.
+;****************************************************************************
+;////////////////////////////////////////////////////////////////////////
+
+;la logica que se pretende programar aqui es que cuando se empiece a registrar lluvia
+;entonces el algoritmo empiece a medir los intervalos entre tips.
+
+;/////////////////////////////////////////////////////////////////////////
+
+
+     5:  Time (P18)
+      1: 3        Store Year,Day,Hr,Min,Sec in 5 consecutive locations
+      2: 0        Mod/By
+      3: 7        Loc [ Tp_Year   ]
+
+     6:  Z=X*F (P37)
+      1: 9        X Loc [ Tp_Hour   ]
+      2: 3600     F
+      3: 13       Z Loc [ Tp_Hour_S ]
+
+     7:  Z=X*F (P37)
+      1: 10       X Loc [ Tp_Min    ]
+      2: 60       F
+      3: 12       Z Loc [ Tp_Min_S  ]
+
+
+     8:  Z=X+Y (P33)
+      1: 12       X Loc [ Tp_Min_S  ]
+      2: 13       Y Loc [ Tp_Hour_S ]
+      3: 26       Z Loc [ Time_13   ]
+
+     9:  Z=X+Y (P33)
+      1: 26       X Loc [ Time_13   ]
+      2: 11       Y Loc [ Tp_Sec    ]
+      3: 26       Z Loc [ Time_13   ]
+
+
+     10:  Block Move (P54)
+      1: 12       No. of Values
+      2: 15       First Source Loc [ Time_2    ]
+      3: 1        Source Step
+      4: 14       First Destination Loc [ Time_1    ]
+      5: 1        Destination Step
+
+     11:  Z=X-Y (P35)
+      1: 25       X Loc [ Time_12   ]
+      2: 24       Y Loc [ Time_11   ]
+      3: 39       Z Loc [ interT_13 ]
+
+;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+;19/12/05: Voy probando este otro algortitmo para arreglar la discontinuidad
+;en medianoche: Cuando la etiqueta interT_13 me de negativa significa que esta
+;pasando por la discontinuidad de la medianoche, en este momento redefino
+;interT_13 segun el siguiente criterio:
+;///////////////////////////////////////////////////////////////
+;***************************************************************
+
+
+;VOY A PROBAR EL SIGUIENTE ALGORITMO QUE ME INVENTE:
+;si Time_13=0 entonces
+;TAU=(86400-Time_11) + Time_13
+;
+;EJ
+;
+;SI SE TIENE 86300          86400 (00:OOH)     70
+;NOTESE QUE ABS( 70-86300)= 86230
+
+
+;/////////////////////////////////////////////////////////////////
+
+     12:  If (X<=>F) (P89)
+      1: 39       X Loc [ interT_13 ]
+      2: 4        <
+      3: 0        F
+      4: 30       Then Do
+
+          13:  Z=F x 10^n (P30)
+           1: 86400    F
+           2: 0        n, Exponent of 10
+           3: 44       Z Loc [ S86400    ]
+
+          14:  Z=X-Y (P35)
+           1: 44       X Loc [ S86400    ]
+           2: 24       Y Loc [ Time_11   ]
+           3: 39       Z Loc [ interT_13 ]
+
+
+          15:  Z=X+Y (P33)
+           1: 39       X Loc [ interT_13 ]
+           2: 26       Y Loc [ Time_13   ]
+           3: 39       Z Loc [ interT_13 ]
+
+
+     16:  End (P95)
+
+;Lo he probado y esta funcionando bien. Darle otra chequeadita
+;por si acaso
+
+
+
+
+
+;******************************************************************
+
+;AQUI TENGO QUE HACER DE ALGUNA MANERA QUE CUANDO  interT13 me de mas
+;alla de cierta cantidad de tiempo entonces
+;a) o no me lo tome en cuenta en COUNTER (porque seria el tiempo que va
+;entre un evento de precipitacion y otro
+;b)y/o que no considere el lambda para este caso, ya que no seria parte
+;de un mismo aguacero
+;*******************************************************************
+
+;21/12/05:aqui estoy diciendo que cuando tenga un tiempo entre tips mayor a dos horas
+;entonces no voy a ejecutar ninguno de los algoritmos, ya que estan hechos para
+;medir en condiciones de precipitacion sostenida. DEBO PROBAR QUE ESTO FUNCIONA
+
+;     17:  If (X<=>F) (P89)
+;      1: 39       X Loc [ interT_13 ]
+;      2: 3        >=
+;      3: 7200     F
+;      4: 0        Go to end of Program Table
+
+;/////////////////////////////////////////////////////////////////
+;interT_13 es la etiqueta que corresponde a la cantidad de segundos
+;entre tips, o tiempo entre tips.
+;////////////////////////////////////////////////////////////////
+
+     17:  Block Move (P54)
+      1: 12       No. of Values
+      2: 28       First Source Loc [ interTT_2 ]
+      3: 1        Source Step
+      4: 27       First Destination Loc [ interTT_1 ]
+      5: 1        Destination Step
+
+;//////////////////////////////////////////////////////
+;TAU corresponde al parametro para los fast tips
+;/////////////////////////////////////////////////////
+
+     18:  Z=X/Y (P38)
+      1: 38       X Loc [ interT_12 ]
+      2: 37       Y Loc [ interT_11 ]
+      3: 40       Z Loc [ TAU       ]
+
+     19:  Z=LN(X) (P40)
+      1: 40       X Loc [ TAU       ]
+      2: 41       Z Loc [ LAMBDA    ]
+
+
+     20:  Z=ABS(X) (P43)
+      1: 41       X Loc [ LAMBDA    ]
+      2: 41       Z Loc [ LAMBDA    ]
+
+
+;///////////////////////////////////////////////////////
+;y lambda el parametro de rechazo, el tip se rechaza si
+;este lambda es mayor que 5 (ESTO HAY QUE REVISARLO, NO SE PORQUE)
+;///////////////////////////////////////////////////////
+
+21:  End (P95)
+
+
+
+;///////////////////////////////////////////////////////////////////
+
+;el lambda se elige 3. para una precipitacion de 42mm/h que es el
+;caso del aeropuerto de Pavas
+;//////////////////////////////////////////////////////////////////
+
+     22:  If (X<=>F) (P89)
+      1: 41       X Loc [ LAMBDA    ]
+      2: 3        >=
+      3: 5        F
+      4: 30       Then Do
+
+          23:  Z=X (P31)
+           1: 41       X Loc [ LAMBDA    ]
+           2: 45       Z Loc [ LAMBD_OUT ]
+;====================================================================================
+;LAMBD_OUT corresponde al valor verdadero de lambda cuando se pasa de rango, en esta
+;etiqueta lo visualizo para ver cuanto esta dando.
+;====================================================================================
+          24:  Z=Z+1 (P32)
+           1: 42       Z Loc [ COUNTER   ]
+;/////////////////////////////////////////////////////////////
+;aqui inicializo el valor de lambda en cero ya que si no lo hago
+;la etiqueta COUNTER sigue incrementandose sin limite, lo importante
+;es que COUNTER registre que lambda se paso del valor limite, una
+;vez hecho esto no importa ponerla de nuevo en cero.
+
+
+          25:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 41       Z Loc [ LAMBDA    ]
+
+;/////////////////////////////////////////////////////////////
+;ESTABLEZCO UN CONTADOR PARA REGISTRAR EN "COUNTER" LAS VECES
+;QUE EL PARAMETRO LAMBDA SOBREPASA EL VALOR PERMITIDO
+;/////////////////////////////////////////////////////////////
+     26:  End (P95)
+
+
+;::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+;:::::::::CONTROLES DE CALIDAD CONOCIDO EL TIEMPO ENTRE TIPS::::::::::::::::::::::::::::::::::::::
+
+;1) SI EL TIEMPO ENTRE TIPS ES MENOR QUE 3 SEGUNDOS DEBE HABER ALGO RARO, SUPONIENDO
+;UNA RAZON DE PRECIPITACION MAXIMA DE 12.1mm/5min PARA EL CASO DE STA BARBARA. SE PUEDE DEMOSTRAR QUE LA UNICA FORMA DE SUPERAR
+;ESTE MAXIMO A RAZON DE PRECIPITACION CONSTANTE ES QUE EN PROMEDIO EL TIEMPO ENTRE TIPS
+;FUERA MENOR A 3S, LO CUAL SERIA UN CASO EXCEPCIONAL, POR LO QUE DEBERIA DE ABANDERARSE.
+;LLAMANDO
+
+;FLAG_INT: Etiqueta que cuenta  el numero de tiempos entre tips menores a 3 segundos en una hora
+;si FLAG_INT = 0 todo anda normal.
+;si FLAG_INT > 0 numero de tiempo entre tips anormalmente cortos durante esa hora, y se cuenta el
+;numero de tiempo entre tips anormalmente cortos
+
+     27:  If (X<=>F) (P89)
+      1: 1        X Loc [ Tips      ]
+      2: 3        >=
+      3: 0.1      F
+      4: 30       Then Do
+
+     28:  If (X<=>F) (P89)
+      1: 39       X Loc [ interT_13 ]
+      2: 4        <
+      3: 3        F
+      4: 30       Then Do
+
+
+          29:  Z=Z+1 (P32)
+           1: 46       Z Loc [ FLAG_INT  ]
+
+     30:  End (P95)
+
+31:  End (P95)
+
+;::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+;****************************************************************************************************
+;***2) DETECCION DE TIEMPOS ENTRE TIPS LENTOS CRECIENTES CON UN UNICO PLUVIOMETRO DE BALANCIN********
+
+;INDICE DE CAMBIO: NUMERO DE TIEMPOS ENTRE TIPS CRECIENTES REGISTRADOS. DEBIDO A QUE ESTO CORRESPONDE A UNA SECUENCIA
+; voy a graficar el indice de cambio CHNG_INDX en funcion del tiempo usando el RTMC, asi puedo
+;ver si hay o no una secuencia de unos o menos unos
+;****************************************************************************************
+     32:  If (X<=>F) (P89)
+      1: 1        X Loc [ Tips      ]
+      2: 3        >=
+      3: 0.1      F
+      4: 30       Then Do
+
+;contador de tips
+
+
+          33:  Z=Z+1 (P32)
+           1: 67       Z Loc [ cuent_tip ]
+
+;///////este if es para que esl calculo se ejecute solo cuando este lluviento/////////
+
+     34:  If (X<=>Y) (P88)
+      1: 37       X Loc [ interT_11 ]
+      2: 4        <
+      3: 39       Y Loc [ interT_13 ]
+      4: 30       Then Do
+
+          35:  Z=F x 10^n (P30)
+           1: 1        F
+           2: 0        n, Exponent of 10
+           3: 59       Z Loc [ CHNG_INDX ]
+
+     36:  End (P95)
+
+
+     37:  If (X<=>Y) (P88)
+      1: 39       X Loc [ interT_13 ]
+      2: 4        <
+      3: 37       Y Loc [ interT_11 ]
+      4: 30       Then Do
+
+          38:  Z=F x 10^n (P30)
+           1: -1       F
+           2: 0        n, Exponent of 10
+           3: 59       Z Loc [ CHNG_INDX ]
+
+     39:  End (P95)
+
+     40:  If (X<=>Y) (P88)
+      1: 39       X Loc [ interT_13 ]
+      2: 1        =
+      3: 37       Y Loc [ interT_11 ]
+      4: 30       Then Do
+
+          41:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 59       Z Loc [ CHNG_INDX ]
+
+     42:  End (P95)
+
+
+
+     43:  Block Move (P54)
+      1: 12       No. of Values
+      2: 48       First Source Loc [ CHG_2     ]
+      3: 1        Source Step
+      4: 47       First Destination Loc [ CHG_1     ]
+      5: 1        Destination Step
+
+;aqui puse una secuencia de cuatro solo para hacer pruebas,
+;hay que ponerla en 12
+
+     44:  Spatial Average (P51)
+      1: 12       Swath
+      2: 47       First Loc [ CHG_1     ]
+      3: 60       Avg Loc [ SECUENCE  ]
+
+     45:  Z=X (P31)
+      1: 60       X Loc [ SECUENCE  ]
+      2: 62       Z Loc [ SEC_VER   ]
+;SEC_VER la cree para ver el valor que va asumiendo el valor SE
+;/////////////////////////////////////////////////////////////////////
+
+;La logica que estoy siguiendo en este algoritmo es que cuando
+;el parametro SECUENCE me registre una secuencia creciente de tips
+;entonces me lo guarde en la etiqueta SEC FLAG la cual va ir guardando
+;el numero de secuencias iguales o superiores a 12 de intervalos entre
+;tips crecientes que se han venido registrando. Una vez que se cuenta una
+;secuencia atipica entonces se almacena y se graba en la salida de datos
+;horaria. A la hora esta bandera se inicializa. De no haber casos de secuencias
+;superiores o iguales a 12 entonces se debe mantener en cero.
+;
+;SEC_FLAG: >0 No de secuencias de intervalos entre tips crecientes.
+;          =0 No hay ninguna secuencia sospechosa.
+
+     46:  If (X<=>F) (P89)
+      1: 60       X Loc [ SECUENCE  ]
+      2: 1        =
+      3: 1        F
+      4: 30       Then Do
+
+
+;          46:  Z=Z+1 (P32)
+;           1: 61       Z Loc [SEC_FLAG  ]
+
+;Le agrego un -10 a secuecuencias de flags como indicador instantaneo de que
+;se dieron 12 tips consecutivos
+          47:  Z=F x 10^n (P30)
+           1: -10      F
+           2: 00       n, Exponent of 10
+           3: 61       Z Loc [ SEC_FLAG  ]
+
+
+
+
+;          47:  Z=F x 10^n (P30)
+;           1: 0        F
+;           2: 0        n, Exponent of 10
+;           3: 60       Z Loc [ SECUENCE  ]
+
+     48:  End (P95)
+
+;=======================================================================================
+;**********ALGORITMO DE CUSUM PARA DETECCION DE PLUVIOMETROS BLOQUEADOS****************
+
+
+;Lo primero que hay que hacer es que el algoritmo se fije si el tiempo entre tips es mayor o igual a
+;dos horas para que inicialice las variables del caso
+
+49:  If (X<=>F) (P89)
+ 1: 39       X Loc [ interT_13 ]
+ 2: 3        >=
+ 3: 7200     F
+ 4: 30       Then Do
+
+     50:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 63       Z Loc [ CUSUM     ]
+
+;////////////////faltaba inicializar el rk 11/3/06
+
+     51:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 64       Z Loc [ Nk        ]
+
+     52:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 65       Z Loc [ rk        ]
+
+53:  End (P95)
+
+
+               54:  Z=X+Y (P33)
+                1: 63       X Loc [ CUSUM     ]
+                2: 59       Y Loc [ CHNG_INDX ]
+                3: 63       Z Loc [ CUSUM     ]
+
+;****************************************************************************
+;Correccion al algoritmo de sumas acumulativas; Nk es el numero de tips que se han dado
+;desde que se registro un valor de cero en CUSUMA.
+               55:  If (X<=>F) (P89)
+                1: 63       X Loc [ CUSUM     ]
+                2: 4        <
+                3: 1        F
+                4: 30       Then Do
+
+                    56:  Z=F x 10^n (P30)
+                     1: 0        F
+                     2: 0        n, Exponent of 10
+                     3: 63       Z Loc [ CUSUM     ]
+
+
+                    57:  Z=F x 10^n (P30)
+                     1: 0        F
+                     2: 0        n, Exponent of 10
+                     3: 64       Z Loc [ Nk        ]
+
+                    58:  Z=F x 10^n (P30)
+                     1: 0        F
+                     2: 0        n, Exponent of 10
+                     3: 65       Z Loc [ rk        ]
+
+
+
+               59:  Else (P94)
+
+
+               60:  Z=Z+1 (P32)
+                1: 64       Z Loc [ Nk        ]
+
+
+
+               61:  Z=X/Y (P38)
+                1: 63       X Loc [ CUSUM     ]
+                2: 64       Y Loc [ Nk        ]
+                3: 65       Z Loc [ rk        ]
+
+          62:  End (P95)
+
+
+;********************************************************************
+
+     63:  End (P95)
+
+     64:  If (X<=>F) (P89)
+      1: 63       X Loc [ CUSUM     ]
+      2: 3        >=
+      3: 13       F
+      4: 30       Then Do
+
+;/////se supone que rk debe ser mayor o igual a 0.5, lo ajuste a 0.1 para probar el algoritmo///////
+
+          65:  If (X<=>F) (P89)
+           1: 65       X Loc [ rk        ]
+           2: 3        >=
+           3: 0.5      F
+           4: 30       Then Do
+
+;================================================================================================
+;FLG_CUSUM dice el numero de secuencias registradas cuya suma acumulativa es mayor que 12 y que
+;ademas rk mayor o igual que 0.5. Si FLG_CUSUM>0 hay que tener cuidado.
+;================================================================================================
+
+               66:  Z=F x 10^n (P30)
+                1: 5        F
+                2: 0        n, Exponent of 10
+                3: 66       Z Loc [ FLG_CUSUM ]
+
+;//////aunque el esta bandera FLG_CUSUM se inicializa cada hora, el algoritmo de sumas acumulativas sigue
+;corriendo de modo que CUSUM y Nk solo se inicializan despues de pasar un intervalo entre tips superior
+;o igual a dos horas///////////////////////////
+;
+
+
+
+          67:  End (P95)
+
+68:  End (P95)
+
+
+
+
+;/////////////////////////////////////////////////////////////////////////////////////////
+;==========================================================================================
+
+;     ////////////////SALIDA DE DATOS HORARIA/////////////////////
+
+          69:  If time is (P92)
+           1: 0        Minutes (Seconds --) into a
+           2: 60       Interval (same units as above)
+           3: 10       Set Output Flag High (Flag 0)
+
+          70:  Set Active Storage Area (P80)^22873
+           1: 1        Final Storage Area 1
+           2: 1        Array ID
+
+          71:  Real Time (P77)^3526
+           1: 1220     Year,Day,Hour/Minute (midnight = 2400)
+
+          72:  Totalize (P72)^29488
+           1: 2        Reps
+           2: 1        Loc [ Tips      ]
+
+          73:  Sample (P70)^26110
+           1: 1        Reps
+           2: 46       Loc [ FLAG_INT  ]
+
+
+          74:  Sample (P70)^29810
+           1: 1        Reps
+           2: 61       Loc [ SEC_FLAG  ]
+
+          75:  Sample (P70)^25293
+           1: 1        Reps
+           2: 42       Loc [ COUNTER   ]
+
+          76:  Sample (P70)^30816
+           1: 1        Reps
+           2: 66       Loc [ FLG_CUSUM ]
+
+;//////////Inicializando las banderas cada hora//////////////
+
+     77:  If time is (P92)
+      1: 0        Minutes (Seconds --) into a
+      2: 60       Interval (same units as above)
+      3: 30       Then Do
+;  CADA HORA HAGO QUE EL CONTADOR DE LAMBDAS FUERA DE RANGO SE INICIALICE
+          78:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 42       Z Loc [ COUNTER   ]
+
+          79:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 46       Z Loc [ FLAG_INT  ]
+
+
+
+          80:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 61       Z Loc [ SEC_FLAG  ]
+
+          81:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 66       Z Loc [ FLG_CUSUM ]
+
+     82:  End (P95)
+;//////////////////////////////////////////////////////////
+
+;*****AREA DE ALMACENAJE CADA SEGUNDO PARA SIMULACIONES UTILIZANDO LA BOMBA*****
+;     75:  Do (P86)
+;      1: 10       Set Output Flag High (Flag 0)
+;
+;          76:  Set Active Storage Area (P80)
+;           1: 1        Final Storage Area 1
+;           2: 2        Array ID
+;
+;          77:  Real Time (P77)
+;           1: 1221     Year,Day,Hour/Minute,Seconds (midnight = 2400)
+;
+;          78:  Totalize (P72)
+;           1: 2        Reps
+;           2: 1        Loc [ Tips      ]
+;
+;
+;          79:  Sample (P70)
+;           1: 2        Reps
+;           2: 1        Loc [ Tips      ]
+;
+;
+;          80:  Sample (P70)
+;           1: 2        Reps
+;           2: 41       Loc [ LAMBDA    ]
+;
+;          81:  Sample (P70)
+;           1: 1        Reps
+;           2: 45       Loc [ LAMBD_OUT ]
+;
+
+     83:  Resolution (P78)
+      1: 1        High Resolution
+
+;          82:  Sample (P70)
+;           1: 1        Reps
+;           2: 39       Loc [ interT_13 ]
+
+
+;     84:  Resolution (P78)
+;      1: 0        Low Resolution
+
+
+
+
+;          83:  Sample (P70)
+;           1: 1        Reps
+;           2: 59       Loc [ CHNG_INDX ]
+;
+
+;    
+
+;          84:  Sample (P70)
+;           1: 1        Reps
+;           2: 46       Loc [ FLAG_INT  ]
+;
+;
+;          85:  Sample (P70)
+;           1: 1        Reps
+;           2: 61       Loc [ SEC_FLAG  ]
+;
+;          86:  Sample (P70)
+;           1: 1        Reps
+;           2: 42       Loc [ COUNTER   ]
+;
+;          87:  Sample (P70)
+;           1: 4        Reps
+;           2: 63       Loc [ CUSUM     ]
+;
+;
+;          88:  Sample (P70)
+;           1: 1        Reps
+;           2: 60       Loc [ SECUENCE  ]
+
+;
+;     83:  Sample (P70)
+;      1: 1        Reps
+;      2: 67       Loc [ cuent_tip ]
+
+
+;////SALIDA DE DATOS CADA  MINUTO PARA INTER TIPS LARGOS//////
+
+
+          85:  If time is (P92)
+           1: 0        Minutes (Seconds --) into a
+           2: 1        Interval (same units as above)
+           3: 10       Set Output Flag High (Flag 0)
+
+          86:  Set Active Storage Area (P80)^28014
+           1: 1        Final Storage Area 1
+           2: 3        Array ID
+
+          87:  Real Time (P77)^24210
+           1: 1220     Year,Day,Hour/Minute (midnight = 2400)
+
+
+          88:  Totalize (P72)^16458
+           1: 2        Reps
+           2: 1        Loc [ Tips      ]
+
+
+          89:  Sample (P70)^24781
+           1: 2        Reps
+           2: 1        Loc [ Tips      ]
+
+
+          90:  Sample (P70)^24307
+           1: 2        Reps
+           2: 41       Loc [ LAMBDA    ]
+
+          91:  Sample (P70)^27183
+           1: 1        Reps
+           2: 45       Loc [ LAMBD_OUT ]
+
+          92:  Resolution (P78)
+           1: 1        High Resolution
+
+          93:  Sample (P70)^7708
+           1: 1        Reps
+           2: 39       Loc [ interT_13 ]
+
+          94:  Resolution (P78)
+           1: 0        Low Resolution
+
+          95:  Sample (P70)^5877
+           1: 1        Reps
+           2: 59       Loc [ CHNG_INDX ]
+
+          96:  Sample (P70)^4440
+           1: 1        Reps
+           2: 46       Loc [ FLAG_INT  ]
+
+
+          97:  Sample (P70)^20510
+           1: 1        Reps
+           2: 61       Loc [ SEC_FLAG  ]
+
+          98:  Sample (P70)^17678
+           1: 1        Reps
+           2: 42       Loc [ COUNTER   ]
+
+          99:  Sample (P70)^7408
+           1: 4        Reps
+           2: 63       Loc [ CUSUM     ]
+
+
+          100:  Sample (P70)^18394
+           1: 1        Reps
+           2: 60       Loc [ SECUENCE  ]
+
+
+          101:  Sample (P70)^6751
+           1: 1        Reps
+           2: 67       Loc [ cuent_tip ]
+
+
+
+*Table 2 Program
+  02: 0.0000    Execution Interval (seconds)
+
+*Table 3 Subroutines
+
+End Program
+
+
+
+
+
+
+
+
+
+
+
+
+-Input Locations-
+1 Tips      1 10 1
+2 Lluv_mm   1 4 1
+3 Tp_1s     6 0 0
+4 Tp_2s     2 0 0
+5 Tp_3s     10 0 0
+6 Tp_4s     18 0 0
+7 Tp_Year   5 0 1
+8 Tp_Day    9 0 1
+9 Tp_Hour   9 1 1
+10 Tp_Min    9 1 1
+11 Tp_Sec    17 1 1
+12 Tp_Min_S  1 1 1
+13 Tp_Hour_S 1 1 1
+14 Time_1    7 0 1
+15 Time_2    11 1 1
+16 Time_3    11 1 1
+17 Time_4    11 1 1
+18 Time_5    11 1 1
+19 Time_6    11 1 1
+20 Time_7    11 1 1
+21 Time_8    11 1 1
+22 Time_9    11 1 1
+23 Time_10   11 1 1
+24 Time_11   11 3 1
+25 Time_12   19 1 1
+26 Time_13   1 3 2
+27 interTT_1 7 0 1
+28 interTT_2 11 0 1
+29 interTT_3 11 0 1
+30 interTT_4 11 0 1
+31 interTT_5 11 0 1
+32 interTT_6 11 0 1
+33 interTT_7 11 0 1
+34 interTT_8 11 0 1
+35 interTT_9 11 0 1
+36 interT_10 11 0 1
+37 interT_11 11 3 1
+38 interT_12 19 1 1
+39 interT_13 1 11 4
+40 TAU       1 1 3
+41 LAMBDA    1 4 3
+42 COUNTER   1 4 2
+43 TOT_tips  1 0 0
+44 S86400    1 2 2
+45 LAMBD_OUT 1 2 1
+46 FLAG_INT  1 3 2
+47 CHG_1     7 1 1
+48 CHG_2     11 2 1
+49 CHG_3     11 2 1
+50 CHG_4     11 2 1
+51 CHG_5     11 2 1
+52 CHG_6     11 2 1
+53 CHG_7     11 2 1
+54 CHG_8     11 2 1
+55 CHG_9     11 2 1
+56 CHG_10    11 2 1
+57 CHG_11    11 2 1
+58 CHG_12    19 2 1
+59 CHNG_INDX 1 4 3
+60 SECUENCE  1 4 2
+61 SEC_FLAG  5 2 3
+62 SEC_VER   1 0 1
+63 CUSUM     1 6 4
+64 Nk        1 2 3
+65 rk        1 2 3
+66 FLG_CUSUM 1 2 2
+67 cuent_tip 1 2 1
+-Program Security-
+0000
+0000
+0000
+-Mode 4-
+-Final Storage Area 2-
+0
+-CR10X ID-
+0
+-CR10X Power Up-
+3
+-CR10X Compile Setting-
+3
+-CR10X RS-232 Setting-
+-1
+-DLD File Labels-
+0
+-Final Storage Labels-
+0,1,22873
+1,Tips_TOT~1,29488
+1,Lluv_mm_TOT~2
+2,Year_RTM,3526
+2,Day_RTM
+2,Hour_Minute_RTM
+3,FLAG_INT~46,26110
+4,SEC_FLAG~61,29810
+5,COUNTER~42,25293
+6,FLG_CUSUM~66,30816
+7,3,28014
+8,Tips_TOT~1,16458
+8,Lluv_mm_TOT~2
+9,Tips~1,24781
+9,Lluv_mm~2
+10,LAMBDA~41,24307
+10,COUNTER~42
+11,LAMBD_OUT~45,27183
+12,interT_13~39,7708
+13,CHNG_INDX~59,5877
+14,FLAG_INT~46,4440
+15,SEC_FLAG~61,20510
+16,COUNTER~42,17678
+17,CUSUM~63,7408
+17,Nk~64
+17,rk~65
+17,FLG_CUSUM~66
+18,SECUENCE~60,18394
+19,Year_RTM,24210
+19,Day_RTM
+19,Hour_Minute_RTM
+20,cuent_tip~67,6751

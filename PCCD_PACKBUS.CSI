@@ -1,0 +1,944 @@
+;{CR10X-TD}
+
+*Table 1 Program
+  01: 10        Execution Interval (seconds)
+
+
+
+1:  Volt (SE) (P1)
+ 1: 1        Reps
+ 2: 25       2500 mV 60 Hz Rejection Range
+ 3: 1        SE Channel
+ 4: 1        Loc [ TEMP_C         ]
+ 5: 0.1      Multiplier
+ 6: -40      Offset
+
+
+2:  Volt (SE) (P1)
+ 1: 1        Reps
+ 2: 25       2500 mV 60 Hz Rejection Range
+ 3: 2        SE Channel
+ 4: 2        Loc [ HR             ]
+ 5: 0.1      Multiplier
+ 6: 0        Offset
+
+
+;/////CONTROL DE CALIDAD DEL DATO PARA TEMPERATURA///////
+
+3:  Z=X (P31)
+ 1: 1        X Loc [ TEMP_C         ]
+ 2: 5        Z Loc [ TEMP_C2        ]
+
+4:  Block Move (P54)
+ 1: 2        No. of Values
+ 2: 4        First Source Loc [ temp_2         ]
+ 3: 1        Source Step
+ 4: 3        First Destination Loc [ temp_1         ]
+ 5: 1        Destination Step
+
+
+5:  Z=X-Y (P35)
+ 1: 3        X Loc [ temp_1         ]
+ 2: 4        Y Loc [ temp_2         ]
+ 3: 6        Z Loc [ Dif_TempC      ]
+
+6:  Z=ABS(X) (P43)
+ 1: 6        X Loc [ Dif_TempC      ]
+ 2: 6        Z Loc [ Dif_TempC      ]
+
+
+7:  If (X<=>F) (P89)
+ 1: 6        X Loc [ Dif_TempC      ]
+ 2: 3        >=
+ 3: 2        F
+ 4: 30       Then Do
+
+     8:  Z=Z+1 (P32)
+      1: 7        Z Loc [ out_ins_T      ]
+
+     9:  If (X<=>F) (P89)
+      1: 7        X Loc [ out_ins_T      ]
+      2: 3        >=
+      3: 119      F
+      4: 30       Then Do
+
+          10:  Z=F x 10^n (P30)
+           1: -8       F
+           2: 0        n, Exponent of 10
+           3: 8        Z Loc [ FLG_ins_T      ]
+
+     11:  Else (P94)
+
+          12:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 8        Z Loc [ FLG_ins_T      ]
+
+
+     13:  End (P95)
+
+14:  End (P95)
+
+;////Promedio de temperatura en la ultima hora//////
+
+
+15:  Data Table (P84)^2780
+ 1: 0        Seconds into Interval
+ 2: 3600     Seconds Interval
+ 3: -9       (0 = auto allocate, -x = redirect to inloc x)
+ 4:                           Table Name
+
+16:  Average (P71)^2370
+ 1: 2        Reps
+ 2: 1        Loc [ TEMP_C         ]
+
+17:  CASE (P93)
+ 1: 9        Case Loc [ TEMPC_H        ]
+
+     18:  If Case Location < F (P83)
+      1: 20       F
+      2: 30       Then Do
+
+          19:  Z=F x 10^n (P30)
+           1: -1       F
+           2: 0        n, Exponent of 10
+           3: 11       Z Loc [ TOUT_flag      ]
+
+     20:  End (P95)
+
+     21:  If Case Location < F (P83)
+      1: 21       F
+      2: 30       Then Do
+
+          22:  Z=F x 10^n (P30)
+           1: 1        F
+           2: 0        n, Exponent of 10
+           3: 11       Z Loc [ TOUT_flag      ]
+
+     23:  End (P95)
+
+24:  End (P95)
+
+;/////////////DIP TEST EN OPERACION///////////////
+
+
+25:  If (X<=>F) (P89)
+ 1: 9        X Loc [ TEMPC_H        ]
+ 2: 4        <
+ 3: 0        F
+ 4: 30       Then Do
+
+     26:  Z=F x 10^n (P30)
+      1: -9       F
+      2: 0        n, Exponent of 10
+      3: 9        Z Loc [ TEMPC_H        ]
+
+27:  End (P95)
+
+
+28:  If time is (P92)
+ 1: 0        Seconds into a
+ 2: 60       Second interval
+ 3: 30       Then Do
+
+     29:  Z=X (P31)
+      1: 9        X Loc [ TEMPC_H        ]
+      2: 20       Z Loc [ temer_4        ]
+
+     30:  Z=X (P31)
+      1: 10       X Loc [ HR_H           ]
+      2: 24       Z Loc [ HR_4H          ]
+
+     31:  Block Move (P54)
+      1: 3        No. of Values
+      2: 18       First Source Loc [ temer_2        ]
+      3: 1        Source Step
+      4: 17       First Destination Loc [ temer_1        ]
+      5: 1        Destination Step
+
+     32:  Block Move (P54)
+      1: 3        No. of Values
+      2: 22       First Source Loc [ HR_2H          ]
+      3: 1        Source Step
+      4: 21       First Destination Loc [ HR_1H          ]
+      5: 1        Destination Step
+
+
+     33:  Z=X-Y (P35)
+      1: 17       X Loc [ temer_1        ]
+      2: 18       Y Loc [ temer_2        ]
+      3: 25       Z Loc [ Timenos1       ]
+
+     34:  Z=X-Y (P35)
+      1: 19       X Loc [ temer_3        ]
+      2: 18       Y Loc [ temer_2        ]
+      3: 26       Z Loc [ Timas          ]
+
+     35:  Z=X*Y (P36)
+      1: 25       X Loc [ Timenos1       ]
+      2: 26       Y Loc [ Timas          ]
+      3: 27       Z Loc [ delt_calc      ]
+
+     36:  CASE (P93)
+      1: 27       Case Loc [ delt_calc      ]
+
+          37:  If Case Location < F (P83)
+           1: 4        F
+           2: 30       Then Do
+
+               38:  Z=F x 10^n (P30)
+                1: 0        F
+                2: 0        n, Exponent of 10
+                3: 16       Z Loc [ delta_err      ]
+
+          39:  Else (P94)
+
+               40:  Z=F x 10^n (P30)
+                1: -2       F
+                2: 0        n, Exponent of 10
+                3: 16       Z Loc [ delta_err      ]
+
+          41:  End (P95)
+
+     42:  End (P95)
+
+;//////////Diferencia respecto a la hora anterior/////////////
+
+
+     43:  Z=X-Y (P35)
+      1: 19       X Loc [ temer_3        ]
+      2: 18       Y Loc [ temer_2        ]
+      3: 28       Z Loc [ JUMP_2C        ]
+
+     44:  Z=ABS(X) (P43)
+      1: 28       X Loc [ JUMP_2C        ]
+      2: 28       Z Loc [ JUMP_2C        ]
+
+     45:  If (X<=>F) (P89)
+      1: 28       X Loc [ JUMP_2C        ]
+      2: 3        >=
+      3: 2        F
+      4: 30       Then Do
+
+          46:  Z=F x 10^n (P30)
+           1: -5       F
+           2: 0        n, Exponent of 10
+           3: 12       Z Loc [ Flag_Jump      ]
+
+     47:  Else (P94)
+
+          48:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 12       Z Loc [ Flag_Jump      ]
+
+     49:  End (P95)
+
+;///Razon de cambio de la temperatura con la humedad relativa////
+
+
+     50:  Z=X-Y (P35)
+      1: 19       X Loc [ temer_3        ]
+      2: 18       Y Loc [ temer_2        ]
+      3: 29       Z Loc [ T24_T23        ]
+
+     51:  Z=X-Y (P35)
+      1: 23       X Loc [ HR_3H          ]
+      2: 22       Y Loc [ HR_2H          ]
+      3: 30       Z Loc [ HR3_HR2        ]
+
+     52:  Z=X/Y (P38)
+      1: 29       X Loc [ T24_T23        ]
+      2: 30       Y Loc [ HR3_HR2        ]
+      3: 31       Z Loc [ T_HR_cstc      ]
+
+     53:  If (X<=>F) (P89)
+      1: 31       X Loc [ T_HR_cstc      ]
+      2: 4        <
+      3: 0        F
+      4: 30       Then Do
+
+          54:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 32       Z Loc [ THR_flag       ]
+
+     55:  Else (P94)
+
+          56:  Z=F x 10^n (P30)
+           1: -4       F
+           2: 0        n, Exponent of 10
+           3: 32       Z Loc [ THR_flag       ]
+
+     57:  End (P95)
+
+58:  End (P95)
+
+;/////Temperaturas absolutas maximas y minimas///////
+
+
+
+59:  Data Table (P84)^4040
+ 1: 0        Seconds into Interval
+ 2: 25140    Seconds Interval
+ 3: -30      (0 = auto allocate, -x = redirect to inloc x)
+ 4:                           Table Name
+
+
+60:  Maximum (P73)^32724
+ 1: 2        Reps
+ 2: 1        Value with Time Stamp
+ 3: 1        Loc [ TEMP_C         ]
+
+
+61:  Minimum (P74)^8014
+ 1: 2        Reps
+ 2: 1        Value with Time Stamp
+ 3: 37       Loc [ TminD_abs      ]
+
+
+62:  If time is (P92)
+ 1: 25140    Seconds into a
+ 2: 86400    Second interval
+ 3: 1        Call Subroutine 1
+
+63:  If time is (P92)
+ 1: 25140    Seconds into a
+ 2: 86400    Second interval
+ 3: 2        Call Subroutine 2
+
+
+64:  If time is (P92)
+ 1: 25140    Seconds into a
+ 2: 86400    Second interval
+ 3: 30       Then Do
+
+     65:  If (X<=>Y) (P88)
+      1: 37       X Loc [ TminD_abs      ]
+      2: 3        >=
+      3: 35       Y Loc [ TmaxD_abs      ]
+      4: 30       Then Do
+
+          66:  Z=F x 10^n (P30)
+           1: -3       F
+           2: 0        n, Exponent of 10
+           3: 15       Z Loc [ FlagT_day      ]
+
+     67:  Else (P94)
+
+          68:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 15       Z Loc [ FlagT_day      ]
+
+     69:  End (P95)
+
+70:  End (P95)
+
+;//////////Salida horaria de datos//////////
+
+
+
+71:  Data Table (P84)^4215
+ 1: 0        Seconds into Interval
+ 2: 3600     Seconds Interval
+ 3: 0        (0 = auto allocate, -x = redirect to inloc x)
+ 4: Horarios                  Table Name
+
+
+72:  Sample (P70)^29718
+ 1: 6        Reps
+ 2: 11       Loc [ TOUT_flag      ]
+
+;******************************************************
+*Table 2 Program
+  02: 1         Execution Interval (seconds)
+;******************************************************
+1:  Pulse (P3)
+ 1: 1        Reps
+ 2: 1        Pulse Channel 1
+ 3: 2        Switch Closure, All Counts
+ 4: 45       Loc [ Tips           ]
+ 5: 1        Multiplier
+ 6: 0        Offset
+
+2:  Z=X*F (P37)
+ 1: 45       X Loc [ Tips           ]
+ 2: 0.1      F
+ 3: 46       Z Loc [ LLUV_mm        ]
+
+3:  If (X<=>F) (P89)
+ 1: 45       X Loc [ Tips           ]
+ 2: 3        >=
+ 3: 1        F
+ 4: 30       Then Do
+
+     4:  Time (P18)
+      1: 6        Store Mo,Day,Yr,Hr,Min,Sec in 6 consecutive locations
+      2: 0        Hours into current day (maximum 24)
+      3: 39       Loc [ Tp_MO          ]
+
+
+     5:  Z=X*F (P37)
+      1: 42       X Loc [ Tp_Hour        ]
+      2: 3600     F
+      3: 47       Z Loc [ Tp_Hour_S      ]
+
+     6:  Z=X*F (P37)
+      1: 43       X Loc [ Tp_Min         ]
+      2: 60       F
+      3: 48       Z Loc [ Tp_Min_S       ]
+
+     7:  Z=X+Y (P33)
+      1: 48       X Loc [ Tp_Min_S       ]
+      2: 47       Y Loc [ Tp_Hour_S      ]
+      3: 62       Z Loc [ Time_13        ]
+
+
+     8:  Z=X+Y (P33)
+      1: 62       X Loc [ Time_13        ]
+      2: 44       Y Loc [ Tp_Sec         ]
+      3: 62       Z Loc [ Time_13        ]
+
+
+     9:  Block Move (P54)
+      1: 12       No. of Values
+      2: 51       First Source Loc [ Time_2         ]
+      3: 1        Source Step
+      4: 50       First Destination Loc [ Time_1         ]
+      5: 1        Destination Step
+
+
+     10:  Z=X-Y (P35)
+      1: 61       X Loc [ Time_12        ]
+      2: 60       Y Loc [ Time_11        ]
+      3: 75       Z Loc [ interT_13      ]
+
+     11:  If (X<=>F) (P89)
+      1: 75       X Loc [ interT_13      ]
+      2: 4        <
+      3: 0        F
+      4: 30       Then Do
+
+     12:  Z=F x 10^n (P30)
+      1: 86400    F
+      2: 0        n, Exponent of 10
+      3: 76       Z Loc [ S86400         ]
+
+     13:  Z=X-Y (P35)
+      1: 76       X Loc [ S86400         ]
+      2: 60       Y Loc [ Time_11        ]
+      3: 75       Z Loc [ interT_13      ]
+
+
+     14:  Z=X+Y (P33)
+      1: 75       X Loc [ interT_13      ]
+      2: 62       Y Loc [ Time_13        ]
+      3: 75       Z Loc [ interT_13      ]
+
+15:  End (P95)
+
+16:  Block Move (P54)
+ 1: 12       No. of Values
+ 2: 64       First Source Loc [ interT_2       ]
+ 3: 1        Source Step
+ 4: 63       First Destination Loc [ interT_1       ]
+ 5: 1        Destination Step
+
+17:  Z=X/Y (P38)
+ 1: 74       X Loc [ interT_12      ]
+ 2: 73       Y Loc [ interT_11      ]
+ 3: 77       Z Loc [ TAU            ]
+
+18:  Z=LN(X) (P40)
+ 1: 77       X Loc [ TAU            ]
+ 2: 78       Z Loc [ LAMBDA         ]
+
+
+
+19:  Z=ABS(X) (P43)
+ 1: 78       X Loc [ LAMBDA         ]
+ 2: 78       Z Loc [ LAMBDA         ]
+
+20:  End (P95)
+
+
+21:  If (X<=>F) (P89)
+ 1: 78       X Loc [ LAMBDA         ]
+ 2: 3        >=
+ 3: 3        F
+ 4: 30       Then Do
+
+     22:  Z=X (P31)
+      1: 78       X Loc [ LAMBDA         ]
+      2: 79       Z Loc [ LAMBDA_OUT     ]
+
+     23:  Z=Z+1 (P32)
+      1: 80       Z Loc [ COUNTER        ]
+
+     24:  Z=F x 10^n (P30)
+      1: 0        F
+      2: 0        n, Exponent of 10
+      3: 78       Z Loc [ LAMBDA         ]
+
+25:  End (P95)
+
+;//////CONTROLES DE CALIDAD CONOCIDO EL TIEMPO ENTRE TIPS/////
+
+
+26:  If (X<=>F) (P89)
+ 1: 45       X Loc [ Tips           ]
+ 2: 3        >=
+ 3: 0.1      F
+ 4: 30       Then Do
+
+     27:  If (X<=>F) (P89)
+      1: 75       X Loc [ interT_13      ]
+      2: 4        <
+      3: 3        F
+      4: 30       Then Do
+
+          28:  Z=Z+1 (P32)
+           1: 81       Z Loc [ FLAG_INT       ]
+
+     29:  End (P95)
+
+30:  End (P95)
+
+
+
+31:  If (X<=>F) (P89)
+ 1: 45       X Loc [ Tips           ]
+ 2: 3        >=
+ 3: 0.1      F
+ 4: 30       Then Do
+
+     32:  If (X<=>Y) (P88)
+      1: 73       X Loc [ interT_11      ]
+      2: 4        <
+      3: 75       Y Loc [ interT_13      ]
+      4: 30       Then Do
+
+          33:  Z=F x 10^n (P30)
+           1: 1        F
+           2: 0        n, Exponent of 10
+           3: 104      Z Loc [ CHNG_INDX      ]
+
+     34:  End (P95)
+
+     35:  If (X<=>Y) (P88)
+      1: 75       X Loc [ interT_13      ]
+      2: 4        <
+      3: 73       Y Loc [ interT_11      ]
+      4: 30       Then Do
+
+          36:  Z=F x 10^n (P30)
+           1: -1       F
+           2: 0        n, Exponent of 10
+           3: 104      Z Loc [ CHNG_INDX      ]
+
+
+     37:  End (P95)
+
+
+     38:  If (X<=>Y) (P88)
+      1: 75       X Loc [ interT_13      ]
+      2: 1        =
+      3: 73       Y Loc [ interT_11      ]
+      4: 30       Then Do
+
+          39:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 104      Z Loc [ CHNG_INDX      ]
+
+
+     40:  End (P95)
+
+
+
+     41:  Block Move (P54)
+      1: 12       No. of Values
+      2: 93       First Source Loc [ CHG_2          ]
+      3: 1        Source Step
+      4: 92       First Destination Loc [ CHG_1          ]
+      5: 1        Destination Step
+
+
+     42:  Spatial Average (P51)
+      1: 12       Swath
+      2: 92       First Loc [ CHG_1          ]
+      3: 88       Avg Loc [ SECUENCE       ]
+
+
+     43:  Z=X (P31)
+      1: 88       X Loc [ SECUENCE       ]
+      2: 83       Z Loc [ SEC_VER        ]
+
+     44:  If (X<=>F) (P89)
+      1: 83       X Loc [ SEC_VER        ]
+      2: 1        =
+      3: 1        F
+      4: 30       Then Do
+
+          45:  Z=Z+1 (P32)
+           1: 84       Z Loc [ SEC_FLAG       ]
+
+          46:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 88       Z Loc [ SECUENCE       ]
+
+     47:  End (P95)
+;///////Algoritmo para la deteccion de pluviometros bloqueados////////
+
+
+     48:  Z=X+Y (P33)
+      1: 85       X Loc [ CUSUM          ]
+      2: 104      Y Loc [ CHNG_INDX      ]
+      3: 85       Z Loc [ CUSUM          ]
+
+     49:  Z=Z+1 (P32)
+      1: 86       Z Loc [ Nk             ]
+
+     50:  Z=X/Y (P38)
+      1: 85       X Loc [ CUSUM          ]
+      2: 86       Y Loc [ Nk             ]
+      3: 87       Z Loc [ rk             ]
+
+51:  End (P95)
+
+52:  If (X<=>F) (P89)
+ 1: 85       X Loc [ CUSUM          ]
+ 2: 1        =
+ 3: 12       F
+ 4: 30       Then Do
+
+
+     53:  If (X<=>F) (P89)
+      1: 87       X Loc [ rk             ]
+      2: 3        >=
+      3: 0.1      F
+      4: 30       Then Do
+
+          54:  Z=F x 10^n (P30)
+           1: 5        F
+           2: 0        n, Exponent of 10
+           3: 82       Z Loc [ FLG_CUSUM      ]
+
+     55:  End (P95)
+
+     56:  If (X<=>F) (P89)
+      1: 75       X Loc [ interT_13      ]
+      2: 3        >=
+      3: 7200     F
+      4: 30       Then Do
+
+          57:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 85       Z Loc [ CUSUM          ]
+
+          58:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 87       Z Loc [ rk             ]
+
+     59:  End (P95)
+
+60:  End (P95)
+
+
+
+61:  Data Table (P84)^28597
+ 1: 0        Seconds into Interval
+ 2: 60       Seconds Interval
+ 3: 0        (0 = auto allocate, -x = redirect to inloc x)
+ 4: Lluvia instantanea        Table Name
+
+
+62:  Sample (P70)^4282
+ 1: 12       Reps
+ 2: 77       Loc [ TAU            ]
+
+
+63:  Sample (P70)^19757
+ 1: 1        Reps
+ 2: 104      Loc [ CHNG_INDX      ]
+
+
+
+;*************************************************
+*Table 3 Subroutines
+;*************************************************
+;////////T max del dia//////////
+
+1:  Beginning of Subroutine (P85)
+ 1: 1        Subroutine 1
+
+     2:  CASE (P93)
+      1: 36       Case Loc [ HM_Tmax        ]
+
+          3:  If Case Location < F (P83)
+           1: 900      F
+           2: 30       Then Do
+
+               4:  Z=F x 10^n (P30)
+                1: -6       F
+                2: 0        n, Exponent of 10
+                3: 13       Z Loc [ FL_Tmax        ]
+
+          5:  End (P95)
+
+          6:  If Case Location < F (P83)
+           1: 1500     F
+           2: 30       Then Do
+
+               7:  Z=F x 10^n (P30)
+                1: 0        F
+                2: 0        n, Exponent of 10
+                3: 13       Z Loc [ FL_Tmax        ]
+
+          8:  End (P95)
+
+          9:  If Case Location < F (P83)
+           1: 2400     F
+           2: 30       Then Do
+
+               10:  Z=F x 10^n (P30)
+                1: -6       F
+                2: 0        n, Exponent of 10
+                3: 13       Z Loc [ FL_Tmax        ]
+
+          11:  End (P95)
+
+     12:  End (P95)
+
+13:  End (P95)
+
+;//////////T minima  dia/////////////
+
+
+14:  Beginning of Subroutine (P85)
+ 1: 2        Subroutine 2
+
+
+     15:  CASE (P93)
+      1: 38       Case Loc [ HM_Tmin        ]
+
+          16:  If Case Location < F (P83)
+           1: 600      F
+           2: 30       Then Do
+
+               17:  Z=F x 10^n (P30)
+                1: 0        F
+                2: 0        n, Exponent of 10
+                3: 14       Z Loc [ FL_Tmin        ]
+
+          18:  End (P95)
+
+          19:  If Case Location < F (P83)
+           1: 2300     F
+           2: 30       Then Do
+
+
+          20:  Z=F x 10^n (P30)
+           1: -7       F
+           2: 0        n, Exponent of 10
+           3: 14       Z Loc [ FL_Tmin        ]
+
+     21:  End (P95)
+
+     22:  If Case Location < F (P83)
+      1: 2400     F
+      2: 30       Then Do
+
+          23:  Z=F x 10^n (P30)
+           1: 0        F
+           2: 0        n, Exponent of 10
+           3: 14       Z Loc [ FL_Tmin        ]
+
+     24:  End (P95)
+
+
+25:  End (P95)
+
+26:  End (P95)
+
+
+
+End Program
+
+-Input Locations-
+1 TEMP_C         1 3 1
+2 HR             1 0 1
+3 temp_1         15 1 2
+4 temp_2         19 2 2
+5 TEMP_C2        1 1 1
+6 Dif_TempC      1 2 2
+7 out_ins_T      1 1 1
+8 FLG_ins_T      1 0 2
+9 TEMPC_H        3 3 1
+10 HR_H           3 1 0
+11 TOUT_flag      1 1 2
+12 Flag_Jump      1 1 2
+13 FL_Tmax        1 1 3
+14 FL_Tmin        1 1 3
+15 FlagT_day      1 1 2
+16 delta_err      1 1 2
+17 temer_1        7 1 1
+18 temer_2        11 5 1
+19 temer_3        19 4 1
+20 temer_4        1 1 1
+21 HR_1H          6 0 0
+22 HR_2H          11 2 0
+23 HR_3H          19 2 0
+24 HR_4H          1 1 1
+25 Timenos1       1 1 1
+26 Timas          1 1 1
+27 delt_calc      1 1 1
+28 JUMP_2C        1 2 2
+29 T24_T23        1 1 1
+30 HR3_HR2        1 1 1
+31 T_HR_cstc      1 1 1
+32 THR_flag       1 0 2
+35 TmaxD_abs      7 1 0
+36 HM_Tmax        11 1 0
+37 TminD_abs      11 2 0
+38 HM_Tmin        19 2 0
+39 Tp_MO          7 0 1
+40 Tp_Year        10 0 0
+41 MO_Day         10 0 0
+42 Tp_Hour        11 1 0
+43 Tp_Min         11 1 0
+44 Tp_Sec         19 1 0
+45 Tips           1 4 1
+46 LLUV_mm        1 0 1
+47 Tp_Hour_S      1 1 1
+48 Tp_Min_S       1 1 1
+50 Time_1         7 0 1
+51 Time_2         11 1 1
+52 Time_3         11 1 1
+53 Time_4         11 1 1
+54 Time_5         11 1 1
+55 Time_6         11 1 1
+56 Time_7         11 1 1
+57 Time_8         11 1 1
+58 Time_9         11 1 1
+59 Time_10        11 1 1
+60 Time_11        11 3 1
+61 Time_12        19 2 1
+62 Time_13        1 3 2
+63 interT_1       7 0 1
+64 interT_2       11 1 1
+65 interT_3       11 1 1
+66 interT_4       11 1 1
+67 interT_5       11 1 1
+68 interT_6       11 1 1
+69 interT_7       11 1 1
+70 interT_8       11 1 1
+71 interT_9       11 1 1
+72 interT_10      11 1 1
+73 interT_11      11 5 1
+74 interT_12      19 2 1
+75 interT_13      1 8 3
+76 S86400         1 1 1
+77 TAU            1 2 1
+78 LAMBDA         1 4 3
+79 LAMBDA_OUT     1 1 1
+80 COUNTER        1 1 1
+81 FLAG_INT       1 1 1
+82 FLG_CUSUM      1 1 1
+83 SEC_VER        1 2 1
+84 SEC_FLAG       1 1 1
+85 CUSUM          1 4 2
+86 Nk             1 2 1
+87 rk             1 2 2
+88 SECUENCE       1 2 2
+92 CHG_1          7 1 1
+93 CHG_2          11 2 1
+94 CHG_3          11 2 1
+95 CHG_4          11 2 1
+96 CHG_5          11 2 1
+97 CHG_6          11 2 1
+98 CHG_7          11 2 1
+99 CHG_8          11 2 1
+100 CHG_9          11 2 1
+101 CHG_10         11 2 1
+102 CHG_11         11 2 1
+103 CHG_12         19 2 1
+104 CHNG_INDX      1 3 3
+-Program Security-
+0000
+0000
+0000
+-Mode 4-
+-CR10X ID-
+0
+-CR10X Power Up-
+3
+-CR10X RS-232 Setting-
+-1
+-PakBus-
+1
+1
+0
+0
+0
+1
+0
+0
+0
+0
+1
+1
+0
+DR=0
+0
+0
+0
+0
+.endAddrSwath
+.endAddrSwath
+.endAddrSwath
+.endAddrSwath
+-DLD File Labels-
+-1
+-Final Storage Labels-
+0,TMSTAMP,2780
+0,RECNBR
+1,TEMP_C_AVG~1,2370
+1,HR_AVG~2
+2,TMSTAMP,4040
+2,RECNBR
+3,TEMP_C_MAX~1,32724
+3,TEMP_C_Time_MAX~1
+3,HR_MAX~2
+3,HR_Time_MAX~2
+4,TminD_abs_MIN~37,8014
+4,TminD_abs_Time_MIN~37
+4,HM_Tmin_MIN~38
+4,HM_Tmin_Time_MIN~38
+5,TMSTAMP,4215
+5,RECNBR
+6,TOUT_flag~11,29718
+6,Flag_Jump~12
+6,FL_Tmax~13
+6,FL_Tmin~14
+6,FlagT_day~15
+6,delta_err~16
+7,TMSTAMP,28597
+7,RECNBR
+8,TAU~77,4282
+8,LAMBDA~78
+8,LAMBDA_OUT~79
+8,COUNTER~80
+8,FLAG_INT~81
+8,FLG_CUSUM~82
+8,SEC_VER~83
+8,SEC_FLAG~84
+8,CUSUM~85
+8,Nk~86
+8,rk~87
+8,SECUENCE~88
+9,CHNG_INDX~104,19757
